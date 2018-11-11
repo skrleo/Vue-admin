@@ -11,7 +11,7 @@
                   </el-dropdown-menu>
               </el-dropdown>
           </el-header>
-          <el-container>
+          <el-container class="aside">
             <el-aside :width="tabWidth+'px'">
                 <el-menu
                 default-active="2"
@@ -97,6 +97,23 @@
                 }
             }
         }
+    }
+    .aside{
+        overflow: visible;
+        height: 100%;
+        background-color: $background-color;
+        color: $color;
+        aside{
+            overflow: visible;
+            height: 100%;
+            background-color: $background-color;
+            color: $color;
+            border-right: 1px solid #DDD;
+            .menu {
+                width: 100%;
+                border-right:0;
+            }
+         }
     }
 
 </style>
