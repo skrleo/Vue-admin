@@ -1,52 +1,71 @@
 <template>
-  <el-row class="container">
-    <!--头部-->
-    <el-col :span="24"><top></top></el-col>
-    <el-col :span="24" class="main">
-      <!--左侧导航-->
-      <div class="left-nav">
-        <left></left>
-      </div>
-      <!--右侧内容区-->
-      <div class="right-nav">
-        <!--动态路由的设置-->
-        <nuxt/>
-        <!-- <nuxt-link to="addtitle">首 页</nuxt-link> -->
-      </div>
-    </el-col>
-  </el-row>
+  <el-form ref="form" :model="form" label-width="80px">
+    <el-form-item label="活动名称">
+      <el-input v-model="form.name"></el-input>
+    </el-form-item>
+    <el-form-item label="活动区域">
+      <el-select v-model="form.region" placeholder="请选择活动区域">
+        <el-option label="区域一" value="shanghai"></el-option>
+        <el-option label="区域二" value="beijing"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="活动时间">
+      <el-col :span="11">
+        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+      </el-col>
+      <el-col class="line" :span="2">-</el-col>
+      <el-col :span="11">
+        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+      </el-col>
+    </el-form-item>
+    <el-form-item label="即时配送">
+      <el-switch v-model="form.delivery"></el-switch>
+    </el-form-item>
+    <el-form-item label="活动性质">
+      <el-checkbox-group v-model="form.type">
+        <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+        <el-checkbox label="地推活动" name="type"></el-checkbox>
+        <el-checkbox label="线下主题活动" name="type"></el-checkbox>
+        <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
+      </el-checkbox-group>
+    </el-form-item>
+    <el-form-item label="特殊资源">
+      <el-radio-group v-model="form.resource">
+        <el-radio label="线上品牌商赞助"></el-radio>
+        <el-radio label="线下场地免费"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item label="活动形式">
+      <el-input type="textarea" v-model="form.desc"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit">立即创建</el-button>
+      <el-button>取消</el-button>
+    </el-form-item>
+  </el-form>
 </template>
-
-<style>
-  .left-nav{
-    width: 200px;
-    float: left;
-  }
-  .right-nav{
-    float: left;
-    overflow: hidden;
-    width:calc(100% - 200px);
-  }
-</style>
-
 <script>
-  import TopNav from "@/components/Nav/topNav.vue"
-  import LeftNav from "@/components/Nav/leftNav.vue"
-
   export default {
-    name: 'index',
-    // created:function(){
-    //   this.$router.push('/addtitle'); // 页面加载时跳转
-    // },
-     components: {
-      top: TopNav,
-      left: LeftNav
-    },
-    data () {
+    layout: 'main',
+    name :'index',
+    data() {
       return {
-        loading: false
+        form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        }
+      }
+    },
+    methods: {
+      onSubmit() {
+        console.log('submit!');
       }
     }
   }
 </script>
-
