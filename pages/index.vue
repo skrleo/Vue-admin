@@ -31,7 +31,7 @@
   }
   .demo-input-suffix{
     width: 360px;
-    margin: 68px auto;
+    margin: 88px auto;
   }
   .demo-input-suffix h2{
     text-align: center;
@@ -43,14 +43,7 @@
 
 <script>
 export default {
-  data() {
-    return {
-      checked: true,
-      input2: '',
-      input21: '',
-      input22: '',
-      input23: ''
+    data() {
     }
-  }
 }
 </script>
