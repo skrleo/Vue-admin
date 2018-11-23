@@ -1,12 +1,22 @@
 <template>
     <div id="app">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+            </el-breadcrumb>
+        <br>
         <!--搜索框-->
         <el-row>
             <el-col :span="3" class="grid">
-                <el-input v-model="input" placeholder="请输入内容" size="mini"></el-input>
+                <el-button type="primary" icon="el-icon-edit-outline"  @click="addUser">新增用户</el-button>
             </el-col>
-            <el-col :span="1" class="grid">
-                <el-button type="success" icon="el-icon-search" size="mini">搜索</el-button>
+            <el-col :span="5" class="grid">
+                <el-input v-model="input" placeholder="请输入内容"></el-input>
+            </el-col>
+            <el-col :span="2" class="grid">
+                <el-button type="success" icon="el-icon-search">搜索</el-button>
             </el-col>
         </el-row>
         <br>
@@ -24,26 +34,13 @@
             </el-table-column>
             <el-table-column prop="address" label="地址">
             </el-table-column>
-            <el-table-column label="编辑" width="100">
+            <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
                     <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
-                </template>
-            </el-table-column>
-            <el-table-column label="删除" width="100">
-                <template slot-scope="scope">
                     <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
-        <br>
-        <!--新增按钮-->
-        <el-col :span="1" class="grid">
-            <el-button type="success" icon="el-icon-circle-plus-outline" size="mini" round>新增</el-button>
-        </el-col>
-        <!--全删按钮-->
-        <el-col :span="1" class="grid">
-            <el-button type="danger" icon="el-icon-delete" size="mini" round>全删</el-button>
-        </el-col>
         <br>
         <!--分页条-->
         <el-pagination background layout="prev, pager, next" :total="1000">
@@ -86,6 +83,24 @@
             },
             indexMethod(index) {
                 return index;
+            },
+            addUser() {
+                this.$prompt('请输入邮箱', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+                inputErrorMessage: '邮箱格式不正确'
+                }).then(({ value }) => {
+                this.$message({
+                    type: 'success',
+                    message: '你的邮箱是: ' + value
+                });
+                }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '取消输入'
+                });       
+                });
             }
         }
     }

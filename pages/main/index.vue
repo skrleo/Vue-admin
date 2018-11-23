@@ -1,5 +1,13 @@
 <template>
-  <el-form ref="form" :model="form" label-width="80px">
+  <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+    </el-breadcrumb>
+    <br>
+    <el-form ref="form" :model="form" label-width="80px">
     <el-form-item label="活动名称">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
@@ -43,6 +51,7 @@
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
+</div>
 </template>
 <script>
   export default {
