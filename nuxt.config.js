@@ -14,7 +14,6 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     script: [
-      { src: "./assets/lib/font-icon/iconfont.js" },
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js' }
     ],
     link: [
@@ -32,7 +31,6 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    './assets/lib/font-icon/iconfont.css',
     'element-ui/lib/theme-chalk/index.css',
     'mavon-editor/dist/css/index.css'
   ],
