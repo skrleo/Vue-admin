@@ -8,7 +8,7 @@
     </el-breadcrumb>
     <br>
     <el-form ref="form" :model="form" label-width="80px">
-    <el-form-item label="活动名称">
+    <el-form-item label="活动名称" style="width:400px" >
       <el-input v-model="form.name"></el-input>
     </el-form-item>
     <el-form-item label="活动区域">
@@ -44,7 +44,7 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="活动形式">
-      <el-input type="textarea" v-model="form.desc"></el-input>
+      <el-input type="textarea" v-model="form.desc" ></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">立即创建</el-button>

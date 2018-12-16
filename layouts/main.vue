@@ -28,8 +28,15 @@
                                 <span>个人中心</span>
                             </template>
                             <el-menu-item-group>
-                                <el-menu-item index="1-1">选项1</el-menu-item>
-                                <el-menu-item index="1-2">选项2</el-menu-item>
+                                <nuxt-link :to="{name:'rbac'}">
+                                    <el-menu-item index="1-1">选项1</el-menu-item>
+                                </nuxt-link>
+                                <nuxt-link :to="{name:'main'}">
+                                    <el-menu-item index="1-2">选项2</el-menu-item>
+                                </nuxt-link>
+                                <!-- <nuxt-link :to="{name:'main',params:{newsId:'3306'}}">
+                                    <el-menu-item index="1-2">选项2</el-menu-item>
+                                </nuxt-link> -->
                             </el-menu-item-group>
                         </el-submenu>
                         
@@ -39,8 +46,9 @@
                                 <span slot="title">用户管理</span>
                             </template>
                             <el-menu-item-group>
-                                <el-menu-item index="2-1">选项1</el-menu-item>
-                                <el-menu-item index="2-2">选项2</el-menu-item>
+                                <nuxt-link :to="{name:'user'}">
+                                    <el-menu-item index="2-1">用户管理</el-menu-item>
+                                </nuxt-link>
                             </el-menu-item-group>
                         </el-submenu>
 
@@ -61,8 +69,18 @@
                                 <span slot="title">系统管理</span>
                             </template>
                             <el-menu-item-group>
-                                <el-menu-item index="4-1">选项1</el-menu-item>
-                                <el-menu-item index="4-2">选项2</el-menu-item>
+                                <nuxt-link :to="{name:'node'}">
+                                    <el-menu-item index="4-1">节点管理</el-menu-item>
+                                </nuxt-link>
+                                <nuxt-link :to="{name:'user'}">
+                                    <el-menu-item index="4-2">权限管理</el-menu-item>
+                                </nuxt-link>
+                                <nuxt-link :to="{name:'role'}">
+                                    <el-menu-item index="4-3">角色管理</el-menu-item>
+                                </nuxt-link>
+                                <nuxt-link :to="{name:'site'}">
+                                    <el-menu-item index="4-4">站点管理</el-menu-item>
+                                </nuxt-link>
                             </el-menu-item-group>
                         </el-submenu>
 
@@ -83,6 +101,9 @@
     $header-height:60px;
     $background-color:rgb(253, 253, 253);
     $color: #dddddd;
+    *{
+        text-decoration-line: none;
+    }
     .main{
         height: 100vh;
         min-width: 800px;
