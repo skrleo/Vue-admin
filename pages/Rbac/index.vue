@@ -8,17 +8,20 @@
             </el-breadcrumb>
         <br>
         <!--搜索框-->
-        <el-row>
-            <el-col :span="3" class="grid">
-                <el-button type="primary" icon="el-icon-edit-outline"  @click="addUser">新增用户</el-button>
-            </el-col>
-            <el-col :span="5" class="grid">
-                <el-input v-model="input" placeholder="请输入内容"></el-input>
-            </el-col>
-            <el-col :span="2" class="grid">
-                <el-button type="success" icon="el-icon-search">搜索</el-button>
-            </el-col>
-        </el-row>
+        <el-form :inline="true" :model="formInline" style="float:left;" size="small">
+            <el-form-item label="审批人">
+                <el-input placeholder="审批人"></el-input>
+            </el-form-item>
+            <el-form-item label="活动区域">
+                <el-select placeholder="活动区域">
+                <el-option label="上海" value="shanghai"></el-option>
+                <el-option label="北京" value="beijing"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">查询</el-button>
+            </el-form-item>
+        </el-form>
         <br>
         <!--表格数据及操作-->
         <el-table :data="tableData" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
