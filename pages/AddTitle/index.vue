@@ -1,6 +1,6 @@
 <template>
   <div>
-    <no-ssr><mavon-editor :codeStyle="dark" :toolbars="markdownOption" v-model="handbook"/></no-ssr>
+    <no-ssr><mavon-editor :toolbars="markdownOption" v-model="handbook"/></no-ssr>
   </div>
 </template>
 <script>
@@ -39,7 +39,8 @@ export default {
         subfield: true, // 单双栏模式
         preview: true, // 预览
       },
-      handbook:"#### 这是手册",
+      handbook:"#### 开始编写",
+      codeStyle: "dark"
     }
   },
   methods: {

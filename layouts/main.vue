@@ -11,7 +11,9 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>设置</el-dropdown-item>
-                        <el-dropdown-item>退出登录</el-dropdown-item>
+                         <nuxt-link :to="{name:'login'}">
+                            <el-dropdown-item>退出登录</el-dropdown-item>
+                        </nuxt-link>
                     </el-dropdown-menu>
                 </el-dropdown>
             </el-header>

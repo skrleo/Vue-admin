@@ -32,7 +32,8 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    'mavon-editor/dist/css/index.css'
+    'mavon-editor/dist/css/index.css',
+    'v-charts/lib/style.min.css'
   ],
 
   /*
@@ -40,7 +41,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/mavon-editor'
+    '@/plugins/mavon-editor',
+    '@/plugins/v-charts'
   ],
 
   /*

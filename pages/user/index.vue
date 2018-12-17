@@ -39,7 +39,7 @@
             <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
                     <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
-                        <el-button type="primary" icon="el-icon-edit" size="mini">详情</el-button>
+                        <el-button type="info" icon="el-icon-edit" size="mini">详情</el-button>
                     </nuxt-link>
                     <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
