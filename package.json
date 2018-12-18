@@ -11,6 +11,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@antv/data-set": "^0.10.1",
     "@nuxtjs/axios": "^5.3.6",
     "bootstrap": "^4.1.3",
     "cross-env": "^5.2.0",
@@ -19,7 +20,8 @@
     "jquery": "^3.3.1",
     "mavon-editor": "^2.6.17",
     "nuxt": "^2.3.4",
-    "v-charts": "^1.19.0"
+    "v-charts": "^1.19.0",
+    "viser-vue": "^2.4.2"
   },
   "devDependencies": {
     "node-sass": "^4.11.0",
