@@ -7,11 +7,13 @@
                 </div>
                 <el-dropdown>
                     <span class="el-dropdown-link">
-                        <img src="../assets/images/33d243824a318f1819630542733a21eb.jpeg" alt="">
+                        <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
+                            <img src="../assets/images/33d243824a318f1819630542733a21eb.jpeg" alt="">
+                        </nuxt-link>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>设置</el-dropdown-item>
-                         <nuxt-link :to="{name:'login'}">
+                         <nuxt-link :to="{ path: '/' }">
                             <el-dropdown-item>退出登录</el-dropdown-item>
                         </nuxt-link>
                     </el-dropdown-menu>
@@ -100,14 +102,14 @@
     </div>
 </template>
 <style scoped lang="scss">
-    $header-height:60px;
+    $header-height:50px;
     $background-color:rgb(253, 253, 253);
     $color: #dddddd;
     *{
         text-decoration-line: none;
     }
     .main{
-        height: 100vh;
+        height: 97vh;
         min-width: 800px;
         min-height: 600px;
         overflow: hidden;

@@ -4,18 +4,17 @@
             <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>系统管理</el-breadcrumb-item>
             <el-breadcrumb-item>角色列表</el-breadcrumb-item>
-            <el-breadcrumb-item>角色详情</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
         <!--搜索框-->
         <el-form :inline="true" :model="formInline" style="float:left;" size="small">
-            <el-form-item label="审批人">
-                <el-input placeholder="审批人"></el-input>
+            <el-form-item label="用户角色">
+                <el-input placeholder="用户账号/邮箱/手机号码"></el-input>
             </el-form-item>
             <el-form-item label="活动区域">
                 <el-select placeholder="活动区域">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+                <el-option label="北京" value="北京"></el-option>
+                <el-option label="广州" value="广州"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
