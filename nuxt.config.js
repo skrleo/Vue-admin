@@ -66,10 +66,5 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-   plugins: [
-    new pkg.ProvidePlugin({
-      '$': 'jquery'
-    })
-  ]
   }
 }
