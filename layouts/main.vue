@@ -162,12 +162,24 @@
 </style>
 
 <script>
-
   export default {
     name: 'index',
     // created:function(){
     //   this.$router.push('/addtitle'); // 页面加载时跳转
     // },
+    methods:{
+        loadData(){
+            axios.get(urls.api, { params: this.param })
+            .then(res => {
+            //请求成功回调
+            //   this.$router.push('/main'); // 页面加载时跳转
+            })
+            .catch(error => {
+            //请求失败
+                
+            });
+        }
+    },
     data() {
         return {
             isCollapse: false,
