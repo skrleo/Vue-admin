@@ -33,7 +33,8 @@ module.exports = {
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    'mavon-editor/dist/css/index.css'
+    'mavon-editor/dist/css/index.css',
+    './assets/icon/iconfont.css'
   ],
 
   /*

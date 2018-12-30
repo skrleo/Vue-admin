@@ -4,7 +4,7 @@
       <div style="margin-top: 15px;">
         <el-input
             placeholder="请输入账号/邮箱">
-            <i slot="prefix" class="el-input__icon el-icon-search"></i>
+            <i slot="prefix" class="el-icon-third-tubiaozhizuomoban12"></i>
         </el-input>
       </div>
       <div style="margin-top: 15px;">

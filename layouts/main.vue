@@ -88,10 +88,12 @@
                             </el-menu-item-group>
                         </el-submenu>
 
-                        <el-menu-item index="5">
-                            <i class="el-icon-info"></i>
-                            <span slot="title">变更日志</span>
-                        </el-menu-item>
+                        <nuxt-link :to="{name:'change'}">
+                            <el-menu-item index="5">
+                                <i class="el-icon-info"></i>
+                                <span slot="title">变更日志</span>
+                            </el-menu-item>
+                        </nuxt-link>
                     </el-menu>
                 </el-aside>
                 <el-main>
