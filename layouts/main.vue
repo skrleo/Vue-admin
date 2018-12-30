@@ -7,14 +7,31 @@
                 </div>
                 <el-dropdown>
                     <span class="el-dropdown-link">
-                        <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
-                            <img src="../assets/images/33d243824a318f1819630542733a21eb.jpeg" alt="">
-                        </nuxt-link>
+                            <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
+                        <el-badge is-dot class="item">
+                                <img src="../assets/images/33d243824a318f1819630542733a21eb.jpeg" alt="">
+                                     
+                        </el-badge>
+                            </nuxt-link>     
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>设置</el-dropdown-item>
                          <nuxt-link :to="{ path: '/' }">
-                            <el-dropdown-item>退出登录</el-dropdown-item>
+                            <el-dropdown-item>
+                                <i class="el-icon-third-tubiaozhizuomoban13"></i>
+                                消息
+                            </el-dropdown-item>
+                        </nuxt-link>
+                         <nuxt-link :to="{ path: '/' }">
+                            <el-dropdown-item>
+                                <i class="el-icon-third-shezhi"></i>
+                                个人中心
+                            </el-dropdown-item>
+                        </nuxt-link>
+                         <nuxt-link :to="{ path: '/' }">
+                            <el-dropdown-item>
+                                <i class="el-icon-third-tuichu"></i>
+                                退出登录
+                            </el-dropdown-item>
                         </nuxt-link>
                     </el-dropdown-menu>
                 </el-dropdown>
@@ -124,13 +141,14 @@
                 color:#7d7d7d;
                 float: left;
                 font-size: 23px;
-                margin-top: -16px;
+                margin-top: -21px;
             }
             .el-dropdown{
                 cursor: pointer;
                 float: right;
             }
             .el-dropdown-link{
+                margin-right: 35px;
                 img{
                     $imgMargin: (($header-height - 45)/2);
                     display:inline-block;
@@ -138,7 +156,6 @@
                     height: 45px;
                     border-radius: 25px;
                     margin-top: $imgMargin;
-                    margin-right: 30px;
                 }
             }
         }
