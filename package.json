@@ -5,10 +5,9 @@
   "author": "Chenguanghui<13035809409@163.com>",
   "private": true,
   "scripts": {
-    "dev": "backpack",
-    "build": "nuxt build && backpack build",
-    "start": "cross-env NODE_ENV=production node build/main.js",
-    "server": "pm2 build/main.js",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {
