@@ -1,8 +1,4 @@
-FROM node:8.2.1
-MAINTAINER stark.wang
-
-ENV NODE_ENV=production
-ENV HOST 0.0.0.0
+FROM node:8.11.3
 
 RUN mkdir -p /app
 COPY . /app
