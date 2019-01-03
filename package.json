@@ -2,12 +2,13 @@
   "name": "vue-admin",
   "version": "1.0.0",
   "description": "My outstanding Nuxt.js project",
-  "author": "Chenguanghui",
+  "author": "Chenguanghui<13035809409@163.com>",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
+    "dev": "backpack dev",
+    "build": "nuxt build && backpack build",
+    "start": "cross-env NODE_ENV=production node build/main.js",
+    "server": "pm2 build/main.js",
     "generate": "nuxt generate"
   },
   "dependencies": {
