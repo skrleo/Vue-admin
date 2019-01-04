@@ -21,11 +21,11 @@ $ npm run generate
 docker 运行方式:
 
 先构建镜像
-> docker build -t nuxt-demo .
+<p><code> docker build -t nuxt-demo . </code></p>
 然后启动容器
-> docker run -dt -p 8080:3000 nuxt-demo
+<p><code> docker run -dt -p 8080:3000 nuxt-demo </code></p>
 打开浏览器访问
-> <服务器 IP>:8080
+<p><code> <服务器 IP>:8080 </code></p>
 
 
 
