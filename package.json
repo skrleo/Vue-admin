@@ -13,6 +13,7 @@
   "dependencies": {
     "@antv/data-set": "^0.10.1",
     "@nuxtjs/axios": "^5.3.6",
+    "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
     "cross-env": "^5.2.0",
     "echarts": "^4.2.0-rc.2",

@@ -18,7 +18,7 @@
       </div>
       <div style="margin-top: 15px;">
           <nuxt-link :to="{name:'main'}">
-            <el-button type="primary" style="width:320px;">立即登录</el-button>
+            <el-button type="primary" style="width:320px;">{{ users }}</el-button>
           </nuxt-link>
       </div>
     </div>
@@ -42,9 +42,13 @@
 </style>
 
 <script>
-
+import axios from '~/plugins/axios'
 export default {
     data() {
+    },
+    async asyncData () {
+      let { data } = await axios.get('/hello')
+      return { users: data }
     },
 		mounted () {
       var a_index = 0;
