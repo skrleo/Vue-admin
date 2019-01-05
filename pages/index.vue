@@ -60,7 +60,7 @@ export default {
     // },
     methods: {
       async login () {
-        this.$axios.post('/login', {
+        this.$axios.post('http://api.example.com/v1.0/api/login', {
           account: 'Fred',
           password: 'Flintstone'
         })
