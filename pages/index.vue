@@ -1,26 +1,28 @@
 <template>
     <div class="demo-input-suffix" style="margin-top:200px;">
       <h2>后台登录系统</h2>
-      <div style="margin-top: 15px;">
-        <el-input
-            placeholder="请输入账号/邮箱">
-            <i slot="prefix" class="el-input__icon el-icon-third-zhanghao"></i>
-        </el-input>
-      </div>
-      <div style="margin-top: 15px;">
-        <el-input
-            placeholder="请输入密码">
-            <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
-        </el-input>
-      </div>
-      <div style="margin-top: 15px;">
-        <el-checkbox>记住密码</el-checkbox><a href="#" style="float:right;color:rgb(103, 102, 102);">忘记密码?联系管理员</a>
-      </div>
-      <div style="margin-top: 15px;">
-          <nuxt-link :to="{name:'main'}">
-            <el-button type="primary" style="width:320px;">{{ users }}</el-button>
-          </nuxt-link>
-      </div>
+      <el-form ref="form" :model="form" label-width="80px">
+        <div style="margin-top: 15px;">
+          <el-input
+              v-model="account"
+              placeholder="请输入账号/邮箱">
+              <i slot="prefix" class="el-input__icon el-icon-third-zhanghao"></i>
+          </el-input>
+        </div>
+        <div style="margin-top: 15px;">
+          <el-input
+              v-model="password"
+              placeholder="请输入密码">
+              <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
+          </el-input>
+        </div>
+        <div style="margin-top: 15px;">
+          <el-checkbox>记住密码</el-checkbox><a href="#" style="float:right;color:rgb(103, 102, 102);">忘记密码?联系管理员</a>
+        </div>
+        <div style="margin-top: 15px;">
+          <el-button type="primary" style="width:320px;" @click="login">立即登录</el-button>
+        </div>
+      </el-form>
     </div>
     
 </template>
@@ -45,10 +47,30 @@
 import axios from '~/plugins/axios'
 export default {
     data() {
+      return {
+        form:{
+          account:'',
+          password: ''
+        }
+      }
     },
-    async asyncData () {
-      let { data } = await axios.get('/hello')
-      return { users: data }
+    // async asyncData () {
+    //   let { data } = await axios.get('/hello')
+    //   return { users: data }
+    // },
+    methods: {
+      async login () {
+        this.$axios.post('/login', {
+          account: 'Fred',
+          password: 'Flintstone'
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
     },
 		mounted () {
       var a_index = 0;
