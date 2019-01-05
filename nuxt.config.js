@@ -26,8 +26,13 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
- loading: { color: '#fff' },
 
+  // loading bar style 
+  loading: { color: '#3B8070' },
+  // 环境变量
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
   /*
   ** Global CSS
   */
@@ -51,19 +56,21 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    // 请求代理配置，解决跨域
+    '@gauseen/nuxt-proxy',
   ],
+
+  proxyTable: {
+    '/api': { target: 'http://api.example.com/v1.0/', ws: false }
+  },
+
   /*
   ** Axios module configuration
   */
   axios: {
     proxy: true,
-    prefix: '/api/',
     // See https://github.com/nuxt-community/axios-module#options
-  },
-
-  proxy: {
-    '/api/': { target: 'http://localhost:8080', pathRewrite: {'^/api/': ''} }
   },
   
   /*

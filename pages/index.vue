@@ -65,9 +65,14 @@ export default {
           password: 'Flintstone'
         })
         .then(function (response) {
+          this.$message({
+            message: '登录成功,即将跳转',
+            type: 'success'
+          });
           console.log(response);
         })
         .catch(function (error) {
+          this.$message.error('请求错误，请重试');
           console.log(error);
         });
       }
