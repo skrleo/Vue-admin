@@ -4,14 +4,14 @@
       <el-form ref="form" :model="form" label-width="80px">
         <div style="margin-top: 15px;">
           <el-input
-              v-model="account"
+              v-model="form.account"
               placeholder="请输入账号/邮箱">
               <i slot="prefix" class="el-input__icon el-icon-third-zhanghao"></i>
           </el-input>
         </div>
         <div style="margin-top: 15px;">
           <el-input
-              v-model="password"
+              v-model="form.password"
               placeholder="请输入密码">
               <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
           </el-input>
@@ -56,25 +56,19 @@ export default {
     },
     // async asyncData () {
     //   let { data } = await axios.get('/hello')
+    //   console.log(data)
     //   return { users: data }
     // },
     methods: {
       async login () {
-        this.$axios.post('http://api.example.com/v1.0/api/login', {
-          account: 'Fred',
-          password: 'Flintstone'
-        })
-        .then(function (response) {
-          this.$message({
-            message: '登录成功,即将跳转',
-            type: 'success'
+        // 为给定 ID 的 user 创建请求
+        axios.get('/user?ID=12345')
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
           });
-          console.log(response);
-        })
-        .catch(function (error) {
-          this.$message.error('请求错误，请重试');
-          console.log(error);
-        });
       }
     },
 		mounted () {

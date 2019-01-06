@@ -2,6 +2,15 @@ const pkg = require('./package')
 
 module.exports = {
   mode: 'universal',
+  dev: {
+    proxyTable: {
+        '/api':
+          {
+              target: 'http://api.example.com/', 
+              pathRewrite: { '^/v1.0/api': '/' }
+          }
+      }
+    },
 
   /*
   ** Headers of the page
@@ -31,7 +40,7 @@ module.exports = {
   loading: { color: '#3B8070' },
   // 环境变量
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+    baseUrl: process.env.BASE_URL || 'http://api.example.com'
   },
   /*
   ** Global CSS
@@ -58,18 +67,17 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     // 请求代理配置，解决跨域
-    '@gauseen/nuxt-proxy',
+    '@nuxtjs/proxy'
   ],
 
-  proxyTable: {
-    '/api': { target: 'http://api.example.com/v1.0/', ws: false }
-  },
+  proxy:[
+      ['/json.html',{target:'http://api.example.com/', pathRewrite: { '^/v1.0/api': '/' }}]    //注意这也是一个数组
+  ],
 
   /*
   ** Axios module configuration
   */
   axios: {
-    proxy: true,
     // See https://github.com/nuxt-community/axios-module#options
   },
   
