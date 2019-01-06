@@ -65,19 +65,26 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios',
-    // 请求代理配置，解决跨域
-    '@nuxtjs/proxy'
+    '@nuxtjs/axios'
   ],
 
-  proxy:[
-      ['/json.html',{target:'http://api.example.com/', pathRewrite: { '^/v1.0/api': '/' }}]    //注意这也是一个数组
-  ],
+  proxy: {
+    '/api/': {
+      target: 'http://api.example.com/v1.0', // 代理地址
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': ''
+      },
+    },
+  },
 
   /*
   ** Axios module configuration
   */
   axios: {
+    proxy: true,
+    prefix: '/api', // baseURL
+    credentials: true,
     // See https://github.com/nuxt-community/axios-module#options
   },
   
@@ -85,6 +92,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    vendor:['axios']
     /*
     ** You can extend webpack config here
     */
