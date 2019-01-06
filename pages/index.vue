@@ -62,23 +62,15 @@ export default {
     methods: {
       async login () {
         // 为给定 ID 的 user 创建请求
-        axios.get('/hello')
-          .then(function (response) {
-            this.$message({
-              showClose: true,
-              message: '登录成功, 即将跳转...',
-              type: 'success'
-              });
-            console.log(response);
-          })
-          .catch(function (error) {
-            this.$message({
-              showClose: true,
-              message: error,
-              type: 'error'
-            });
-            console.log(error);
-          });
+        // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        axios({
+          method: 'post',
+          url: '/login',
+          data: {
+            account: '13035809409',
+            password: '123456'
+          }
+        });
       }
     },
 		mounted () {
