@@ -40,7 +40,7 @@ module.exports = {
   loading: { color: '#3B8070' },
   // 环境变量
   env: {
-    baseUrl: process.env.BASE_URL || 'http://api.example.com'
+    baseUrl: process.env.BASE_URL || 'http://api.example.com/v1.0/api'
   },
   /*
   ** Global CSS
