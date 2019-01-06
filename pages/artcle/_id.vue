@@ -1,5 +1,11 @@
 <template>
   <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item>文章管理</el-breadcrumb-item>
+    <el-breadcrumb-item>添加文章</el-breadcrumb-item>
+    </el-breadcrumb>
+    <br>
     <no-ssr><mavon-editor :toolbars="markdownOption" v-model="handbook"/></no-ssr>
   </div>
 </template>

@@ -76,10 +76,12 @@
                         <el-submenu index="3">
                             <template slot="title">
                                 <i class="el-icon-document"></i>
-                                <span slot="title">权限管理</span>
+                                <span slot="title">媒体管理</span>
                             </template>
                             <el-menu-item-group>
-                                <el-menu-item index="3-1">选项1</el-menu-item>
+                                <nuxt-link :to="{name:'artcle'}">
+                                    <el-menu-item index="3-1">文章管理</el-menu-item>
+                                </nuxt-link>
                                 <el-menu-item index="3-2">选项2</el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
@@ -105,12 +107,10 @@
                             </el-menu-item-group>
                         </el-submenu>
 
-                        <nuxt-link :to="{name:'change'}">
-                            <el-menu-item index="5">
-                                <i class="el-icon-info"></i>
-                                <span slot="title">变更日志</span>
-                            </el-menu-item>
-                        </nuxt-link>
+                        <el-menu-item index="5">
+                            <i class="el-icon-info"></i>
+                            <span slot="title">变更日志</span>
+                        </el-menu-item>
                     </el-menu>
                 </el-aside>
                 <el-main>
