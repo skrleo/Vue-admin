@@ -44,7 +44,7 @@
 </style>
 
 <script>
-import axios from '~/plugins/axios'
+// import axios from '~/plugins/axios'
 export default {
     data() {
       return {
@@ -61,17 +61,14 @@ export default {
     // },
     methods: {
       login () {
-          axios({
-            method: 'post',
-            url: '/login',
-            data: {
-              account: '13035809409',
-              password: '123456'
-            }
-          });
-          this.$router.push({
-            path: '/node',
-          });
+        this.$axios.post('/login', {
+            account: '13035809409',
+            password: '123456'
+          }).then(res => {
+            this.$router.push({
+              path: '/node',
+            });
+          })
       }
     },
 		mounted () {
