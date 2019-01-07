@@ -61,7 +61,7 @@ export default {
     // },
     methods: {
       login () {
-        this.$axios.post('/login', {
+        this.$axios.post('http://api.example.com/v1.0/api/login', {
             account: '13035809409',
             password: '123456'
           }).then(res => {
