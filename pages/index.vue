@@ -60,17 +60,18 @@ export default {
     //   return { users: data }
     // },
     methods: {
-      async login () {
-        // 为给定 ID 的 user 创建请求
-        // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-        axios({
-          method: 'post',
-          url: '/login',
-          data: {
-            account: '13035809409',
-            password: '123456'
-          }
-        });
+      login () {
+          axios({
+            method: 'post',
+            url: '/login',
+            data: {
+              account: '13035809409',
+              password: '123456'
+            }
+          });
+          this.$router.push({
+            path: '/node',
+          });
       }
     },
 		mounted () {
