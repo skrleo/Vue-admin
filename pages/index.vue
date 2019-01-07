@@ -11,6 +11,7 @@
         </div>
         <div style="margin-top: 15px;">
           <el-input
+              type="password"
               v-model="form.password"
               placeholder="请输入密码">
               <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
