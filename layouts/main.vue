@@ -182,10 +182,11 @@
 
 <script>
   export default {
+    middleware: 'checkLogin',
     name: 'index',
     // created:function(){
     //   this.$router.push('/addtitle'); // 页面加载时跳转
-    // },
+
     methods:{
         loadData(){
             axios.get(urls.api, { params: this.param })

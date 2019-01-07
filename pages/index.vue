@@ -45,14 +45,16 @@
 </style>
 
 <script>
+import Cookie from 'js-cookie'
 // import axios from '~/plugins/axios'
 export default {
     data() {
-      return {
+      return{
         form:{
           account:'',
           password: ''
-        }
+        },
+        redirectURL:'/'
       }
     },
     // async asyncData () {
@@ -66,6 +68,10 @@ export default {
             account: '13035809409',
             password: '123456'
           }).then(res => {
+            //将服务端的token存入cookie当中
+            Cookie.set('token', res.data.token)
+            //返回上一页
+            // this.$router.push(this.redirectURL)
             this.$router.push({
               path: '/node',
             });
@@ -75,6 +81,10 @@ export default {
       }
     },
 		mounted () {
+       let rediretUrl = this.$route.query.ref;
+      if (rediretUrl){
+        this.redirectURL = rediretUrl
+      }
       var a_index = 0;
       $("body").click(function(e){
           var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
