@@ -61,7 +61,7 @@ export default {
     // },
     methods: {
       login () {
-        this.$axios.post('/login', {
+        this.$axios.post('http://api.example.com/v1.0/api/login', {
             account: '13035809409',
             password: '123456'
           }).then(res => {
@@ -69,10 +69,7 @@ export default {
               path: '/node',
             });
           }).catch(res => {
-            this.$message({
-              message: '恭喜你，这是一条成功消息',
-              type: 'success'
-            });
+            this.$message.error('请求错误，请重试');
           });
       }
     },
