@@ -7,12 +7,12 @@
                 </div>
                 <el-dropdown>
                     <span class="el-dropdown-link">
-                            <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
-                        <el-badge is-dot class="item">
+                        <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
+                            <el-badge class="item">
                                 <img src="../assets/images/33d243824a318f1819630542733a21eb.jpeg" alt="">
-                                     
-                        </el-badge>
-                            </nuxt-link>     
+                            </el-badge>
+                        </nuxt-link>       
+                        <span>二愣子<i class="el-icon-arrow-down el-icon--right"></i></span>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                          <nuxt-link :to="{ path: '/' }">
@@ -186,7 +186,7 @@
     name: 'index',
     // created:function(){
     //   this.$router.push('/addtitle'); // 页面加载时跳转
-
+    // },
     methods:{
         loadData(){
             axios.get(urls.api, { params: this.param })
