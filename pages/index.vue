@@ -50,28 +50,26 @@ export default {
     data() {
       return {
         ruleForm: {
-          account: '',
+          account:  '',
           password: ''
         },
         rules: {
           account: [
-            { required: true, message: '*账号/邮箱/手机号码 不能为空', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { required: true, message: '账号/邮箱/手机号码 不能为空'}
           ],
           password: [
-            { required: true, message: '*密码 不能为空', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { required: true, message: '密码 不能为空'}
           ]
         }
       };
     },
     methods: {
-      submit (formName) {
-        this.$refs[formName].validate((valid) => {
+      submit (ruleForm) {
+        this.$refs[ruleForm].validate((valid) => {
           if (valid) {
             this.$axios.post('http://api.example.com/v1.0/api/login', {
-                account: this.account,
-                password: this.password
+                account: this.ruleForm.account,
+                password: this.ruleForm.password
               }).then(res => {
                 //将服务端的token存入cookie当中
                 Cookie.set('token', res.data.token)
