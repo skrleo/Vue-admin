@@ -70,8 +70,8 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios.post('http://api.example.com/v1.0/api/login', {
-                account: '13035809409',
-                password: '123456'
+                account: this.account,
+                password: this.password
               }).then(res => {
                 //将服务端的token存入cookie当中
                 Cookie.set('token', res.data.token)
