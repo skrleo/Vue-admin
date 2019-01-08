@@ -1,10 +1,11 @@
 <template>
     <div class="demo-input-suffix" style="margin-top:200px;">
       <h2>后台登录系统</h2>
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <div style="margin-top: 15px;">
           <el-input
-              v-model="form.account"
+              prop="account"
+              v-model="ruleForm.account"
               placeholder="请输入账号/邮箱">
               <i slot="prefix" class="el-input__icon el-icon-third-zhanghao"></i>
           </el-input>
@@ -12,7 +13,8 @@
         <div style="margin-top: 15px;">
           <el-input
               type="password"
-              v-model="form.password"
+              prop="password"
+              v-model="ruleForm.password"
               placeholder="请输入密码">
               <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
           </el-input>
@@ -21,7 +23,7 @@
           <el-checkbox>记住密码</el-checkbox><a href="#" style="float:right;color:rgb(103, 102, 102);">忘记密码?联系管理员</a>
         </div>
         <div style="margin-top: 15px;">
-          <el-button type="primary" style="width:320px;" @click="login">立即登录</el-button>
+          <el-button type="primary" style="width:320px;" @click="submit('ruleForm')">立即登录</el-button>
         </div>
       </el-form>
     </div>
@@ -46,38 +48,47 @@
 
 <script>
 import Cookie from 'js-cookie'
-// import axios from '~/plugins/axios'
 export default {
     data() {
-      return{
-        form:{
-          account:'',
+      return {
+        ruleForm: {
+          account: '',
           password: ''
         },
-        redirectURL:'/'
-      }
+        rules: {
+          account: [
+            { required: true, message: '账号/邮箱/手机号码', trigger: 'blur' },
+            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请选择活动区域', trigger: 'change' }
+          ]
+        }
+      };
     },
-    // async asyncData () {
-    //   let { data } = await axios.get('/hello')
-    //   console.log(data)
-    //   return { users: data }
-    // },
     methods: {
-      login () {
-        this.$axios.post('http://api.example.com/v1.0/api/login', {
-            account: '13035809409',
-            password: '123456'
-          }).then(res => {
-            //将服务端的token存入cookie当中
-            Cookie.set('token', res.data.token)
-            //返回上一页
-            // this.$router.push(this.redirectURL)
-            this.$router.push({
-              path: '/node',
-            });
-          }).catch(res => {
-            this.$message.error('请求错误，请重试');
-          });
+      submit (formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$axios.post('http://api.example.com/v1.0/api/login', {
+                account: '13035809409',
+                password: '123456'
+              }).then(res => {
+                //将服务端的token存入cookie当中
+                Cookie.set('token', res.data.token)
+                //返回上一页
+                // this.$router.push(this.redirectURL)
+                this.$router.push({
+                  path: '/node',
+                });
+              }).catch(res => {
+                this.$message.error('请求错误，请重试');
+              });
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       }
     },
 		mounted () {
