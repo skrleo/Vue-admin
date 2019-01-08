@@ -1,24 +1,22 @@
 <template>
     <div class="demo-input-suffix" style="margin-top:200px;">
       <h2>后台登录系统</h2>
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <div style="margin-top: 15px;">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+        <el-form-item prop="account">
           <el-input
-              prop="account"
               v-model="ruleForm.account"
-              placeholder="请输入账号/邮箱">
+              placeholder="请输入账号/邮箱/手机号码">
               <i slot="prefix" class="el-input__icon el-icon-third-zhanghao"></i>
           </el-input>
-        </div>
-        <div style="margin-top: 15px;">
+        </el-form-item>
+        <el-form-item prop="password">
           <el-input
               type="password"
-              prop="password"
               v-model="ruleForm.password"
               placeholder="请输入密码">
               <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
           </el-input>
-        </div>
+        </el-form-item>
         <div style="margin-top: 15px;">
           <el-checkbox>记住密码</el-checkbox><a href="#" style="float:right;color:rgb(103, 102, 102);">忘记密码?联系管理员</a>
         </div>
@@ -57,11 +55,12 @@ export default {
         },
         rules: {
           account: [
-            { required: true, message: '账号/邮箱/手机号码', trigger: 'blur' },
+            { required: true, message: '*账号/邮箱/手机号码 不能为空', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
           password: [
-            { required: true, message: '请选择活动区域', trigger: 'change' }
+            { required: true, message: '*密码 不能为空', trigger: 'blur' },
+            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ]
         }
       };
