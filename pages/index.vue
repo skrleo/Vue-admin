@@ -51,10 +51,9 @@ import utils from '~/utils/utils'
 export default {
     name:'login',
     created:function(){
-      var token, path
-      token = utils.getcookiesInClient('token')
+      var token = utils.getcookiesInClient('token')
       if (token) {
-        this.$router.push('/node'); 
+        this.$router.push('/main'); 
       }
     },
     data() {
@@ -83,13 +82,13 @@ export default {
               }).then(res => {
                 //将服务端的token存入cookie当中
                 Cookie.set('token', res.data.token)
-                //判断账号
+                //判断是否请求成功
                 if(res.data.statusCode === 'OK'){
-                   this.$router.push({
-                    path: '/node',
+                  this.$router.push({
+                    path: '/main',
                   });               
                 }else{
-                  this.$message.error('账号或者密码错误');
+                  this.$message.error(res.data.message);
                 }
               }).catch(res => {
                 this.$message.error('请求错误，请重试');
