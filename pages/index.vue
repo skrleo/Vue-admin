@@ -46,7 +46,17 @@
 
 <script>
 import Cookie from 'js-cookie'
+import utils from '~/utils/utils'
+
 export default {
+    name:'login',
+    created:function(){
+      var token, path
+      token = utils.getcookiesInClient('token')
+      if (token) {
+        this.$router.push('/node'); 
+      }
+    },
     data() {
       return {
         ruleForm: {
@@ -73,11 +83,14 @@ export default {
               }).then(res => {
                 //将服务端的token存入cookie当中
                 Cookie.set('token', res.data.token)
-                //返回上一页
-                // this.$router.push(this.redirectURL)
-                this.$router.push({
-                  path: '/node',
-                });
+                //判断账号
+                if(res.data.statusCode === 'OK'){
+                   this.$router.push({
+                    path: '/node',
+                  });               
+                }else{
+                  this.$message.error('账号或者密码错误');
+                }
               }).catch(res => {
                 this.$message.error('请求错误，请重试');
               });
