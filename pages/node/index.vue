@@ -6,11 +6,31 @@
         <el-breadcrumb-item>节点管理</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
+        <div style="height:62px;">
+          <!--搜索框-->
+          <el-form :inline="true" :model="formInline" style="float:left;" size="small">
+              <el-form-item>
+                  <el-button type="primary" @click="dialogVisible = true">添加节点</el-button>
+              </el-form-item>
+              <el-form-item label="审批人">
+                  <el-input placeholder="审批人"></el-input>
+              </el-form-item>
+              <el-form-item label="活动区域">
+                  <el-select placeholder="活动区域">
+                  <el-option label="区域一" value="shanghai"></el-option>
+                  <el-option label="区域二" value="beijing"></el-option>
+                  </el-select>
+              </el-form-item>
+              <el-form-item>
+                  <el-button type="primary" @click="onSubmit">查询</el-button>
+              </el-form-item>
+          </el-form>
+        </div>
         <el-dialog
             title="添加节点"
             :visible.sync="dialogVisible"
             width="35%">
-          <el-form ref="form" :model="form" label-width="80px">
+          <el-form ref="form" :model="form" label-width="80px" size="small">
             <el-form-item label="节点名称">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
@@ -36,12 +56,11 @@
                 <el-input type="textarea" v-model="form.desc"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                <el-button type="primary" @click="sumbit(data)">立即创建</el-button>
                 <el-button>取消</el-button>
             </el-form-item>
           </el-form>
         </el-dialog>
-
         <el-tree
             :data="data"
             show-checkbox
@@ -65,14 +84,7 @@
         label: '一级 1',
         children: [{
           id: 4,
-          label: '二级 1-1',
-          children: [{
-            id: 9,
-            label: '三级 1-1-1'
-          }, {
-            id: 10,
-            label: '三级 1-1-2'
-          }]
+          label: '二级 1-1'
         }]
       }, {
         id: 2,
@@ -112,6 +124,9 @@
     },
 
     methods: {
+      sumbit(data){
+          console.log(data);
+      },
       append(data) {
         const newChild = { id: id++, label: 'testtest', children: [] };
         if (!data.children) {
@@ -132,7 +147,6 @@
           <span class="custom-tree-node">
             <span>{node.label}</span>
             <span>
-              <el-button size="mini" type="text" on-click={ (res) => this.dialogVisible = true }>添加</el-button>
               <el-button size="mini" type="text" on-click={ () => this.$router.push({ path: '/node/' + 1 }) } >查看</el-button>
               <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>删除</el-button>
             </span>
