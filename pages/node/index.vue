@@ -1,26 +1,36 @@
 <template>
-<div class="custom-tree-container">
-  <el-breadcrumb separator-class="el-icon-arrow-right">
-  <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
-  <el-breadcrumb-item>系统管理</el-breadcrumb-item>
-  <el-breadcrumb-item>节点管理</el-breadcrumb-item>
-  </el-breadcrumb>
-  <br>
-  <div class="block">
-    <el-tree
-      :data="data4"
-      show-checkbox
-      node-key="id"
-      default-expand-all
-      :expand-on-click-node="false"
-      :render-content="renderContent">
-    </el-tree>
-  </div>
-</div>
+    <div>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+        <el-breadcrumb-item>节点管理</el-breadcrumb-item>
+        </el-breadcrumb>
+        <br>
+        <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :before-close="handleClose">
+        <span>这是一段信息</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+        </el-dialog>
+
+        <el-tree
+            :data="data"
+            show-checkbox
+            node-key="id"
+            default-expand-all
+            :expand-on-click-node="false"
+            :render-content="renderContent">
+        </el-tree>
+    </div>
 </template>
 
 
-<script>
+ <script>
   let id = 1000;
   export default {
     layout:'main',
@@ -62,12 +72,20 @@
         }]
       }];
       return {
-        data4: JSON.parse(JSON.stringify(data)),
-        data5: JSON.parse(JSON.stringify(data))
+          
+        dialogVisible: false,
+        data: JSON.parse(JSON.stringify(data))
       }
     },
 
     methods: {
+        handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
       append(data) {
         const newChild = { id: id++, label: 'testtest', children: [] };
         if (!data.children) {
@@ -88,7 +106,8 @@
           <span class="custom-tree-node">
             <span>{node.label}</span>
             <span>
-              <el-button size="mini" type="text" on-click={ () => this.append(data) }>添加</el-button>
+              <el-button size="mini" type="text" on-click={ (res) => this.dialogVisible = true }>添加</el-button>
+              <el-button size="mini" type="text" on-click={ () => this.$router.push({ path: '/node/' + 1 }) } >查看</el-button>
               <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>删除</el-button>
             </span>
           </span>);
