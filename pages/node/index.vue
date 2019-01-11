@@ -40,23 +40,16 @@
             <el-form-item label="路由地址">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
-            <el-form-item label="菜单类型">
-                <el-radio-group v-model="form.resource">
-                <el-radio label="一级菜单"></el-radio>
-                <el-radio label="二级菜单"></el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item label="节点类型">
+            <el-form-item label="父级节点">
                 <el-select v-model="form.region" placeholder="请选择父级节点">
-                <el-option label="权限管理" value="beijing"></el-option>
-                <el-option label="站点管理" value="shanghai"></el-option>
+                <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.name" :value="item.name"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="节点描述">
                 <el-input type="textarea" v-model="form.desc"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="sumbit(data)">立即创建</el-button>
+                <el-button type="primary" @click="sumbit">立即创建</el-button>
                 <el-button>取消</el-button>
             </el-form-item>
           </el-form>
@@ -74,10 +67,20 @@
 
 
  <script>
+ 
+  import axios from '~/plugins/axios'
+
   let id = 1000;
   export default {
     layout:'main',
     name:'node',
+     // ajax module as axios
+    async asyncData () {
+      let { data } = await axios.get('http://api.example.com/v1.0/api/rbac/node/lists')
+      return {
+        nodeParent: data.lists
+      }
+    },
     data() {
       const data = [{
         id: 1,
@@ -124,8 +127,8 @@
     },
 
     methods: {
-      sumbit(data){
-          console.log(data);
+      sumbit(){
+
       },
       append(data) {
         const newChild = { id: id++, label: 'testtest', children: [] };
