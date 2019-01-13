@@ -35,18 +35,21 @@
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item label="是否启用">
-                <el-switch v-model="form.delivery"></el-switch>
+                <el-switch v-model="form.status"></el-switch>
+            </el-form-item>
+            <el-form-item label="Icon">
+                <el-input v-model="form.icon"></el-input>
             </el-form-item>
             <el-form-item label="路由地址">
-                <el-input v-model="form.name"></el-input>
+                <el-input v-model="form.path"></el-input>
             </el-form-item>
             <el-form-item label="父级节点">
-                <el-select v-model="form.region" placeholder="请选择父级节点">
+                <el-select v-model="form.parentId" placeholder="请选择父级节点">
                 <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.name" :value="item.name"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="节点描述">
-                <el-input type="textarea" v-model="form.desc"></el-input>
+                <el-input type="textarea" v-model="form.description"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="sumbit">立即创建</el-button>
@@ -113,13 +116,11 @@
       return {
         form: {
           name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          icon: '',
+          status: '',
+          path: '',
+          parentId: '',
+          description: ''
         },
         dialogVisible: false,
         data: JSON.parse(JSON.stringify(data))
@@ -128,7 +129,29 @@
 
     methods: {
       sumbit(){
-
+          this.$axios.post('http://api.example.com/v1.0/api/rbac/node', {
+              name: this.form.name,
+              icon: this.form.icon,
+              status: this.form.status,
+              path: this.form.path,
+              parentId: this.form.parentId,
+              description: this.form.description,
+            }).then(res => {
+              //将服务端的token存入cookie当中
+              Cookie.set('token', res.data.token)
+              //判断是否请求成功
+              if(res.data.statusCode === 'OK'){
+                this.$message({
+                  message: '成功添加节点',
+                  type: 'success'
+                });       
+                this.append(data);       
+              }else{
+                this.$message.error(res.data.message);
+              }
+            }).catch(res => {
+              this.$message.error('请求错误，请重试');
+            });
       },
       append(data) {
         const newChild = { id: id++, label: 'testtest', children: [] };
