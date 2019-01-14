@@ -4,8 +4,9 @@ export default axios.create({
   baseURL: process.env.baseUrl,
   headers : {
     post: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      'Content-Type': 'application/json;charset=UTF-8'
     },
-    'X-Requested-With': 'XMLHttpRequest'
+    // 'X-Requested-With': 'XMLHttpRequest',
+    'x-ddv-from-host': 'localhost:3000'
   }
 })

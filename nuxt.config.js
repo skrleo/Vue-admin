@@ -2,15 +2,6 @@ const pkg = require('./package')
 
 module.exports = {
   mode: 'universal',
-  dev: {
-    proxyTable: {
-        '/api':
-          {
-              target: 'http://api.example.com/', 
-              pathRewrite: { '^/v1.0/api': '/' }
-          }
-      }
-    },
 
   /*
   ** Headers of the page
@@ -65,26 +56,19 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+  // 请求代理配置，解决跨域
+    '@gauseen/nuxt-proxy'
   ],
 
-  proxy: {
-    '/api/': {
-      target: 'http://api.example.com/v1.0', // 代理地址
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api': ''
-      },
-    },
+  proxyTable: {
+    '/api': { target: 'http://example.com', ws: false }
   },
 
   /*
   ** Axios module configuration
   */
   axios: {
-    proxy: true,
-    prefix: '/api', // baseURL
-    credentials: true,
     // See https://github.com/nuxt-community/axios-module#options
   },
   
