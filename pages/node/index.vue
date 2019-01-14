@@ -60,7 +60,8 @@
         <el-tree
             :data="data"
             show-checkbox
-            node-key="id"
+            node-key="nodeId"
+            node-value="name"
             default-expand-all
             :expand-on-click-node="false"
             :render-content="renderContent">
@@ -77,53 +78,56 @@
   export default {
     layout:'main',
     name:'node',
-     // ajax module as axios
     async asyncData () {
       let { data } = await axios.get('http://api.example.com/v1.0/api/rbac/node/lists')
       return {
-        nodeParent: data.lists
+        nodeParent: data.lists,
+        data: JSON.parse(JSON.stringify(data.lists))
       }
     },
     data() {
       const data = [{
-        id: 1,
-        label: '一级 1',
+        nodeId: 2,
+        label: '文章管理',
         children: [{
-          id: 4,
-          label: '二级 1-1'
+          nodeId: 5,
+          label: '文章列表'
+        }, {
+          nodeId: 6,
+          label: '微信管理'
+        }]
+      },{
+        nodeId: 1,
+        label: '权限管理',
+        children: [{
+          nodeId: 4,
+          label: '节点管理'
+        },{
+          nodeId: 4,
+          label: '角色管理'
+        },{
+          nodeId: 4,
+          label: '权限管理'
         }]
       }, {
-        id: 2,
-        label: '一级 2',
+        nodeId: 3,
+        label: '站点管理',
         children: [{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 6,
-          label: '二级 2-2'
-        }]
-      }, {
-        id: 3,
-        label: '一级 3',
-        children: [{
-          id: 7,
-          label: '二级 3-1'
-        }, {
-          id: 8,
-          label: '二级 3-2'
+          nodeId: 7,
+          label: '站点配置'
         }]
       }];
       return {
         form: {
           name: '',
           icon: '',
-          status: '',
+          status: true,
           path: '',
           parentId: '',
           description: ''
         },
         dialogVisible: false,
-        data: JSON.parse(JSON.stringify(data))
+        // data: JSON.parse(JSON.stringify(data))
       }
     },
 
@@ -147,7 +151,7 @@
                 });       
                 this.append(data);       
               }else{
-                this.$message.error(res.data.message);
+                this.$message.error('res.data.message');
               }
             }).catch(res => {
               this.$message.error('请求错误，请重试');
