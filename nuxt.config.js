@@ -80,5 +80,15 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-  }
+  },
+  // 项目监听
+  'defaultListen': false,
+  // 监听列表
+  'listen': [
+    {
+      'type': 'tcp',
+      'host': 'manage.example.com',
+      'port': 80
+    }
+  ]
 }
