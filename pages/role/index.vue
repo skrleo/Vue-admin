@@ -8,6 +8,9 @@
         <br>
         <!--搜索框-->
         <el-form :inline="true" :model="formInline" style="float:left;" size="small">
+            <el-form-item>
+                <el-button type="primary" @click="dialogVisible = true">添加节点</el-button>
+            </el-form-item>
             <el-form-item label="用户角色">
                 <el-input placeholder="用户账号/邮箱/手机号码"></el-input>
             </el-form-item>
@@ -22,18 +25,18 @@
             </el-form-item>
         </el-form>
         <!--表格数据及操作-->
-        <el-table :data="tableData" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+        <el-table :data="tableData" border style="width: 100%" stripe ref="multipleTable">
             <!--勾选框-->
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
-            <el-table-column prop="name" label="用户账号" width="180">
+            <el-table-column prop="name" label="角色ID" width="180">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="180">
+            <el-table-column prop="name" label="角色名称" width="180">
             </el-table-column>
-            <el-table-column prop="address" label="备注信息">
+            <el-table-column prop="address" label="角色描述">
             </el-table-column>
-            <el-table-column prop="date" label="日期" width="180" sortable>
+            <el-table-column prop="date" label="角色状态">
             </el-table-column>
             <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
