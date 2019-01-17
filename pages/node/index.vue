@@ -12,14 +12,8 @@
               <el-form-item>
                   <el-button type="primary" @click="dialogVisible = true">添加节点</el-button>
               </el-form-item>
-              <el-form-item label="审批人">
-                  <el-input placeholder="审批人"></el-input>
-              </el-form-item>
-              <el-form-item label="活动区域">
-                  <el-select placeholder="活动区域">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
-                  </el-select>
+              <el-form-item label="节点">
+                  <el-input placeholder="搜索节点"></el-input>
               </el-form-item>
               <el-form-item>
                   <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -45,7 +39,7 @@
             </el-form-item>
             <el-form-item label="父级节点">
                 <el-select v-model="form.parentId" placeholder="请选择父级节点">
-                <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.name" :value="item.name"></el-option>
+                <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.label" :value="item.label"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="节点描述">
@@ -59,9 +53,9 @@
         </el-dialog>
         <el-tree
             :data="data"
+            :props="name"
             show-checkbox
             node-key="nodeId"
-            node-value="name"
             default-expand-all
             :expand-on-click-node="false"
             :render-content="renderContent">
@@ -72,14 +66,16 @@
 
  <script>
  
-  import axios from '~/plugins/axios'
+  import qs from 'qs';
+  import axios from '~/plugins/axios.js'
 
   let id = 1000;
   export default {
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('http://api.example.com/v1.0/api/rbac/node/lists')
+      let { data } = await axios.get('/rbac/node/lists')
+      console.log(data.lists);
       return {
         nodeParent: data.lists,
         data: JSON.parse(JSON.stringify(data.lists))
@@ -133,29 +129,28 @@
 
     methods: {
       sumbit(){
-          this.$axios.post('http://api.example.com/v1.0/api/rbac/node', {
-              name: this.form.name,
-              icon: this.form.icon,
-              status: this.form.status,
-              path: this.form.path,
-              parentId: this.form.parentId,
-              description: this.form.description,
-            }).then(res => {
-              //将服务端的token存入cookie当中
-              Cookie.set('token', res.data.token)
-              //判断是否请求成功
-              if(res.data.statusCode === 'OK'){
-                this.$message({
+        axios.post('/rbac/node',qs.stringify({
+            name: this.form.name,
+            icon: this.form.icon,
+            status: this.form.status ? 1 : 0,
+            path: this.form.path,
+            parentId: this.form.parentId,
+            description: this.form.description,
+          })).then(res => {
+            //将服务端的token存入cookie当中
+            Cookie.set('token', res.data.token)
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              this.$message({
                   message: '成功添加节点',
                   type: 'success'
-                });       
-                this.append(data);       
-              }else{
-                this.$message.error('res.data.message');
-              }
-            }).catch(res => {
-              this.$message.error('请求错误，请重试');
-            });
+                });                 
+            }else{
+              this.$message.error(res.data.message);
+            }
+          }).catch(res => {
+            this.$message.error('请求错误，请重试');
+          });
       },
       append(data) {
         const newChild = { id: id++, label: 'testtest', children: [] };
