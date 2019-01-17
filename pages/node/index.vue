@@ -82,37 +82,6 @@
       }
     },
     data() {
-      const data = [{
-        nodeId: 2,
-        label: '文章管理',
-        children: [{
-          nodeId: 5,
-          label: '文章列表'
-        }, {
-          nodeId: 6,
-          label: '微信管理'
-        }]
-      },{
-        nodeId: 1,
-        label: '权限管理',
-        children: [{
-          nodeId: 4,
-          label: '节点管理'
-        },{
-          nodeId: 4,
-          label: '角色管理'
-        },{
-          nodeId: 4,
-          label: '权限管理'
-        }]
-      }, {
-        nodeId: 3,
-        label: '站点管理',
-        children: [{
-          nodeId: 7,
-          label: '站点配置'
-        }]
-      }];
       return {
         form: {
           name: '',
@@ -122,8 +91,7 @@
           parentId: '',
           description: ''
         },
-        dialogVisible: false,
-        // data: JSON.parse(JSON.stringify(data))
+        dialogVisible: false
       }
     },
 
