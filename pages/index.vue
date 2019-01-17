@@ -45,6 +45,8 @@
 </style>
 
 <script>
+import qs from 'qs';
+import axios from '~/plugins/axios.js'
 import Cookie from 'js-cookie'
 import utils from '~/utils/utils'
 
@@ -76,14 +78,14 @@ export default {
       submit (ruleForm) {
         this.$refs[ruleForm].validate((valid) => {
           if (valid) {
-            this.$axios.post('http://api.example.com/v1.0/api/login', {
+            axios.post('/login',qs.stringify({
                 account: this.ruleForm.account,
                 password: this.ruleForm.password
-              }).then(res => {
+              })).then(res => {
                 //将服务端的token存入cookie当中
                 Cookie.set('token', res.data.token)
                 //判断是否请求成功
-                if(res.data.statusCode === 'OK'){
+                if(res.data.errorId === 'OK'){
                   this.$router.push({
                     path: '/main',
                   });               
