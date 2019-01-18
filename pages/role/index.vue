@@ -12,8 +12,8 @@
               <el-form-item>
                   <el-button type="primary" @click="dialogVisible = true">添加角色</el-button>
               </el-form-item>
-              <el-form-item label="节点">
-                  <el-input placeholder="搜索节点"></el-input>
+              <el-form-item label="角色">
+                  <el-input placeholder="搜索角色"></el-input>
               </el-form-item>
               <el-form-item>
                   <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -46,13 +46,13 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
-            <el-table-column prop="name" label="用户账号" width="180">
+            <el-table-column prop="roleId" label="角色ID" width="120">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="180">
+            <el-table-column prop="name" label="角色名称" width="180">
             </el-table-column>
-            <el-table-column prop="address" label="备注信息">
+            <el-table-column prop="description" label="角色描述">
             </el-table-column>
-            <el-table-column prop="date" label="日期" width="180">
+            <el-table-column prop="createdAt" label="创建时间" width="180">
             </el-table-column>
             <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
@@ -84,11 +84,10 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/rbac/node/lists')
+      let { data } = await axios.get('/rbac/role/lists')
       console.log(data.lists);
       return {
-        nodeParent: data.lists,
-        data: JSON.parse(JSON.stringify(data.lists))
+        tableData: data.lists
       }
     },
     data() {
@@ -98,28 +97,6 @@
           state: true,
           description: ''
         },
-        //表格数据
-        tableData: [{
-            roleId: 1,
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-            roleId: 1,
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-            roleId: 1,
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-            roleId: 1,
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-        }],
         //查询输入框数据
         input: '',
         //导航条默认选项
@@ -131,7 +108,22 @@
 
     methods: {
       sumbit(data){
-
+        axios.post('/rbac/role',qs.stringify({
+            name: this.form.name,
+            state: 1,
+            description: this.form.description,
+          })).then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              this.$message({
+                  message: '成功添加角色',
+                  type: 'success'
+                });  
+              this.dialogVisible = false;   
+            }
+          }).catch(res => {
+            this.$message.error('请求错误，请重试');
+          });
       },
       cancel(data) {
         this.dialogVisible = false;     
