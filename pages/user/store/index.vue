@@ -18,7 +18,7 @@
         :on-remove="handleRemove"
         :before-remove="beforeRemove"
         multiple
-        :limit="3"
+        :limit="1"
         :on-exceed="handleExceed"
         :file-list="fileList">
         <el-button size="small" type="primary">点击上传</el-button>
@@ -26,32 +26,29 @@
       </el-upload>    
     </el-form-item>
     <el-form-item label="是否可用">
-      <el-switch v-model="form.delivery"></el-switch>
+      <el-switch v-model="form.status"></el-switch>
     </el-form-item>
     <el-form-item label="性别">
-      <el-radio-group v-model="form.resource">
+      <el-radio-group v-model="form.sex">
         <el-radio label="男"></el-radio>
         <el-radio label="女"></el-radio>
         <el-radio label="保密"></el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item label="账号密码">
-      <el-input v-model="form.name" style="width:350px" ></el-input>
+      <el-input v-model="form.password" style="width:350px" ></el-input>
     </el-form-item>
     <el-form-item label="真实姓名">
       <el-input v-model="form.name" style="width:350px" ></el-input>
     </el-form-item>
     <el-form-item label="用户昵称">
-      <el-input v-model="form.name" style="width:350px" ></el-input>
+      <el-input v-model="form.nickname" style="width:350px" ></el-input>
     </el-form-item>
     <el-form-item label="邮箱地址">
-      <el-input v-model="form.name" style="width:350px" ></el-input>
+      <el-input v-model="form.email" style="width:350px" ></el-input>
     </el-form-item>
     <el-form-item label="联系方式">
-      <el-input v-model="form.name" style="width:350px" ></el-input>
-    </el-form-item>
-    <el-form-item label="备注" style="width:600px">
-      <el-input type="textarea" v-model="form.desc" ></el-input>
+      <el-input v-model="form.phone" style="width:350px" ></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -67,13 +64,12 @@
       return {
         form: {
           name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          status: '',
+          sex: '',
+          password: '',
+          nickname: '',
+          email: '',
+          phone: ''
         }
       }
     },
