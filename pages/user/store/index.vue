@@ -8,7 +8,7 @@
     <br>
     <el-form ref="form" :model="form" label-width="80px" size="small" >
     <el-form-item label="账户名称">
-      <el-input v-model="form.name" style="width:400px" ></el-input>
+      <el-input v-model="form.account" style="width:400px" ></el-input>
     </el-form-item>
     <el-form-item label="用户头像">
       <el-upload
@@ -58,11 +58,14 @@
 </div>
 </template>
 <script>
+  import qs from 'qs';
+  import axios from '~/plugins/axios.js'
   export default {
     layout: 'main',
     data() {
       return {
         form: {
+          account: '',
           name: '',
           status: '',
           sex: '',
@@ -75,6 +78,28 @@
     },
     methods: {
       onSubmit() {
+        axios.post('/user',qs.stringify({
+            account: this.form.account,
+            name: this.form.name,
+            status: 1,
+            sex: 1,
+            password: this.form.password,
+            nickname: this.form.nickname,
+            headimg: 1,
+            email: this.form.email,
+            phone: this.form.phone
+          })).then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              this.$message({
+                  message: '成功添加用户',
+                  type: 'success'
+                });  
+              this.dialogVisible = false;   
+            }
+          }).catch(res => {
+            this.$message.error('请求错误，请重试');
+          });
         console.log('submit!');
       }
     }

@@ -23,18 +23,22 @@
           </el-form>
         </div>
         <!--表格数据及操作-->
-        <el-table :data="tableData" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+        <el-table :data="userData" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
             <!--勾选框-->
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
+            <el-table-column prop="name" label="用户ID" width="120">
+            </el-table-column>
             <el-table-column prop="name" label="用户账号" width="180">
             </el-table-column>
             <el-table-column prop="name" label="姓名" width="180">
             </el-table-column>
-            <el-table-column prop="address" label="备注信息">
+            <el-table-column prop="phone" label="联系方式">
             </el-table-column>
-            <el-table-column prop="date" label="日期" width="180">
+            <el-table-column prop="status" label="是否启用">
+            </el-table-column>
+            <el-table-column prop="createdAt" label="创建时间">
             </el-table-column>
             <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
@@ -66,11 +70,10 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/rbac/node/lists')
+      let { data } = await axios.get('/user/lists')
       console.log(data.lists);
       return {
-        nodeParent: data.lists,
-        data: JSON.parse(JSON.stringify(data.lists))
+        userData: data.lists
       }
     },
     data() {
