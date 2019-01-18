@@ -1,45 +1,53 @@
 <template>
     <div id="app">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+            <el-breadcrumb-item>角色列表</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
         <!--搜索框-->
         <el-form :inline="true" :model="formInline" style="float:left;" size="small">
-            <el-form-item label="审批人">
-                <el-input placeholder="审批人"></el-input>
+            <el-form-item>
+                <nuxt-link :to="{name:'role-store'}">
+                    <el-button type="primary">添加角色</el-button>
+                </nuxt-link>
+            </el-form-item>
+            <el-form-item label="用户角色">
+                <el-input placeholder="用户账号/邮箱/手机号码"></el-input>
             </el-form-item>
             <el-form-item label="活动区域">
                 <el-select placeholder="活动区域">
-                <el-option label="上海" value="shanghai"></el-option>
-                <el-option label="北京" value="beijing"></el-option>
+                <el-option label="北京" value="北京"></el-option>
+                <el-option label="广州" value="广州"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
             </el-form-item>
         </el-form>
-        <br>
         <!--表格数据及操作-->
-        <el-table :data="tableData" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+        <el-table :data="tableData" border style="width: 100%" stripe ref="multipleTable">
             <!--勾选框-->
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
-            <el-table-column type="index" :index="indexMethod">
+            <el-table-column prop="name" label="角色ID" width="180">
             </el-table-column>
-            <el-table-column prop="date" label="日期" width="180" sortable>
+            <el-table-column prop="name" label="角色名称" width="180">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="180">
+            <el-table-column prop="address" label="角色描述">
             </el-table-column>
-            <el-table-column prop="address" label="地址">
+            <el-table-column prop="date" label="角色状态">
             </el-table-column>
             <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
-                    <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+                    <nuxt-link :to="{name:'role-id',params:{ id: 1 }}">
+                        <el-button type="info" icon="el-icon-edit" size="mini">详情</el-button>
+                    </nuxt-link>
+                    <nuxt-link :to="{name:'role-id',params:{ id: 1 }}">
+                        <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+                    </nuxt-link>
                     <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
                 </template>
             </el-table-column>
@@ -53,7 +61,7 @@
 <script>
     export default {
         layout: 'main',
-        name:'rbac',
+        name:'user',
         data() {
             return {
                 //表格数据
@@ -95,15 +103,15 @@
                 inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
                 inputErrorMessage: '邮箱格式不正确'
                 }).then(({ value }) => {
-                this.$message({
-                    type: 'success',
-                    message: '你的邮箱是: ' + value
-                });
+                    this.$message({
+                        type: 'success',
+                        message: '你的邮箱是: ' + value
+                    });
                 }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '取消输入'
-                });       
+                    this.$message({
+                        type: 'info',
+                        message: '取消输入'
+                    });       
                 });
             }
         }

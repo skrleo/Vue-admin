@@ -42,7 +42,7 @@
             <el-table-column prop="date" label="状态" >
             </el-table-column>
             <el-table-column label="操作" width="300">
-                <template>
+                <template slot-scope="scope">
                     <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
                         <el-button type="info" icon="el-icon-edit" size="mini">详情</el-button>
                     </nuxt-link>
