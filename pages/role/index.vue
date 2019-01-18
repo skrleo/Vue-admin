@@ -9,7 +9,7 @@
         <!--搜索框-->
         <el-form :inline="true" :model="formInline" style="float:left;" size="small">
             <el-form-item>
-                <el-button type="primary" @click="dialogVisible = true">添加节点</el-button>
+                <el-button type="primary" @click="dialogVisible = true">添加角色</el-button>
             </el-form-item>
             <el-form-item label="用户角色">
                 <el-input placeholder="用户账号/邮箱/手机号码"></el-input>
