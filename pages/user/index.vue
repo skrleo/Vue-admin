@@ -4,11 +4,15 @@
             <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>用户管理</el-breadcrumb-item>
             <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-            <el-breadcrumb-item>用户详情</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
         <!--搜索框-->
         <el-form :inline="true" :model="formInline" style="float:left;" size="small">
+            <el-form-item>
+                <nuxt-link :to="{name:'user-store'}">
+                    <el-button type="primary">添加用户</el-button>
+                </nuxt-link>
+            </el-form-item>
             <el-form-item label="审批人">
                 <el-input placeholder="审批人"></el-input>
             </el-form-item>
@@ -38,7 +42,7 @@
             <el-table-column prop="date" label="状态" >
             </el-table-column>
             <el-table-column label="操作" width="300">
-                <template slot-scope="scope">
+                <template>
                     <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
                         <el-button type="info" icon="el-icon-edit" size="mini">详情</el-button>
                     </nuxt-link>
