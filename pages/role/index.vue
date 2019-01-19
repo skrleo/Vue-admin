@@ -52,23 +52,17 @@
             </el-table-column>
             <el-table-column prop="description" label="角色描述">
             </el-table-column>
-            <el-table-column prop="createdAt" label="创建时间" width="190">
+            <el-table-column prop="createdAt" label="创建时间" width="180">
                 <template slot-scope="scope">
-                    <span>{{scope.row.createdAt | formatDate('yyyy-MM-dd')}}</span>
-                    <!-- <span>时间：{{scope.row.createdAt | d('date,1', 'Y年m月d日 H:i:s')}}</span> -->
-                </template>
-            </el-table-column>
-            <el-table-column prop="createdAt" :formatter="timestampToTime" label="创建时间" width="180">
-                <template slot-scope="scope">
-                    <span>{{scope.row.createdAt | d('date,1', 'Y年m月d日 H:i:s')}}</span>
+                    <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'artcle-id',params:{ id: 1 }}">
+                    <nuxt-link :to="{name:'role-id',params:{ id: scope.row.roleId }}">
                         <el-button type="info" icon="el-icon-edit" size="mini">详情</el-button>
                     </nuxt-link>
-                    <nuxt-link :to="{name:'artcle-id',params:{ id: 1 }}">
+                    <nuxt-link :to="{name:'role-id',params:{ id: scope.row.roleId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
                     <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
@@ -84,10 +78,15 @@
 
 
  <script>
- 
-  import qs from 'qs';
-  import axios from '~/plugins/axios.js'
 
+  import qs from 'qs';
+  import axios from '~/plugins/axios.js';
+//引入'ddv-util'
+import util from 'ddv-util';
+//引入时间处理api模块
+import utilTime from 'ddv-util/time';
+//安装到'ddv-util'
+util.extendInit(utilTime);
   let id = 1000;
   export default {
     layout:'main',

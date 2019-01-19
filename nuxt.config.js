@@ -46,6 +46,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '~plugins/filters.js', ssr: true }, 
     { src: '~plugins/element-ui', ssr: true }, 
     { src: '~plugins/mavon-editor', ssr: true }, 
     { src: '~plugins/v-charts', ssr: false }   //ssr设置为false的时候，只在客户端引入

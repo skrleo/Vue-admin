@@ -42,13 +42,16 @@
                 </template>
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
+                </template>
             </el-table-column>
             <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'artcle-id',params:{ id: 1 }}">
+                    <nuxt-link :to="{name:'user-id',params:{ id: scope.row.uid }}">
                         <el-button type="info" icon="el-icon-edit" size="mini">详情</el-button>
                     </nuxt-link>
-                    <nuxt-link :to="{name:'artcle-id',params:{ id: 1 }}">
+                    <nuxt-link :to="{name:'user-id',params:{ id: scope.row.uid }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
                     <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
