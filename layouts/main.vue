@@ -15,13 +15,13 @@
                         <span>二愣子<i class="el-icon-arrow-down el-icon--right"></i></span>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                         <nuxt-link :to="{ path: '/' }">
+                        <nuxt-link :to="{name:'message'}">
                             <el-dropdown-item>
                                 <i class="el-icon-third-tubiaozhizuomoban13"></i>
                                 消息
                             </el-dropdown-item>
                         </nuxt-link>
-                         <nuxt-link :to="{ path: '/' }">
+                        <nuxt-link :to="{name:'user-id'}">
                             <el-dropdown-item>
                                 <i class="el-icon-third-shezhi"></i>
                                 个人中心
@@ -49,8 +49,8 @@
                                 <span>个人中心</span>
                             </template>
                             <el-menu-item-group>
-                                <nuxt-link :to="{name:'rbac'}">
-                                    <el-menu-item index="1-1">选项1</el-menu-item>
+                                <nuxt-link :to="{name:'user-id'}">
+                                    <el-menu-item index="1-1">个人中心</el-menu-item>
                                 </nuxt-link>
                                 <nuxt-link :to="{name:'main'}">
                                     <el-menu-item index="1-2">选项2</el-menu-item>
@@ -82,7 +82,7 @@
                                 <nuxt-link :to="{name:'artcle'}">
                                     <el-menu-item index="3-1">文章管理</el-menu-item>
                                 </nuxt-link>
-                                <el-menu-item index="3-2">选项2</el-menu-item>
+                                <el-menu-item index="3-2">微信管理</el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
         
@@ -92,17 +92,20 @@
                                 <span slot="title">系统管理</span>
                             </template>
                             <el-menu-item-group>
-                                <nuxt-link :to="{name:'node'}">
-                                    <el-menu-item index="4-1">节点管理</el-menu-item>
-                                </nuxt-link>
                                 <nuxt-link :to="{name:'user'}">
-                                    <el-menu-item index="4-2">权限管理</el-menu-item>
+                                    <el-menu-item index="4-1">用户管理</el-menu-item>
+                                </nuxt-link>
+                                <nuxt-link :to="{name:'node'}">
+                                    <el-menu-item index="4-2">节点管理</el-menu-item>
+                                </nuxt-link>
+                                <nuxt-link :to="{name:'power'}">
+                                    <el-menu-item index="4-3">权限管理</el-menu-item>
                                 </nuxt-link>
                                 <nuxt-link :to="{name:'role'}">
-                                    <el-menu-item index="4-3">角色管理</el-menu-item>
+                                    <el-menu-item index="4-4">角色管理</el-menu-item>
                                 </nuxt-link>
                                 <nuxt-link :to="{name:'site'}">
-                                    <el-menu-item index="4-4">站点管理</el-menu-item>
+                                    <el-menu-item index="4-5">站点管理</el-menu-item>
                                 </nuxt-link>
                             </el-menu-item-group>
                         </el-submenu>
