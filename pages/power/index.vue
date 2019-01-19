@@ -10,7 +10,7 @@
           <!--搜索框-->
           <el-form :inline="true" :model="formInline" style="float:left;" size="small">
               <el-form-item>
-                <nuxt-link :to="{name:'power-id',params:{ id: 1 }}">
+                <nuxt-link :to="{name:'power-store'}">
                     <el-button type="primary">添加权限</el-button>
                 </nuxt-link>
               </el-form-item>
