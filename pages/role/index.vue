@@ -74,11 +74,11 @@
         <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="100"
+            :current-page="pageNow"
+            :page-sizes="[10, 50, 100, 150]"
+            :page-size="pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="400">
+            :total="pageCount">
             </el-pagination>
     </div>
 </template>
@@ -97,7 +97,9 @@
       let { data } = await axios.get('/rbac/role/lists')
       console.log(data.lists);
       return {
-          count: data.page.count || 0 ,
+          pageNow: data.page.now || 1 ,
+          pageSize: data.page.size || 10 ,
+          pageCount: data.page.count || 0 ,
           lists: data.lists || []
       }
     },
