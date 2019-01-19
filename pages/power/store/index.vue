@@ -12,8 +12,7 @@
     </el-form-item>
     <el-form-item label="所属部门">
       <el-select v-model="form.region" placeholder="请选择所属部门">
-        <el-option label="技术部" value="shanghai"></el-option>
-        <el-option label="推广部" value="beijing"></el-option>
+        <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="是否可用">
@@ -26,13 +25,6 @@
         <el-checkbox label="普通用户" name="type"></el-checkbox>
       </el-checkbox-group>
     </el-form-item>
-    <el-form-item label="性别">
-      <el-radio-group v-model="form.resource">
-        <el-radio label="男"></el-radio>
-        <el-radio label="女"></el-radio>
-        <el-radio label="保密"></el-radio>
-      </el-radio-group>
-    </el-form-item>
     <el-form-item label="备注" style="width:600px">
       <el-input type="textarea" v-model="form.desc" ></el-input>
     </el-form-item>
@@ -44,8 +36,17 @@
 </div>
 </template>
 <script>
+  import qs from 'qs';
+  import axios from '~/plugins/axios.js'
   export default {
     layout: 'main',
+    async asyncData () {
+      let { data } = await axios.get('/rbac/node/lists')
+      console.log(data.lists);
+      return {
+        nodeParent: data.lists
+      }
+    },
     data() {
       return {
         form: {
