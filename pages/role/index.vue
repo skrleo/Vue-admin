@@ -71,8 +71,15 @@
         </el-table>
         <br>
         <!--分页条-->
-        <el-pagination background layout="prev, pager, next" :total="1000">
-        </el-pagination>
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[100, 200, 300, 400]"
+            :page-size="100"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="400">
+            </el-pagination>
     </div>
 </template>
 
@@ -81,12 +88,7 @@
 
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
-//引入'ddv-util'
-import util from 'ddv-util';
-//引入时间处理api模块
-import utilTime from 'ddv-util/time';
-//安装到'ddv-util'
-util.extendInit(utilTime);
+
   let id = 1000;
   export default {
     layout:'main',
@@ -106,6 +108,8 @@ util.extendInit(utilTime);
           state: true,
           description: ''
         },
+        
+        currentPage: 2,
         //查询输入框数据
         input: '',
         //导航条默认选项
@@ -116,6 +120,12 @@ util.extendInit(utilTime);
     },
 
     methods: {
+       handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      },
       sumbit(data){
         axios.post('/rbac/role',qs.stringify({
             name: this.form.name,
