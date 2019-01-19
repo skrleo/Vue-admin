@@ -41,7 +41,7 @@
           </el-form>
         </el-dialog>
         <!--表格数据及操作-->
-        <el-table :data="tableData" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+        <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
             <!--勾选框-->
             <el-table-column type="selection" width="55">
             </el-table-column>
@@ -52,7 +52,16 @@
             </el-table-column>
             <el-table-column prop="description" label="角色描述">
             </el-table-column>
-            <el-table-column prop="createdAt" label="创建时间" width="180">
+            <el-table-column prop="createdAt" label="创建时间" width="190">
+                <template slot-scope="scope">
+                    <span>{{scope.row.createdAt | formatDate('yyyy-MM-dd')}}</span>
+                    <!-- <span>时间：{{scope.row.createdAt | d('date,1', 'Y年m月d日 H:i:s')}}</span> -->
+                </template>
+            </el-table-column>
+            <el-table-column prop="createdAt" :formatter="timestampToTime" label="创建时间" width="180">
+                <template slot-scope="scope">
+                    <span>{{scope.row.createdAt | d('date,1', 'Y年m月d日 H:i:s')}}</span>
+                </template>
             </el-table-column>
             <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
@@ -87,7 +96,8 @@
       let { data } = await axios.get('/rbac/role/lists')
       console.log(data.lists);
       return {
-        tableData: data.lists
+          count: data.page.count || 0 ,
+          lists: data.lists || []
       }
     },
     data() {

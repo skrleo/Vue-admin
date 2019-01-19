@@ -37,6 +37,9 @@
             <el-table-column prop="phone" label="联系方式">
             </el-table-column>
             <el-table-column prop="status" label="是否启用">
+                <template slot-scope="scope">
+                    <span>{{scope.row.status ? '是':'否'}}</span>
+                </template>
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间">
             </el-table-column>

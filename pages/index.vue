@@ -92,7 +92,8 @@ export default {
                   });               
                 }
               }).catch(res => {
-                this.$message.error('账号或者密码错误');
+                // console.log(res.data.message);
+                this.$message.error('账号或者密码错误！');
               });
           } else {
             console.log('error submit!!');
