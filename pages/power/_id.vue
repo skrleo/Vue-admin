@@ -12,7 +12,7 @@
     </el-form-item>
     <el-form-item label="所属部门">
       <el-select v-model="form.region" placeholder="请选择所属部门">
-        <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
+        <el-option v-for="item in department" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="是否可用">
@@ -20,9 +20,7 @@
     </el-form-item>
     <el-form-item label="用户角色">
       <el-checkbox-group v-model="form.type">
-        <el-checkbox label="超级管理员" name="type"></el-checkbox>
-        <el-checkbox label="普通管理员" name="type"></el-checkbox>
-        <el-checkbox label="普通用户" name="type"></el-checkbox>
+        <el-checkbox v-for="item in role" :key="item.roleId" :label="item.name" :value="item.roleId"></el-checkbox>
       </el-checkbox-group>
     </el-form-item>
     <el-form-item label="备注" style="width:600px">
@@ -36,35 +34,27 @@
   <el-dialog
       title="添加角色"
       :visible.sync="dialogVisible"
-      width="35%">
-    <el-form ref="form" :model="form" label-width="80px" size="small">
-      <el-form-item label="角色名称">
-          <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="是否启用">
-          <el-switch v-model="form.state"></el-switch>
-      </el-form-item>
-      <el-form-item label="角色描述">
-          <el-input type="textarea" v-model="form.description"></el-input>
-      </el-form-item>
-      <el-form-item>
-          <el-button type="primary" @click="sumbit">立即创建</el-button>
-          <el-button type="primary" @click="cancel">取消</el-button>
-      </el-form-item>
-    </el-form>
+      width="65%">
+      <el-user-list></el-user-list>
   </el-dialog>
 </div>
 </template>
 <script>
   import qs from 'qs';
-  import axios from '~/plugins/axios.js'
+  import axios from '~/plugins/axios.js';
+  import userlist from '~/components/common/userlist.vue'
   export default {
     layout: 'main',
+    components: {
+      'el-user-list':userlist
+    },
     async asyncData () {
-      let { data } = await axios.get('/rbac/node/lists')
+      let {data} = await axios.get('/rbac/role/lists');
+      // let department = await axios.get('/rbac/node/lists')
       console.log(data.lists);
       return {
-        nodeParent: data.lists
+        role: data.lists,
+        // department: department.lists
       }
     },
     data() {
