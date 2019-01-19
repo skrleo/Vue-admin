@@ -52,7 +52,14 @@
         </el-table>
         <br>
         <!--分页条-->
-        <el-pagination background layout="prev, pager, next" :total="1000">
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageNow"
+            :page-sizes="[10, 50, 100, 150]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pageCount">
         </el-pagination>
     </div>
 </template>

@@ -79,7 +79,7 @@
             :page-size="pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="pageCount">
-            </el-pagination>
+        </el-pagination>
     </div>
 </template>
 

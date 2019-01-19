@@ -23,7 +23,7 @@
           </el-form>
         </div>
         <!--表格数据及操作-->
-        <el-table :data="userData" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+        <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
             <!--勾选框-->
             <el-table-column type="selection" width="55">
             </el-table-column>
@@ -60,14 +60,19 @@
         </el-table>
         <br>
         <!--分页条-->
-        <el-pagination background layout="prev, pager, next" :total="1000">
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageNow"
+            :page-sizes="[10, 50, 100, 150]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pageCount">
         </el-pagination>
     </div>
 </template>
 
-
  <script>
- 
   import qs from 'qs';
   import axios from '~/plugins/axios.js'
 
@@ -79,7 +84,10 @@
       let { data } = await axios.get('/user/lists')
       console.log(data.lists);
       return {
-        userData: data.lists
+         pageNow: data.page.now || 1 ,
+         pageSize: data.page.size || 10 ,
+         pageCount: data.page.count || 0 ,
+         lists: data.lists || []
       }
     },
     data() {
@@ -89,28 +97,6 @@
           state: true,
           description: ''
         },
-        //表格数据
-        tableData: [{
-            roleId: 1,
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-            roleId: 1,
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-            roleId: 1,
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-            roleId: 1,
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-        }],
         //查询输入框数据
         input: '',
         //导航条默认选项
@@ -121,12 +107,26 @@
     },
 
     methods: {
-      sumbit(data){
+        handleSizeChange(val) {
+            axios.get(`/user/lists?pageSize=${val}`)
+            .then(res => {
+                this.lists = res.data.lists || [];
+                this.pageSize = res.data.page.size || 10;
+            });
+        },
+        handleCurrentChange(val) {
+            axios.get(`/user/lists?pageNow=${val}`)
+            .then(res => {
+                this.lists = res.data.lists || [];
+                this.pageNow = res.data.page.now || 1;
+            });
+        },
+        sumbit(data){
 
-      },
-      cancel(data) {
-        this.dialogVisible = false;     
-      }
+        },
+        cancel(data) {
+            this.dialogVisible = false;     
+        }
     }
   };
 </script>
