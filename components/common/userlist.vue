@@ -9,17 +9,17 @@
       </el-table-column>
       <el-table-column
         prop="date"
+        label="用户ID"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="date"
         label="用户账号"
         width="180">
       </el-table-column>
       <el-table-column
         prop="name"
         label="姓名"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="联系方式"
         width="180">
       </el-table-column>
       <el-table-column

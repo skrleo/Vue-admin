@@ -85,15 +85,13 @@ export default {
                 //将服务端的token存入cookie当中
                 Cookie.set('token', res.data.token)
                 //判断是否请求成功
-                if(res.data.errorId === 'OK'){
+                if(res.data.statusCode === '200'){
                   this.$router.push({
                     path: '/main',
                   });               
-                }else{
-                  this.$message.error(res.data.message);
                 }
               }).catch(res => {
-                this.$message.error('请求错误，请重试');
+                this.$message.error('账号或者密码错误');
               });
           } else {
             console.log('error submit!!');

@@ -36,6 +36,10 @@
       :visible.sync="dialogVisible"
       width="65%">
       <el-user-list></el-user-list>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
   </el-dialog>
 </div>
 </template>
@@ -73,6 +77,13 @@
       }
     },
     methods: {
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
       onSubmit() {
         console.log('submit!');
       }
