@@ -82,10 +82,11 @@ export default {
                 account: this.ruleForm.account,
                 password: this.ruleForm.password
               })).then(res => {
-                //将服务端的token存入cookie当中
-                Cookie.set('token', res.data.token)
                 //判断是否请求成功
-                if(res.data.statusCode === '200'){
+                if(res.data.statusCode == '200'){
+                  console.log(res.data.statusCode);
+                  //将服务端的token存入cookie当中
+                  Cookie.set('token', res.data.token)
                   this.$router.push({
                     path: '/main',
                   });               

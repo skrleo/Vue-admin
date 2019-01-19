@@ -27,12 +27,10 @@
                                 个人中心
                             </el-dropdown-item>
                         </nuxt-link>
-                         <nuxt-link :to="{ path: '/' }">
-                            <el-dropdown-item>
-                                <i class="el-icon-third-tuichu"></i>
-                                退出登录
-                            </el-dropdown-item>
-                        </nuxt-link>
+                        <el-dropdown-item @click.native="loginOut()">
+                            <i class="el-icon-third-tuichu"></i>
+                            退出登录
+                        </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </el-header>
@@ -184,6 +182,10 @@
 </style>
 
 <script>
+  import qs from 'qs';
+  import axios from '~/plugins/axios.js'
+  import Cookie from 'js-cookie'
+
   export default {
     middleware: 'checkLogin',
     name: 'index',
@@ -201,6 +203,15 @@
             //请求失败
                 
             });
+        },
+        loginOut(){
+            console.log('error submit!!');
+            Cookie.remove('token');
+            this.$message({
+                message: '退出成功',
+                type: 'success'
+            });
+            this.$router.push('/'); 
         }
     },
     data() {
