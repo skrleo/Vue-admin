@@ -110,8 +110,6 @@
           state: true,
           description: ''
         },
-        
-        currentPage: 2,
         //查询输入框数据
         input: '',
         //导航条默认选项
@@ -123,10 +121,20 @@
 
     methods: {
        handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        axios.get('/rbac/role/lists?pageSize=10&pageNow=2')
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageNow = res.data.page.now || 1;
+            this.pageSize = res.data.page.size || 10;
+          });
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        axios.get('/rbac/role/lists?pageSize=10&pageNow=2')
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageNow = res.data.page.now || 1;
+            this.pageSize = res.data.page.size || 10;
+          });
       },
       sumbit(data){
         axios.post('/rbac/role',qs.stringify({
@@ -135,7 +143,7 @@
             description: this.form.description,
           })).then(res => {
             //判断是否请求成功
-            if(res.data.errorId === 'OK'){
+            if(res.data.statusCode == '200'){
               this.$message({
                   message: '成功添加角色',
                   type: 'success'
