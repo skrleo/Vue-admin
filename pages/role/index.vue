@@ -8,7 +8,7 @@
         <br>
         <div style="height:62px;">
           <!--搜索框-->
-          <el-form :inline="true" :model="formInline" style="float:left;" size="small">
+          <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
                   <el-button type="primary" @click="dialogVisible = true">添加角色</el-button>
               </el-form-item>
@@ -16,7 +16,7 @@
                   <el-input placeholder="搜索角色"></el-input>
               </el-form-item>
               <el-form-item>
-                  <el-button type="primary" @click="onSubmit">查询</el-button>
+                  <el-button type="primary">查询</el-button>
               </el-form-item>
           </el-form>
         </div>
