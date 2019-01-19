@@ -121,19 +121,17 @@
 
     methods: {
        handleSizeChange(val) {
-        axios.get('/rbac/role/lists?pageSize=10&pageNow=2')
+        axios.get(`/rbac/role/lists?pageSize=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
-            this.pageNow = res.data.page.now || 1;
             this.pageSize = res.data.page.size || 10;
           });
       },
       handleCurrentChange(val) {
-        axios.get('/rbac/role/lists?pageSize=10&pageNow=2')
+        axios.get(`/rbac/role/lists?pageNow=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageNow = res.data.page.now || 1;
-            this.pageSize = res.data.page.size || 10;
           });
       },
       sumbit(data){
