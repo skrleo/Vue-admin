@@ -12,7 +12,7 @@
                                 <img src="../assets/images/33d243824a318f1819630542733a21eb.jpeg" alt="">
                             </el-badge>
                         </nuxt-link>       
-                        <span>二愣子<i class="el-icon-arrow-down el-icon--right"></i></span>
+                        <span>{{userInfo.name || '管理员'}}<i class="el-icon-arrow-down el-icon--right"></i></span>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <nuxt-link :to="{name:'message'}">
@@ -38,9 +38,7 @@
                 <el-aside :width="tabWidth+'px'">
                     <el-menu
                         default-active="2"
-                        class="el-menu-vertical-demo"
-                        @open="handleOpen"
-                        @close="handleClose">
+                        class="el-menu-vertical-demo">
                         <el-submenu index="1">
                             <template slot="title">
                                 <i class="el-icon-location"></i>
@@ -189,9 +187,19 @@
   export default {
     middleware: 'checkLogin',
     name: 'index',
-    // created:function(){
-    //   this.$router.push('/addtitle'); // 页面加载时跳转
-    // },
+    created:function(){
+        let Uid = Cookie.get('Uid');
+        axios.get(`/user/${Uid}`)
+            .then(res => {
+                console.log(res.data.data);
+                this.userInfo = res.data.data
+              });
+    //   this.$router.push('/'); // 页面加载时跳转
+    },
+    async asyncData () {
+        let CardNo = Cookie.get('Uid');
+        console.log(CardNo);
+    },
     methods:{
         loadData(){
             axios.get(urls.api, { params: this.param })
@@ -205,7 +213,6 @@
             });
         },
         loginOut(){
-            console.log('error submit!!');
             Cookie.remove('token');
             this.$message({
                 message: '退出成功',

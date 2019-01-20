@@ -84,11 +84,13 @@ export default {
               })).then(res => {
                 //判断是否请求成功
                 if(res.data.statusCode == '200'){
-                  console.log(res.data.statusCode);
+                  this.uid = res.data.data.uid;
+                  //存储用户Uid
+                  Cookie.set('Uid', this.uid);
                   //将服务端的token存入cookie当中
-                  Cookie.set('token', res.data.token)
+                  Cookie.set('token', res.data.token);
                   this.$router.push({
-                    path: '/main',
+                    path: '/',
                   });               
                 }
               }).catch(res => {

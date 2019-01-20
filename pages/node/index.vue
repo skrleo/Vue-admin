@@ -75,7 +75,6 @@
     name:'node',
     async asyncData () {
       let { data } = await axios.get('/rbac/node/lists')
-      console.log(data.lists);
       return {
         nodeParent: data.lists,
         data: JSON.parse(JSON.stringify(data.lists))
@@ -97,7 +96,6 @@
 
     methods: {
       sumbit(){
-        console.log(this.form.parentId);
         axios.post('/rbac/node',qs.stringify({
             label: this.form.label,
             icon: this.form.icon,
