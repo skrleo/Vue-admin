@@ -3,7 +3,7 @@
     <div class="banner">
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-card class="box-card">
+          <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>快捷方式</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
@@ -14,7 +14,7 @@
           </el-card>
         </el-col>
         <el-col :span="8">
-          <el-card class="box-card">
+          <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>代办事件</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
@@ -25,7 +25,7 @@
           </el-card>
         </el-col>
         <el-col :span="8">
-          <el-card class="box-card">
+          <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>网站配置</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
@@ -38,7 +38,7 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="16">
-          <el-card class="box-card">
+          <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>网站访问量</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
@@ -47,7 +47,7 @@
           </el-card>
         </el-col>
         <el-col :span="8">
-          <el-card class="box-card">
+          <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>日均PV量</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
