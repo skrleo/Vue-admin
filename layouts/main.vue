@@ -7,7 +7,7 @@
                 </div>
                 <el-dropdown>
                     <span class="el-dropdown-link">
-                        <nuxt-link :to="{name:'user-id',params:{ id: 1 }}">
+                        <nuxt-link :to="{name:'user-id',params:{ id: userInfo.uid }}">
                             <el-badge class="item">
                                 <img src="../assets/images/33d243824a318f1819630542733a21eb.jpeg" alt="">
                             </el-badge>
@@ -21,7 +21,7 @@
                                 消息
                             </el-dropdown-item>
                         </nuxt-link>
-                        <nuxt-link :to="{name:'user-id'}">
+                        <nuxt-link :to="{name:'user-id',params:{ id: userInfo.uid }}">
                             <el-dropdown-item>
                                 <i class="el-icon-third-shezhi"></i>
                                 个人中心
@@ -223,10 +223,10 @@
     },
     data() {
         return {
-            isCollapse: false,
-            tabWidth: 200,
-            test1: 1,
-            intelval: null,
+            userInfo:{
+                uid: 0 ,
+                name: ''
+            }
         };
     }
   }
