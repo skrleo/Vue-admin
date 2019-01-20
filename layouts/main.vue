@@ -211,7 +211,7 @@
                 message: '退出成功',
                 type: 'success'
             });
-            this.$router.push('/'); 
+            this.$router.push('/login'); 
         }
     },
     data() {
