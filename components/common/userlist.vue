@@ -32,6 +32,17 @@
         label="创建时间">
       </el-table-column>
     </el-table>
+     <!--分页条-->
+     <br>
+    <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageNow"
+        :page-sizes="[10, 50, 100, 150]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pageCount">
+    </el-pagination>
   </div>
 </template>
 
