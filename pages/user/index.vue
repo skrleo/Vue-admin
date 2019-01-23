@@ -30,9 +30,9 @@
             <!--索引-->
             <el-table-column prop="uid" label="用户ID" width="120">
             </el-table-column>
-            <el-table-column prop="name" label="用户账号" width="180">
+            <el-table-column prop="name" label="用户账号" width="150">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="180">
+            <el-table-column prop="name" label="姓名" width="150">
             </el-table-column>
             <el-table-column prop="phone" label="联系方式">
             </el-table-column>
@@ -41,7 +41,7 @@
                     <span>{{scope.row.status ? '是':'否'}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="createdAt" label="创建时间">
+            <el-table-column prop="createdAt" label="创建时间" width="180">
                  <template slot-scope="scope">
                     <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
                 </template>
@@ -82,7 +82,6 @@
     name:'node',
     async asyncData () {
       let { data } = await axios.get('/user/lists')
-      console.log(data.lists);
       return {
          pageNow: data.page.now || 1 ,
          pageSize: data.page.size || 10 ,
