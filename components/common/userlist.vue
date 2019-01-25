@@ -3,7 +3,8 @@
     <el-dialog
         title="选择用户"
         :visible.sync="dialogVisible"
-        width="65%">
+        width="65%"
+        :before-close="handleClose">
         <el-row :gutter="20" style="margin-bottom:30px;">
         <el-col :span="5">
           <el-input v-model="phone" placeholder="输入注册手机搜索" size="medium">
@@ -14,7 +15,7 @@
           </el-input>
         </el-col>
         <el-col :span="5"> 
-          <el-button type="primary" @click="getList" size="medium">搜索</el-button>
+          <el-button type="primary" size="medium">搜索</el-button>
         </el-col>
       </el-row>
     <el-table :data="lists" border style="width: 100%">
@@ -66,28 +67,18 @@
         count: 0, // 总条数
         multipleSelection: [],
         lists: [],
-        userName: []
+        userName: [],
+        dialogVisible: false
       }
     },
     methods: {
-      // 关闭之前执行
-      handleClose (done) {
-        
-      },
-      // 选择事件
-      handleSelectionChange (row) {
-        
-      },
-      // 确认
-      affirmSelect () {
-        
-      },
-      getList (page) {
-        
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
       }
-    },
-    mounted () {
-      // this.getList()
     }
   }
 </script>
