@@ -18,34 +18,33 @@
           <el-button type="primary" size="medium">搜索</el-button>
         </el-col>
       </el-row>
-    <el-table :data="lists" border style="width: 100%">
-      <!--勾选框-->
-      <el-table-column type="selection" width="55">
-      </el-table-column>
-      <el-table-column prop="uid" label="用户ID" width="120">
-      </el-table-column>
-      <el-table-column prop="name" label="用户账号" width="180">
-      </el-table-column>
-      <el-table-column prop="name" label="姓名" width="180">
-      </el-table-column>
-      <el-table-column prop="phone" label="联系方式">
-      </el-table-column>
-      <el-table-column prop="createdAt" label="创建时间">
-            <template slot-scope="scope">
-              <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
-          </template>
-      </el-table-column>
-    </el-table>
+      <el-table :data="lists" border style="width: 100%">
+        <!--勾选框-->
+        <el-table-column type="selection" width="55">
+        </el-table-column>
+        <el-table-column prop="uid" label="用户ID" width="120">
+        </el-table-column>
+        <el-table-column prop="name" label="用户账号" width="180">
+        </el-table-column>
+        <el-table-column prop="name" label="姓名" width="180">
+        </el-table-column>
+        <el-table-column prop="phone" label="联系方式">
+        </el-table-column>
+        <el-table-column prop="createdAt" label="创建时间">
+              <template slot-scope="scope">
+                <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
+            </template>
+        </el-table-column>
+      </el-table>
      <!--分页条-->
      <br>
     <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pageNow"
-        :page-sizes="[10, 50, 100, 150]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="pageCount">
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage"
+      :page-size="100"
+      layout="prev, pager, next, jumper"
+      :total="1000">
     </el-pagination>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -57,27 +56,22 @@
 
 <script>
   export default {
-    props: [ 'dialogVisible', 'refresh', 'users', 'siteId'],
+    props: [ 'dialogVisible', 'refresh', 'users'],
     data () {
       return {
-        name: '', // 用户名搜索
-        phone: '', // 手机搜索
-        pageNow: 1, // 当前页
-        pageSize: 5, // 显示页数
-        count: 0, // 总条数
-        multipleSelection: [],
-        lists: [],
-        userName: [],
+        currentPage: 4,
         dialogVisible: false
       }
     },
     methods: {
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      },
       handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
+        
       }
     }
   }
