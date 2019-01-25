@@ -223,6 +223,10 @@
     },
     data() {
         return {
+            isCollapse: false,
+            tabWidth: 200,
+            test1: 1,
+            intelval: null,
             userInfo:{
                 uid: 0 ,
                 name: ''

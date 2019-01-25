@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="userLists" border style="width: 100%">
+    <el-table :data="lists" border style="width: 100%">
       <!--勾选框-->
       <el-table-column type="selection" width="55">
       </el-table-column>
@@ -38,9 +38,27 @@
       let { data } = await axios.get('/user/lists')
       console.log(data);
       return {
-        userLists: data.lists
+        pageNow: data.page.now || 1 ,
+        pageSize: data.page.size || 10 ,
+        pageCount: data.page.count || 0 ,
+        lists: data.lists || []
       }
     },
-   
+    methods: {
+       handleSizeChange(val) {
+        axios.get(`/user/lists?pageSize=${val}`)
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageSize = res.data.page.size || 10;
+          });
+      },
+      handleCurrentChange(val) {
+        axios.get(`/user/lists?pageNow=${val}`)
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageNow = res.data.page.now || 1;
+          });
+      }
+    }
   }
 </script>

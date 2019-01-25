@@ -8,7 +8,7 @@
         <br>
         <div style="height:62px;">
           <!--搜索框-->
-          <el-form :inline="true" :model="formInline" style="float:left;" size="small">
+          <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
                 <nuxt-link :to="{name:'user-store'}">
                     <el-button type="primary">添加用户</el-button>
