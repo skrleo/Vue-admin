@@ -71,7 +71,7 @@
         console.log(`当前页: ${val}`);
       },
       handleClose(done) {
-        
+        this.dialogVisible = false
       }
     }
   }
