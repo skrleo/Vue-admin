@@ -10,7 +10,9 @@
         <br>
         <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="用户名称" style="width:400px" >
-          <span>123</span>
+           <el-tag @close="removeTag(tag)" v-for="tag in users" :key="tag.uid" closable>
+              {{tag.name}}
+            </el-tag>
           <el-button type="primary" size="medium" @click="chooseUsers">选择用户</el-button>
         </el-form-item>
         <el-form-item label="是否可用">
@@ -32,7 +34,7 @@
     </el-row>
   </el-row>
     <!-- 添加管理员组件 -->
-    <el-user-list :dialogVisible.sync="dialogVisible" @enlarge-text="largeText"></el-user-list>
+    <el-user-list :dialogVisible.sync="dialogVisible" :users.sync="users"></el-user-list>
   </section>
 </template>
 <script>
