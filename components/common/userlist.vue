@@ -18,13 +18,13 @@
           <el-button type="primary" size="medium">搜索</el-button>
         </el-col>
       </el-row>
-      <el-table :data="lists" border style="width: 100%">
-        <!--勾选框-->
+      <!-- <span>{{lists}}</span> -->
+      <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="uid" label="用户ID" width="120">
         </el-table-column>
-        <el-table-column prop="name" label="用户账号" width="180">
+        <el-table-column prop="account" label="用户账号" width="180">
         </el-table-column>
         <el-table-column prop="name" label="姓名" width="180">
         </el-table-column>
@@ -36,7 +36,6 @@
             </template>
         </el-table-column>
       </el-table>
-     <!--分页条-->
      <br>
     <el-pagination
       @size-change="handleSizeChange"
@@ -55,15 +54,24 @@
 </template>
 
 <script>
+  import qs from 'qs';
+  import axios from '~/plugins/axios.js';
   export default {
-    props: [ 'dialogVisible', 'refresh', 'users'],
+    props: [ 'dialogVisible'],
     data () {
       return {
-        currentPage: 4,
-        dialogVisible: false
+        currentPage: 4
       }
     },
+    created: function () {
+      axios.get('/user/lists')
+        .then(res => {
+          console.log(res.data);
+          this.lists = res.data.lists || [];
+        });
+    },
     methods: {
+     
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },

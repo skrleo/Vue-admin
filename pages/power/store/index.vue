@@ -48,7 +48,7 @@
       let {data} = await axios.get('/rbac/role/lists');
       console.log(data.lists);
       return {
-        role: data.lists,
+        userLists: data.lists,
       }
     },
     data() {
@@ -67,13 +67,6 @@
       }
     },
     methods: {
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      },
       onSubmit() {
         console.log('submit!');
       },
