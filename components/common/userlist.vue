@@ -19,7 +19,7 @@
         </el-col>
       </el-row>
       <!-- <span>{{lists}}</span> -->
-      <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+      <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark" @selection-change="selsChange">
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="uid" label="用户ID" width="120">
@@ -47,7 +47,7 @@
     </el-pagination>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="sendUserId()">确 定</el-button>
       </span>
     </el-dialog>
   </section>
@@ -82,6 +82,13 @@
       },
       handleClose(done) {
         this.dialogVisible = false
+      },
+      selsChange(val){
+          console.log(val);
+      },
+      sendUserId(data){
+        this.$emit();
+        console.log(`当前值: ${data}`);
       }
     }
   }
