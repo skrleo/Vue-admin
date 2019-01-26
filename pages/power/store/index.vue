@@ -48,7 +48,7 @@
       let {data} = await axios.get('/rbac/role/lists');
       console.log(data.lists);
       return {
-        userLists: data.lists,
+        role: data.lists,
       }
     },
     data() {

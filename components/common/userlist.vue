@@ -60,6 +60,9 @@
     props: [ 'dialogVisible'],
     data () {
       return {
+        lists:[],
+        name:'',
+        phone:'',
         currentPage: 4
       }
     },
@@ -71,7 +74,6 @@
         });
     },
     methods: {
-     
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },
