@@ -81,14 +81,19 @@
         console.log(`当前页: ${val}`);
       },
       handleClose(done) {
-        this.dialogVisible = false
+        this.$emit('update:dialogVisible', false)
       },
       selsChange(val){
+        this.chooseUser = val;
           console.log(val);
       },
       sendUserId(data){
-        this.$emit();
-        console.log(`当前值: ${data}`);
+        if (this.chooseUser.length === 0) {
+          this.$message.error('还未选择用户！')
+          return
+        }
+        this.$emit('update:users', this.chooseUser)
+        this.handleClose()
       }
     }
   }
