@@ -10,7 +10,9 @@
           <!--搜索框-->
           <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
-                  <el-button type="primary" @click="dialogVisible = true">添加角色</el-button>
+                  <nuxt-link :to="{name:'role-store'}">
+                    <el-button type="primary">添加角色</el-button>
+                  </nuxt-link>
               </el-form-item>
               <el-form-item label="角色">
                   <el-input placeholder="搜索角色"></el-input>
@@ -20,7 +22,7 @@
               </el-form-item>
           </el-form>
         </div>
-        <el-dialog
+        <!-- <el-dialog
             title="添加角色"
             :visible.sync="dialogVisible"
             width="35%">
@@ -39,7 +41,7 @@
                 <el-button type="primary" @click="cancel">取消</el-button>
             </el-form-item>
           </el-form>
-        </el-dialog>
+        </el-dialog> -->
         <!--表格数据及操作-->
         <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
             <!--勾选框-->

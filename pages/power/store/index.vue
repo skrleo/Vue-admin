@@ -13,7 +13,7 @@
            <el-tag @close="removeTag(tag)" v-for="tag in users" :key="tag.uid" closable>
               {{tag.name}}
             </el-tag>
-          <el-button type="primary" size="medium" @click="chooseUsers">选择用户</el-button>
+          <el-button type="primary" size="small" @click="chooseUsers">选择用户</el-button>
         </el-form-item>
         <el-form-item label="是否可用">
           <el-switch v-model="form.delivery"></el-switch>
@@ -70,6 +70,13 @@
       }
     },
     methods: {
+      removeTag (tag) {
+        this.users.forEach((item, index) => {
+          if (item.uid === tag.uid) {
+            this.users.splice(index, 1)
+          }
+        })
+      },
       onSubmit() {
         console.log('submit!');
       },
