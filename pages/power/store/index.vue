@@ -9,7 +9,7 @@
         </el-breadcrumb>
         <br>
         <el-form ref="form" :model="form" label-width="80px">
-          <el-form-item v-model="form.users" label="用户名称" style="width:400px" >
+          <el-form-item v-model="form.user" label="用户名称" style="width:400px" >
             <!-- <el-tag @close="removeTag(tag)" v-for="tag in users" :key="tag.uid" closable>
                 {{tag.name}}
               </el-tag> -->
@@ -57,7 +57,7 @@
         form: {
           role:[]
         },
-        users:[],
+        user: '',
         dialogVisible: false
       }
     },
@@ -66,17 +66,17 @@
         this.roleIds = val;
         console.log(val);
       },
-      removeTag (tag) {
-        this.users.forEach((item, index) => {
-          if (item.uid === tag.uid) {
-            this.users.splice(index, 1)
-          }
-        })
-      },
+      // removeTag (tag) {
+      //   this.users.forEach((item, index) => {
+      //     if (item.uid === tag.uid) {
+      //       this.users.splice(index, 1)
+      //     }
+      //   })
+      // },
       onSubmit() {
-        let uids = this.users.map(item => item.uid)
+        // let uids = this.users.map(item => item.uid)
         axios.put('rbac/purview/user/role',qs.stringify({
-            uids: uids,
+            uid: this.user.uid,
             roleIds: this.roleIds
           })).then(res => {
             //判断是否请求成功
