@@ -10,6 +10,12 @@
     <el-form-item label="角色名称">
       <el-input v-model="form.account" style="width:400px" ></el-input>
     </el-form-item>
+    <el-form-item v-model="form.users" label="用户名称" style="width:400px" >
+      <el-tag @close="removeTag(tag)" v-for="tag in users" :key="tag.uid" closable>
+          {{tag.name}}
+        </el-tag>
+      <el-button type="primary" size="small" @click="chooseUsers">选择用户</el-button>
+    </el-form-item>
     <el-form-item label="状态">
       <el-radio-group v-model="form.sex">
         <el-radio label="关闭"></el-radio>
@@ -29,11 +35,14 @@
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
+  <!-- 添加管理员组件 -->
+  <el-user-list :dialogVisible.sync="dialogVisible" :users.sync="users"></el-user-list>
 </div>
 </template>
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js'
+  import userlist from '~/components/common/user-lists-radio.vue'
   export default {
     layout: 'main',
     async asyncData () {
@@ -54,7 +63,8 @@
           nickname: '',
           email: '',
           phone: ''
-        }
+        },
+        dialogVisible: false
       }
     },
     methods: {
@@ -82,7 +92,11 @@
             this.$message.error('请求错误，请重试');
           });
         console.log('submit!');
-      }
+      },
+      chooseUsers(){
+        this.dialogVisible = true;
+        console.log('chooseUsers!');
+      },
     }
   }
 </script>
