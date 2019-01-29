@@ -46,7 +46,7 @@
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
-  import userlist from '~/components/common/user-list-checkbox.vue'
+  import userlist from '~/components/common/userlist.vue'
   export default {
     layout: 'main',
     components: {

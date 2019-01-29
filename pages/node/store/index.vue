@@ -16,11 +16,7 @@
                 <el-switch v-model="form.state"></el-switch>
             </el-form-item>
             <el-form-item label="Icon">
-                <span>
-                    <i class="el-icon-edit"></i>
-                    <i class="el-icon-share"></i>
-                    <i class="el-icon-delete"></i>
-                </span>
+                <el-input v-model="form.icon"></el-input>
             </el-form-item>
             <el-form-item label="路由地址">
                 <el-input v-model="form.path"></el-input>
@@ -45,7 +41,7 @@
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
-  import userlist from '~/components/common/user-list-checkbox'
+  import userlist from '~/components/common/userlist.vue'
   
   export default {
     layout: 'main',
