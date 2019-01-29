@@ -22,9 +22,9 @@
         <el-radio label="启用"></el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="用户角色">
+    <el-form-item label="关联节点">
         <el-checkbox-group v-model="form.type">
-        <el-checkbox v-for="item in role" :key="item.roleId" :label="item.name" :value="item.roleId"></el-checkbox>
+          <el-checkbox v-for="item in role" :key="item.roleId" :label="item.name" :value="item.roleId"></el-checkbox>
         </el-checkbox-group>
     </el-form-item>
     <el-form-item label="备注" style="width:600px">

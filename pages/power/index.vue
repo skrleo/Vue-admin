@@ -23,7 +23,7 @@
           </el-form>
         </div>
         <!--表格数据及操作-->
-        <el-table :data="tableData" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+        <el-table :data="lists" border style="width: 100%" stripe ref="lists" tooltip-effect="dark">
             <!--勾选框-->
             <el-table-column type="selection" width="55">
             </el-table-column>
@@ -82,11 +82,13 @@
     layout:'main',
     name:'node',
     async asyncData () {
-    //   let { data } = await axios.get('/rbac/role/lists')
-    //   console.log(data.lists);
-    //   return {
-    //     tableData: data.lists
-    //   }
+      let { data } = await axios.get('rbac/manage/lists')
+      return {
+         pageNow: data.page.now || 1 ,
+         pageSize: data.page.size || 10 ,
+         pageCount: data.page.count || 0 ,
+         lists: data.lists || []
+      }
     },
     data() {
       return {
