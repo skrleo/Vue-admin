@@ -62,6 +62,7 @@
     },
     methods: {
       checkinlist(val){
+        this.roleIds = val;
         console.log(val);
       },
       removeTag (tag) {
