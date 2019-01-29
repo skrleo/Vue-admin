@@ -22,7 +22,7 @@
         <el-table :data="lists" border style="width: 100%" ref="multipleTable">
             <el-table-column width="55">
                 <template scope="scope">
-                    <el-radio :label="scope.row.uid" v-model="uid"> &nbsp;</el-radio>
+                    <el-radio :label="scope.row.uid" v-model="uid" @change.native="chooseUser(scope.row)"> &nbsp;</el-radio>
                 </template>
             </el-table-column>
             <el-table-column prop="uid" label="用户ID" width="120">
@@ -30,6 +30,13 @@
             <el-table-column prop="account" label="用户账号" width="180">
             </el-table-column>
             <el-table-column prop="name" label="姓名" width="180">
+            </el-table-column>
+            <el-table-column prop="phone" label="联系方式">
+            </el-table-column>
+            <el-table-column prop="createdAt" label="创建时间">
+                <template slot-scope="scope">
+                    <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
+                </template>
             </el-table-column>
         </el-table>
      <br>
@@ -80,16 +87,16 @@
       handleClose(done) {
         this.$emit('update:dialogVisible', false)
       },
-      selsChange(val){
-        this.chooseUser = val;
+      chooseUser(val){
+          this.user = val;
           console.log(val);
       },
       sendUserId(data){
-        if (this.chooseUser.length === 0) {
+        if (this.user.length === 0) {
           this.$message.error('还未选择用户！')
           return
         }
-        this.$emit('update:users', this.chooseUser)
+        this.$emit('update:user', this.user)
         this.handleClose()
       }
     }
