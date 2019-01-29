@@ -19,8 +19,8 @@
           <el-switch v-model="form.delivery"></el-switch>
         </el-form-item>
         <el-form-item label="用户角色">
-          <el-checkbox-group v-model="form.type">
-            <el-checkbox v-for="item in role" :key="item.roleId" :label="item.name" :value="item.roleId"></el-checkbox>
+          <el-checkbox-group v-model="form.type" @change="checkinlist">
+            <el-checkbox v-for="item in role" :key="item.roleId" :label="item.roleId" :value="item.name">{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="备注" style="width:600px">
@@ -70,6 +70,9 @@
       }
     },
     methods: {
+      checkinlist(val){
+        console.log(val);
+      },
       removeTag (tag) {
         this.users.forEach((item, index) => {
           if (item.uid === tag.uid) {
