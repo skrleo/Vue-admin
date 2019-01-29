@@ -8,7 +8,7 @@
         <br>
         <div style="height:62px;">
           <!--搜索框-->
-          <el-form :inline="true" style="float:left;" size="small">
+          <el-form :inline="true" :model="formInline" style="float:left;" size="small">
               <el-form-item>
                 <nuxt-link :to="{name:'power-store'}">
                     <el-button type="primary">添加权限</el-button>
@@ -82,18 +82,14 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/rbac/role/lists')
-      console.log(data.lists);
-      return {
-        tableData: data.lists
-      }
+    //   let { data } = await axios.get('/rbac/role/lists')
+    //   console.log(data.lists);
+    //   return {
+    //     tableData: data.lists
+    //   }
     },
     data() {
       return {
-        pageNow:  1 ,
-        pageSize:  10 ,
-        pageCount:  0 ,
-        lists: [],
         form: {
           name: '',
           state: true,
@@ -127,20 +123,6 @@
     },
 
     methods: {
-        handleSizeChange(val) {
-        axios.get(`/rbac/role/lists?pageSize=${val}`)
-        .then(res => {
-            this.lists = res.data.lists || [];
-            this.pageSize = res.data.page.size || 10;
-          });
-      },
-      handleCurrentChange(val) {
-        axios.get(`/rbac/role/lists?pageNow=${val}`)
-        .then(res => {
-            this.lists = res.data.lists || [];
-            this.pageNow = res.data.page.now || 1;
-          });
-      },
       sumbit(data){
         axios.post('/rbac/role',qs.stringify({
             name: this.form.name,
@@ -161,9 +143,6 @@
       },
       cancel(data) {
         this.dialogVisible = false;     
-      },
-      onSubmit(){
-
       }
     }
   };

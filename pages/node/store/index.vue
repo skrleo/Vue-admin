@@ -27,15 +27,15 @@
             </el-form-item>
             <el-form-item label="父级节点">
                 <el-select v-model="form.parentId" placeholder="请选择父级节点">
-                  <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
+                <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="节点描述">
                 <el-input type="textarea" v-model="form.description"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSumbit">立即创建</el-button>
-                <el-button type="primary">取消</el-button>
+                <el-button type="primary" @click="sumbit">立即创建</el-button>
+                <el-button type="primary" @click="cancel">取消</el-button>
             </el-form-item>
         </el-form>
     </el-row>
@@ -54,6 +54,7 @@
     },
     async asyncData () {
       let {data} = await axios.get('/rbac/role/lists');
+      console.log(data.lists);
       return {
         role: data.lists,
       }
@@ -61,8 +62,15 @@
     data() {
       return {
         form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
         },
-        nodeParent:[],
         dialogVisible: false
       }
     },
@@ -74,12 +82,15 @@
           }
         })
       },
-      onSumbit() {
+      onSubmit() {
         console.log('submit!');
       },
       chooseUsers(){
         this.dialogVisible = true;
         console.log('chooseUsers!');
+      },
+      largeText(val){
+        console.log(val);
       }
     }
   }

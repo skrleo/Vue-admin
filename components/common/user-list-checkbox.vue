@@ -69,6 +69,7 @@
     created: function () {
       axios.get('/user/lists')
         .then(res => {
+          console.log(res.data);
           this.lists = res.data.lists || [];
         });
     },
@@ -84,6 +85,7 @@
       },
       selsChange(val){
         this.chooseUser = val;
+          console.log(val);
       },
       sendUserId(data){
         if (this.chooseUser.length === 0) {

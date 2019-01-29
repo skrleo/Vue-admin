@@ -56,7 +56,14 @@
     data() {
       return {
         form: {
-          users: [],
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
         },
         dialogVisible: false
       }
@@ -65,6 +72,7 @@
       // selsChange(val){
       //   alert(val);
       //   this.roleIds = val;
+      //     console.log(val);
       // },
       removeTag (tag) {
         this.users.forEach((item, index) => {
@@ -93,6 +101,10 @@
       },
       chooseUsers(){
         this.dialogVisible = true;
+        console.log('chooseUsers!');
+      },
+      largeText(val){
+        console.log(val);
       }
     }
   }
