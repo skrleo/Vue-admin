@@ -10,7 +10,9 @@
           <!--搜索框-->
           <el-form :inline="true" :model="formInline" style="float:left;" size="small">
               <el-form-item>
-                  <el-button type="primary" @click="dialogVisible = true">添加节点</el-button>
+                <nuxt-link :to="{name:'node-store'}">
+                  <el-button type="primary">添加节点</el-button>
+                </nuxt-link>
               </el-form-item>
               <el-form-item label="节点">
                   <el-input placeholder="搜索节点"></el-input>
@@ -20,37 +22,6 @@
               </el-form-item>
           </el-form>
         </div>
-        <el-dialog
-            title="添加节点"
-            :visible.sync="dialogVisible"
-            width="35%">
-          <el-form ref="form" :model="form" label-width="80px" size="small">
-            <el-form-item label="节点名称">
-                <el-input v-model="form.label"></el-input>
-            </el-form-item>
-            <el-form-item label="是否启用">
-                <el-switch v-model="form.state"></el-switch>
-            </el-form-item>
-            <el-form-item label="Icon">
-                <el-input v-model="form.icon"></el-input>
-            </el-form-item>
-            <el-form-item label="路由地址">
-                <el-input v-model="form.path"></el-input>
-            </el-form-item>
-            <el-form-item label="父级节点">
-                <el-select v-model="form.parentId" placeholder="请选择父级节点">
-                <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="节点描述">
-                <el-input type="textarea" v-model="form.description"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="sumbit">立即创建</el-button>
-                <el-button type="primary" @click="cancel">取消</el-button>
-            </el-form-item>
-          </el-form>
-        </el-dialog>
         <el-tree
             :data="data"
             :props="name"
@@ -89,8 +60,7 @@
           path: '',
           parentId: '',
           description: ''
-        },
-        dialogVisible: false
+        }
       }
     },
 
