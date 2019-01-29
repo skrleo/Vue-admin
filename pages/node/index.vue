@@ -8,7 +8,7 @@
         <br>
         <div style="height:62px;">
           <!--搜索框-->
-          <el-form :inline="true" :model="formInline" style="float:left;" size="small">
+          <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
                 <nuxt-link :to="{name:'node-store'}">
                   <el-button type="primary">添加节点</el-button>
@@ -24,7 +24,6 @@
         </div>
         <el-tree
             :data="data"
-            :props="name"
             show-checkbox
             node-key="nodeId"
             default-expand-all
@@ -88,6 +87,9 @@
       },
       cancel(data) {
         this.dialogVisible = false;     
+      },
+      onSubmit() {
+          console.log('submit!');
       },
       append(data) {
         const newChild = { id: id++, label: 'testtest', children: [] };

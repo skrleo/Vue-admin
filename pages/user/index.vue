@@ -120,8 +120,8 @@
                 this.pageNow = res.data.page.now || 1;
             });
         },
-        sumbit(data){
-
+        onSubmit() {
+            console.log('submit!');
         },
         cancel(data) {
             this.dialogVisible = false;     
