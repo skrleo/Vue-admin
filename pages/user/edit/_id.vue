@@ -60,14 +60,6 @@
       }
       return /^\d+$/.test(params.id)
     },
-    // created: function () {
-    //     console.log(params);
-    //   axios.get(`user/${this.id}`)
-    //     .then(res => {
-    //       console.log(res.data);
-    //       this.lists = res.data.lists || [];
-    //     });
-    // },
     async asyncData ({ params }) {
       let {data} = await axios.get(`user/${params.id}`);
       console.log(data.data);
