@@ -28,17 +28,18 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
-            <el-table-column prop="name" label="权限ID" width="120">
+            <el-table-column prop="manageId" label="权限ID" width="120">
             </el-table-column>
-            <el-table-column prop="name" label="用户账号">
-            </el-table-column>
-            <el-table-column prop="address" label="所属部门">
+            <el-table-column prop="hasOneUserBaseModel.name" label="用户账号">
             </el-table-column>
             <el-table-column prop="address" label="角色名称">
             </el-table-column>
             <el-table-column prop="address" label="权限描述">
             </el-table-column>
-            <el-table-column prop="date" label="状态">
+            <el-table-column prop="status" label="状态">
+                 <template slot-scope="scope">
+                    <span>{{scope.row.status ? '启用':'禁用'}}</span>
+                </template>
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间">
                 <template slot-scope="scope">
@@ -47,10 +48,10 @@
             </el-table-column>
             <el-table-column label="操作" width="300">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'artcle-id',params:{ id: scope.row.createdAt }}">
+                    <nuxt-link :to="{name:'power-id',params:{ id: scope.row.manageId }}">
                         <el-button type="info" icon="el-icon-edit" size="mini">详情</el-button>
                     </nuxt-link>
-                    <nuxt-link :to="{name:'artcle-id',params:{ id: scope.row.createdAt }}">
+                    <nuxt-link :to="{name:'power-id',params:{ id: scope.row.manageId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
                     <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
