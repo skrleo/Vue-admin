@@ -10,8 +10,16 @@
     <el-form-item label="账户名称">
       <el-input v-model="form.account" style="width:280px" ></el-input>
     </el-form-item>
-    <el-form-item label="用户头像">
-  
+    <el-form-item label="上传头像" prop="cover">
+      <el-upload
+        class="avatar-uploader"
+        action="http://api.example.com/v1.0/api/upload/img"
+        :show-file-list="false"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload">
+        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
     </el-form-item>
     <el-form-item label="是否可用">
       <el-switch v-model="form.status"></el-switch>
@@ -48,6 +56,31 @@
   </el-form>
 </div>
 </template>
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 118px;
+    height: 118px;
+    line-height: 118px;
+    text-align: center;
+  }
+  .avatar {
+    width: 118px;
+    height: 118px;
+    display: block;
+  }
+</style>
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js'
@@ -78,10 +111,43 @@
           nickname: '',
           email: '',
           phone: ''
-        }
+        },
+        imageUrl: ''
       }
     },
     methods: {
+      uploadImg(item){
+        console.log(item);
+        // axios.post('/upload/img',qs.stringify({
+        //     filePath: file.raw.name
+        //   })).then(res => {
+        //     //判断是否请求成功
+        //     if(res.data.errorId === 'OK'){
+        //       this.$message({
+        //           message: '成功上传',
+        //           type: 'success'
+        //         });  
+        //       this.dialogVisible = false;   
+        //     }
+        //   }).catch(res => {
+        //     this.$message.error('请求错误，请重试');
+        //   });
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
       onSubmit() {
         axios.post('/user',qs.stringify({
             account: this.form.account,
@@ -105,7 +171,6 @@
           }).catch(res => {
             this.$message.error('请求错误，请重试');
           });
-        console.log('submit!');
       }
     }
   }
