@@ -10,16 +10,18 @@
         <br/>
         <el-form ref="form" :model="form" label-width="80px" size="small">
             <el-form-item label="节点名称">
-                <el-input v-model="form.label"></el-input>
+                <el-input v-model="form.label" style="width:280px"></el-input>
             </el-form-item>
             <el-form-item label="是否启用">
                 <el-switch v-model="form.state"></el-switch>
             </el-form-item>
-            <el-form-item label="Icon">
-                <el-input v-model="form.icon"></el-input>
+            <el-form-item label="图标icon">
+                <i class="el-icon-edit"></i>
+                <i class="el-icon-share"></i>
+                <i class="el-icon-delete"></i>
             </el-form-item>
             <el-form-item label="路由地址">
-                <el-input v-model="form.path"></el-input>
+                <el-input v-model="form.path" style="width:280px"></el-input>
             </el-form-item>
             <el-form-item label="父级节点">
                 <el-select v-model="form.parentId" placeholder="请选择父级节点">
@@ -27,7 +29,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="节点描述">
-                <el-input type="textarea" v-model="form.description"></el-input>
+                <el-input type="textarea" v-model="form.description" style="width:380px;"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="sumbit">立即创建</el-button>

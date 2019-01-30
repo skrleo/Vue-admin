@@ -8,7 +8,7 @@
     <br>
     <el-form ref="form" :model="form" label-width="80px" size="small" >
     <el-form-item label="账户名称">
-      <el-input v-model="form.account" style="width:400px" ></el-input>
+      <el-input v-model="form.account" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="用户头像">
       <el-upload
@@ -35,20 +35,23 @@
         <el-radio label="保密"></el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="账号密码">
-      <el-input v-model="form.password" style="width:350px" ></el-input>
-    </el-form-item>
+    <!-- <el-form-item label="账号密码">
+      <el-input v-model="form.password" style="width:280px" ></el-input>
+    </el-form-item> -->
     <el-form-item label="真实姓名">
-      <el-input v-model="form.name" style="width:350px" ></el-input>
+      <el-input v-model="form.name" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="用户昵称">
-      <el-input v-model="form.nickname" style="width:350px" ></el-input>
+      <el-input v-model="form.nickname" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="邮箱地址">
-      <el-input v-model="form.email" style="width:350px" ></el-input>
+      <el-input v-model="form.email" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="联系方式">
-      <el-input v-model="form.phone" style="width:350px" ></el-input>
+      <el-input v-model="form.phone" style="width:280px" ></el-input>
+    </el-form-item>
+    <el-form-item label="备注" style="width:600px">
+      <el-input type="textarea" v-model="form.desc" ></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">立即创建</el-button>
