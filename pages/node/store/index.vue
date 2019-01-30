@@ -51,10 +51,10 @@
        'el-user-list':userlist
     },
     async asyncData () {
-      let {data} = await axios.get('/rbac/role/lists');
+      let {data} = await axios.get('/rbac/node/lists');
       console.log(data.lists);
       return {
-        role: data.lists,
+        nodeParent: data.lists,
       }
     },
     data() {
