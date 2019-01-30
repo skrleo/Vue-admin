@@ -28,6 +28,13 @@
 <script>
   export default {
     layout: 'main',
+    validate ({ params }) {
+      // Must be a number
+      if(/^\d+$/.test(params.id)){
+        this.id = params.id;
+      }
+      return /^\d+$/.test(params.id)
+    },
     data() {
       return {}
     },
