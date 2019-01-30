@@ -59,10 +59,13 @@
                     <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="300">
+            <el-table-column label="操作">
                 <template slot-scope="scope">
                     <nuxt-link :to="{name:'role-id',params:{ id: scope.row.roleId }}">
                         <el-button type="info" icon="el-icon-edit" size="mini">详情</el-button>
+                    </nuxt-link>
+                    <nuxt-link :to="{name:'role-node-id',params:{ id: scope.row.roleId }}">
+                        <el-button type="warning" icon="el-icon-edit" size="mini">关联节点</el-button>
                     </nuxt-link>
                     <nuxt-link :to="{name:'role-id',params:{ id: scope.row.roleId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
