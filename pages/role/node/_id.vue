@@ -10,19 +10,20 @@
         <br>
         <el-form ref="role" :model="role" label-width="80px">
           <el-form-item label="角色名称" prop="name">
-            <el-input v-model="role.name" style="width:280px;"></el-input>
+            <span>超级管理员</span>
           </el-form-item>
-          <el-form-item label="角色状态" prop="state">
-             <el-radio-group v-model="role.state">
-              <el-radio label="0">启用</el-radio>
-              <el-radio label="1">禁用</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="备注" style="width:600px" prop="description">
-            <el-input type="textarea" v-model="role.description"></el-input>
+          <el-form-item label="关联节点">
+             <el-tree
+              :data="data"
+              show-checkbox
+              node-key="id"
+              :default-expanded-keys="[2, 3]"
+              :default-checked-keys="[5]"
+              :props="defaultProps">
+            </el-tree>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit">立即关联</el-button>
             <el-button>取消</el-button>
           </el-form-item>
       </el-form>
@@ -38,32 +39,46 @@
     layout: 'main',
     data() {
       return {
-        role:{
-          name:'',
-          state:'',
-          description:''
-        },
-        dialogVisible: false
-      }
-    },
-    methods: {
-      onSubmit() {
-        axios.post('rbac/role',qs.stringify({
-            name: this.role.name,
-            state: this.role.state,
-            description: this.role.description
-          })).then(res => {
-            //判断是否请求成功
-            if(res.data.errorId === 'OK'){
-              this.$message({
-                  message: '成功添加节点',
-                  type: 'success'
-                });
-            }
-          }).catch(res => {
-            this.$message.error('请求错误，请重试');
-          });
-      }
+        data: [{
+          id: 1,
+          label: '一级 1',
+          children: [{
+            id: 4,
+            label: '二级 1-1',
+            children: [{
+              id: 9,
+              label: '三级 1-1-1'
+            }, {
+              id: 10,
+              label: '三级 1-1-2'
+            }]
+          }]
+        }, {
+          id: 2,
+          label: '一级 2',
+          children: [{
+            id: 5,
+            label: '二级 2-1'
+          }, {
+            id: 6,
+            label: '二级 2-2'
+          }]
+        }, {
+          id: 3,
+          label: '一级 3',
+          children: [{
+            id: 7,
+            label: '二级 3-1'
+          }, {
+            id: 8,
+            label: '二级 3-2'
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
+      };
     }
-  }
+  };
 </script>
