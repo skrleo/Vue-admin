@@ -21,7 +21,7 @@
       <!-- <span>{{lists}}</span> -->
         <el-table :data="lists" border style="width: 100%" ref="multipleTable">
             <el-table-column width="55">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-radio :label="scope.row.uid" v-model="uid" @change.native="chooseUser(scope.row)"> &nbsp;</el-radio>
                 </template>
             </el-table-column>
