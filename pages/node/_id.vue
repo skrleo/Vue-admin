@@ -6,15 +6,15 @@
         <el-breadcrumb-item>节点管理</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
-        <el-form ref="form" :model="form" label-width="80px">
+        <el-form ref="form" :model="form" label-width="80px" size="medium">
             <el-form-item label="节点名称">
-                <el-input v-model="form.name"></el-input>
+                <el-input v-model="form.name" style="width:400px"></el-input>
             </el-form-item>
             <el-form-item label="是否启用">
                 <el-switch v-model="form.delivery"></el-switch>
             </el-form-item>
             <el-form-item label="路由地址">
-                <el-input v-model="form.name"></el-input>
+                <el-input v-model="form.name" style="width:400px"></el-input>
             </el-form-item>
             <el-form-item label="菜单类型">
                 <el-radio-group v-model="form.resource">
@@ -29,7 +29,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="节点描述">
-                <el-input type="textarea" v-model="form.desc"></el-input>
+                <el-input type="textarea" v-model="form.desc" style="width:580px"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">立即创建</el-button>

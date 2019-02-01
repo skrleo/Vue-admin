@@ -9,7 +9,7 @@
         </el-breadcrumb>
         <br>
         <el-form ref="form" :model="form" label-width="80px" size="medium">
-          <el-form-item v-model="form.user" label="用户名称" style="width:400px" >
+          <el-form-item v-model="form.user" label="用户名称" style="width:400px">
             <!-- <el-tag @close="removeTag(tag)" v-for="tag in users" :key="tag.uid" closable>
                 {{tag.name}}
               </el-tag> -->
@@ -17,7 +17,7 @@
             <el-button type="primary" size="small" @click="chooseUsers">选择用户</el-button>
           </el-form-item>
           <el-form-item label="用户角色">
-            <el-checkbox-group v-model="form.role" @change="checkinlist" style="width:58s0px;">
+            <el-checkbox-group v-model="form.role" @change="checkinlist" style="width:580px;">
               <el-checkbox v-for="item in role" :key="item.roleId" :label="item.roleId" :value="item.name">{{item.name}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>

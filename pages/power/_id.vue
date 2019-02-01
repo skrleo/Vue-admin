@@ -6,31 +6,31 @@
       <el-breadcrumb-item>添加用户</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
-    <el-form ref="form" :model="form" label-width="80px">
-    <el-form-item label="用户名称" style="width:400px" >
-      <el-button type="primary" size="medium" @click="dialogVisible = true">选择用户</el-button>
-    </el-form-item>
-    <el-form-item label="所属部门">
-      <el-select v-model="form.region" placeholder="请选择所属部门">
-        <el-option v-for="item in department" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="是否可用">
-      <el-switch v-model="form.delivery"></el-switch>
-    </el-form-item>
-    <el-form-item label="用户角色">
-      <el-checkbox-group v-model="form.type">
-        <el-checkbox v-for="item in role" :key="item.roleId" :label="item.name" :value="item.roleId"></el-checkbox>
-      </el-checkbox-group>
-    </el-form-item>
-    <el-form-item label="备注" style="width:600px">
-      <el-input type="textarea" v-model="form.desc" ></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">立即创建</el-button>
-      <el-button>取消</el-button>
-    </el-form-item>
-  </el-form>
+    <el-form ref="form" :model="form" label-width="80px" size="medium">
+      <el-form-item label="用户名称" style="width:400px" >
+        <el-button type="primary" size="small" @click="dialogVisible = true">选择用户</el-button>
+      </el-form-item>
+      <el-form-item label="所属部门">
+        <el-select v-model="form.region" placeholder="请选择所属部门">
+          <el-option v-for="item in department" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="是否可用">
+        <el-switch v-model="form.delivery"></el-switch>
+      </el-form-item>
+      <el-form-item label="用户角色">
+        <el-checkbox-group v-model="form.type">
+          <el-checkbox v-for="item in role" :key="item.roleId" :label="item.name" :value="item.roleId"></el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item label="备注" style="width:600px">
+        <el-input type="textarea" v-model="form.desc" ></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button>取消</el-button>
+      </el-form-item>
+    </el-form>
   <el-dialog
       title="添加角色"
       :visible.sync="dialogVisible"
