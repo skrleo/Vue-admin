@@ -76,7 +76,7 @@ import { all } from 'q';
             this.node.icon = item
         },
         onUpdate(val) {
-          axios.post(`rbac/node/${val}`,qs.stringify({
+          axios.put(`rbac/node/${val}`,qs.stringify({
             nodeId: val,
             label: this.node.label,
             icon: this.node.icon,

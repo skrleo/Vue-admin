@@ -20,7 +20,7 @@
         <el-input type="textarea" v-model="role.description"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button type="primary" @click="onUpdate(role.roleId)">立即创建</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
@@ -55,7 +55,27 @@
       }
     },
     methods: {
-      onSubmit() {
+      onUpdate(val) {
+        axios.put(`rbac/role/${val}`,qs.stringify({
+            roleId: val,
+            name: this.role.name,
+            state: this.role.state,
+            description: this.role.description
+          })).then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              this.$message({
+                  message: '成功编辑角色',
+                  type: 'success'
+                });
+            }
+          }).catch(res => {
+            if(res.response.data.message === ''){
+              this.$message.error('请求异常，请稍后重试！');
+            }else{
+              this.$message.error(res.response.data.message);
+            }
+          });
         console.log('submit!');
       }
     }
