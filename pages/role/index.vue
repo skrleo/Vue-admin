@@ -75,7 +75,7 @@
                     <nuxt-link :to="{name:'role-id',params:{ id: scope.row.roleId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.roleId)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>

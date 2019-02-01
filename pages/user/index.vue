@@ -54,7 +54,7 @@
                     <nuxt-link :to="{name:'user-edit-id',params:{ id: scope.row.uid }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini"  @click="destroy(scope.row.uid)">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.uid)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
