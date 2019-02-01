@@ -14,6 +14,7 @@
       <el-upload
         class="avatar-uploader"
         action="http://api.example.com/v1.0/api/upload/img"
+        :headers="application/x-www-form-urlencoded"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload">

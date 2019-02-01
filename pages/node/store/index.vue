@@ -8,7 +8,7 @@
           <el-breadcrumb-item>添加节点</el-breadcrumb-item>
         </el-breadcrumb>
         <br/>
-        <el-form ref="node" :model="node" label-width="80px" size="small">
+        <el-form ref="node" :model="node" label-width="80px" size="medium">
             <el-form-item label="节点名称">
                 <el-input v-model="node.name" style="width:280px"></el-input>
             </el-form-item>

@@ -191,7 +191,6 @@
         let Uid = Cookie.get('Uid');
         axios.get(`/user/${Uid}`)
             .then(res => {
-                console.log(res.data.data);
                 this.userInfo = res.data.data
               });
     //   this.$router.push('/'); // 页面加载时跳转

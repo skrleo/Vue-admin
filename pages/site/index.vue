@@ -6,7 +6,7 @@
       <el-breadcrumb-item>站点设置</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
-    <el-form ref="siteConfig" :model="siteConfig" label-width="120px">
+    <el-form ref="siteConfig" :model="siteConfig" label-width="120px" size="medium">
     <el-form-item label="网站名称" style="width:400px" >
       <el-input v-model="siteConfig.title"></el-input>
     </el-form-item>

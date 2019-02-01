@@ -8,7 +8,7 @@
           <el-breadcrumb-item>添加角色</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
-        <el-form ref="role" :model="role" label-width="80px">
+        <el-form ref="role" :model="role" label-width="80px" size="medium">
           <el-form-item label="角色名称" prop="name">
             <span>超级管理员</span>
           </el-form-item>
