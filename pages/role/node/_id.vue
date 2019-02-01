@@ -4,27 +4,25 @@
       <el-row class="panel-body clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/power' }">角色管理</el-breadcrumb-item>
-          <el-breadcrumb-item>添加角色</el-breadcrumb-item>
+          <el-breadcrumb-item>角色管理</el-breadcrumb-item>
+          <el-breadcrumb-item>关联节点</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
-        <el-form ref="role" :model="role" label-width="80px" size="medium">
+        <el-form label-width="80px" size="medium" @selection-change="selsChange">
           <el-form-item label="角色名称" prop="name">
             <span style="color:#000;">超级管理员</span>
           </el-form-item>
           <el-form-item label="关联节点">
             <el-tree
                 :data="node"
-                :props="name"
                 show-checkbox
                 node-key="nodeId"
                 default-expand-all
-                :expand-on-click-node="false"
-                :render-content="renderContent">
+                :expand-on-click-node="false">
             </el-tree>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即关联</el-button>
+            <el-button type="primary" @click="onUpdate(3)">立即关联</el-button>
             <el-button>取消</el-button>
           </el-form-item>
       </el-form>
@@ -44,6 +42,35 @@
         node: JSON.parse(JSON.stringify(data.lists))
       }
     },
-    data() {}
+    data() {
+
+    },
+    methods: {
+      selsChange(val){
+        this.nodeIds = val;
+        console.log(val);
+      },
+      onUpdate(val){
+        // let nodeIds = this.nodes.map(item => item.nodeId)
+        axios.put('rbac/purview/role/node',qs.stringify({
+            roleId: val,
+            nodeIds: this.nodeIds
+          })).then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              this.$message({
+                  message: '成功关联节点',
+                  type: 'success'
+                });
+            }
+          }).catch(res => {
+            if(res.response.data.message === ''){
+              this.$message.error('请求异常，请稍后重试！');
+            }else{
+              this.$message.error(res.response.data.message);
+            }
+          });
+      }
+    }
   };
 </script>

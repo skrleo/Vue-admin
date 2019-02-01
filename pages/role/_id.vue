@@ -76,7 +76,6 @@
               this.$message.error(res.response.data.message);
             }
           });
-        console.log('submit!');
       }
     }
   }
