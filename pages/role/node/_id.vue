@@ -10,7 +10,7 @@
         <br>
         <el-form label-width="80px" size="medium">
           <el-form-item label="角色名称" prop="name">
-            <span style="color:#000;">超级管理员</span>
+            <span style="color:#000;">{{role.name}}</span>
           </el-form-item>
           <el-form-item label="关联节点">
             <el-tree
@@ -19,8 +19,8 @@
                 node-key="nodeId"
                 ref="node"
                 default-expand-all
-                :expand-on-click-node="false"
-                @check-change="handleCheckChange">
+                :default-checked-keys="role.nodeIds"
+                :expand-on-click-node="false">
             </el-tree>
           </el-form-item>
           <el-form-item>
@@ -38,11 +38,20 @@
   
   export default {
     layout: 'main',
-    async asyncData () {
-      let { data } = await axios.get('/rbac/node/lists')
+    validate ({ params }) {
+      // Must be a number
+      return /^\d+$/.test(params.id)
+    },
+    async asyncData ({ params }) {
+      let [node, role] = await Promise.all([
+        axios.get('/rbac/node/lists'),
+        axios.get(`/rbac/role/${params.id}`)
+      ])
       return {
-        node: JSON.parse(JSON.stringify(data.lists))
+        node: JSON.parse(JSON.stringify(node.data.lists)),
+        role: role.data.data
       }
+
     },
     data() {
       return{
