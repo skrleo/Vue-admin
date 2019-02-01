@@ -18,7 +18,7 @@
           </el-input>
         </el-form-item>
         <div style="margin-top: 15px;">
-          <el-checkbox v-model="checked">记住密码</el-checkbox><a href="#" style="float:right;color:rgb(103, 102, 102);">忘记密码?联系管理员</a>
+          <el-checkbox checked>记住密码</el-checkbox><a href="#" style="float:right;color:rgb(103, 102, 102);">忘记密码?联系管理员</a>
         </div>
         <div style="margin-top: 15px;">
           <el-button type="primary" style="width:320px;" @click="submit('ruleForm')">立即登录</el-button>
@@ -82,6 +82,7 @@ export default {
                 account: this.ruleForm.account,
                 password: this.ruleForm.password
               })).then(res => {
+                console.log(res);
                 //判断是否请求成功
                 if(res.data.statusCode == '200'){
                   this.uid = res.data.data.uid;
@@ -93,9 +94,13 @@ export default {
                     path: '/',
                   });               
                 }
-              }).catch(res => {
-                // console.log(res.data.message);
-                this.$message.error('账号或者密码错误！');
+              })
+              .catch(res => {
+                if(res.response.data.message === ''){
+                  this.$message.error('请求异常，请稍后重试！');
+                }else{
+                  this.$message.error(res.response.data.message);
+                }
               });
           } else {
             return false;

@@ -127,7 +127,11 @@
                 const index = children.findIndex(d => d.id === data.id);
                 children.splice(index, 1);
             }).catch(res => {
-                this.$message.error('请求错误，请重试');
+                if(res.response.data.message === ''){
+                  this.$message.error('请求异常，请稍后重试！');
+                }else{
+                  this.$message.error(res.response.data.message);
+                }
             });
         }
     }

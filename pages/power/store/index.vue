@@ -44,7 +44,6 @@
     },
     async asyncData () {
       let {data} = await axios.get('/rbac/role/lists');
-      console.log(data.lists);
       return {
         role: data.lists,
       }
@@ -78,7 +77,11 @@
               this.dialogVisible = false;   
             }
           }).catch(res => {
-            this.$message.error('请求错误，请重试');
+            if(res.response.data.message === ''){
+              this.$message.error('请求异常，请稍后重试！');
+            }else{
+              this.$message.error(res.response.data.message);
+            }
           });
       },
       chooseUsers(){
