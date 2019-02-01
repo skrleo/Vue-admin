@@ -54,11 +54,9 @@
     },
     async asyncData () {
       let {data} = await axios.get('/rbac/role/lists');
-      // let department = await axios.get('/rbac/node/lists')
       console.log(data.lists);
       return {
-        role: data.lists,
-        // department: department.lists
+        role: data.lists
       }
     },
     data() {

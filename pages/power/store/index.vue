@@ -10,9 +10,6 @@
         <br>
         <el-form ref="form" :model="form" label-width="80px" size="medium">
           <el-form-item v-model="form.user" label="用户名称" style="width:400px">
-            <!-- <el-tag @close="removeTag(tag)" v-for="tag in users" :key="tag.uid" closable>
-                {{tag.name}}
-              </el-tag> -->
               <span style="color:#000;">{{user.name}}</span>
             <el-button type="primary" size="small" @click="chooseUsers">选择用户</el-button>
           </el-form-item>
@@ -66,13 +63,6 @@
         this.roleIds = val;
         console.log(val);
       },
-      // removeTag (tag) {
-      //   this.users.forEach((item, index) => {
-      //     if (item.uid === tag.uid) {
-      //       this.users.splice(index, 1)
-      //     }
-      //   })
-      // },
       onSubmit() {
         // let uids = this.users.map(item => item.uid)
         axios.put('rbac/purview/user/role',qs.stringify({
@@ -93,10 +83,6 @@
       },
       chooseUsers(){
         this.dialogVisible = true;
-        console.log('chooseUsers!');
-      },
-      largeText(val){
-        console.log(val);
       }
     }
   }

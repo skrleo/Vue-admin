@@ -123,7 +123,6 @@
         dialogVisible: false
       }
     },
-
     methods: {
        handleSizeChange(val) {
         axios.get(`/rbac/role/lists?pageSize=${val}`)

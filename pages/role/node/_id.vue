@@ -44,10 +44,6 @@
         node: JSON.parse(JSON.stringify(data.lists))
       }
     },
-    data() {
-      return {
-        
-      };
-    }
+    data() {}
   };
 </script>
