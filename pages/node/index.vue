@@ -73,30 +73,6 @@
     },
 
     methods: {
-      sumbit(){
-        axios.post('/rbac/node',qs.stringify({
-            label: this.form.label,
-            icon: this.form.icon,
-            state: 1,
-            path: this.form.path,
-            parentId: this.form.parentId,
-            description: this.form.description,
-          })).then(res => {
-            //判断是否请求成功
-            if(res.data.errorId === 'OK'){
-              this.$message({
-                  message: '成功添加节点',
-                  type: 'success'
-                });  
-              this.dialogVisible = false;   
-            }
-          }).catch(res => {
-            this.$message.error('请求错误，请重试');
-          });
-      },
-      cancel(data) {
-        this.dialogVisible = false;     
-      },
       append(data) {
         const newChild = { id: id++, label: 'testtest', children: [] };
         if (!data.children) {
@@ -106,6 +82,8 @@
       },
 
       remove(node, data) {
+        this.destroy(data.nodeId);
+        //删除当前节点
         const parent = node.parent;
         const children = parent.data.children || parent.data;
         const index = children.findIndex(d => d.id === data.id);
@@ -149,7 +127,21 @@
       },
       allowDrag(draggingNode) {
         return draggingNode.data.label.indexOf('三级 3-2-2') === -1;
-      }
+      },
+      destroy(val){
+        axios.delete(`/rbac/node/${val}`, {data: qs.stringify({nodeId:val})})
+        .then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+                this.$message({
+                    message: '成功删除节点',
+                    type: 'success'
+                    });    
+                }
+            }).catch(res => {
+                this.$message.error('请求错误，请重试');
+            });
+        }
     }
   };
 </script>

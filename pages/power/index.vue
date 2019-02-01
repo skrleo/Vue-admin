@@ -59,7 +59,7 @@
                     <nuxt-link :to="{name:'power-id',params:{ id: scope.row.manageId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.manageId)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -108,27 +108,20 @@
     },
 
     methods: {
-      sumbit(data){
-        axios.post('/rbac/role',qs.stringify({
-            name: this.form.name,
-            state: 1,
-            description: this.form.description,
-          })).then(res => {
-            //判断是否请求成功
-            if(res.data.errorId === 'OK'){
-              this.$message({
-                  message: '成功添加角色',
-                  type: 'success'
-                });  
-              this.dialogVisible = false;   
-            }
-          }).catch(res => {
-            this.$message.error('请求错误，请重试');
-          });
-      },
-      cancel(data) {
-        this.dialogVisible = false;     
-      }
+        destroy(val){
+            axios.delete(`/rbac/manage/${val}`, {data: qs.stringify({manageId:val})})
+            .then(res => {
+                //判断是否请求成功
+                if(res.data.errorId === 'OK'){
+                    this.$message({
+                        message: '成功删除用户',
+                        type: 'success'
+                        });    
+                    }
+                }).catch(res => {
+                    this.$message.error('请求错误，请重试');
+                });
+        }
     }
   };
 </script>

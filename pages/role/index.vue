@@ -143,27 +143,20 @@
             this.pageNow = res.data.page.now || 1;
           });
       },
-      sumbit(data){
-        axios.post('/rbac/role',qs.stringify({
-            name: this.form.name,
-            state: 1,
-            description: this.form.description,
-          })).then(res => {
+      destroy(val){
+        axios.delete(`/rbac/role/${val}`, {data: qs.stringify({roleId:val})})
+        .then(res => {
             //判断是否请求成功
-            if(res.data.statusCode == '200'){
-              this.$message({
-                  message: '成功添加角色',
-                  type: 'success'
-                });  
-              this.dialogVisible = false;   
-            }
-          }).catch(res => {
-            this.$message.error('请求错误，请重试');
-          });
-      },
-      cancel(data) {
-        this.dialogVisible = false;     
-      }
+            if(res.data.errorId === 'OK'){
+                this.$message({
+                    message: '成功删除角色',
+                    type: 'success'
+                    });    
+                }
+            }).catch(res => {
+                this.$message.error('请求错误，请重试');
+            });
+        }
     }
   };
 </script>
