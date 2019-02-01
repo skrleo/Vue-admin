@@ -6,7 +6,7 @@
       <el-breadcrumb-item>添加用户</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form ref="form" :model="form" label-width="80px" size="medium">
     <el-form-item label="用户名称" style="width:400px" >
       <el-input v-model="form.name"></el-input>
     </el-form-item>
