@@ -73,13 +73,6 @@
     },
 
     methods: {
-      append(data) {
-        const newChild = { id: id++, label: 'testtest', children: [] };
-        if (!data.children) {
-          this.$set(data, 'children', []);
-        }
-        data.children.push(newChild);
-      },
       renderContent(h, { node, data, store }) {
         return (
           <span class="custom-tree-node">

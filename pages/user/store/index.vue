@@ -35,9 +35,9 @@
         <el-radio label="保密"></el-radio>
       </el-radio-group>
     </el-form-item>
-    <!-- <el-form-item label="账号密码">
+    <el-form-item label="账号密码">
       <el-input v-model="form.password" style="width:280px" ></el-input>
-    </el-form-item> -->
+    </el-form-item>
     <el-form-item label="真实姓名">
       <el-input v-model="form.name" style="width:280px" ></el-input>
     </el-form-item>
@@ -128,7 +128,6 @@
           }).catch(res => {
             this.$message.error('请求错误，请重试');
           });
-        console.log('submit!');
       }
     }
   }
