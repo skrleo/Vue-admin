@@ -126,7 +126,7 @@
           <span class="custom-tree-node">
             <span>{node.label}</span>
             <span>
-              <el-button size="mini" type="text" on-click={ () => this.$router.push({ path: '/node/' + 1 }) } >查看</el-button>
+              <el-button size="mini" type="text" on-click={ () => this.$router.push({ path: '/node/' + data.nodeId }) } >查看</el-button>
               <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>删除</el-button>
             </span>
           </span>);

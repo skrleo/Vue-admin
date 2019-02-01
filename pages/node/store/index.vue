@@ -10,7 +10,7 @@
         <br/>
         <el-form ref="node" :model="node" label-width="80px" size="medium">
             <el-form-item label="节点名称">
-                <el-input v-model="node.name" style="width:280px"></el-input>
+                <el-input v-model="node.label" style="width:280px"></el-input>
             </el-form-item>
             <el-form-item label="是否启用">
               <el-radio-group v-model="node.state">
@@ -65,7 +65,7 @@
     data() {
       return {
         node: {
-          name: '',
+          label: '',
           state: 1,
           icon:'',
           parentId:'',
@@ -79,7 +79,24 @@
         this.node.icon = item
       },
       onSubmit() {
-        console.log('submit!');
+        axios.post('rbac/node',qs.stringify({
+            label: this.node.label,
+            icon: this.node.icon,
+            state: this.node.state,
+            path: this.node.path || '',
+            parentId: this.node.parentId || 0,
+            description: this.node.description
+          })).then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              this.$message({
+                  message: '成功添加节点',
+                  type: 'success'
+                });
+            }
+          }).catch(res => {
+            this.$message.error('请求错误，请重试');
+          });
       }
     }
   }

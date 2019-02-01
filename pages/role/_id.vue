@@ -16,8 +16,11 @@
         <el-option label="推广部" value="beijing"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="是否可用">
-      <el-switch v-model="form.delivery"></el-switch>
+    <el-form-item label="是否启用">
+      <el-radio-group v-model="form.state">
+        <el-radio label="0">启用</el-radio>
+        <el-radio label="1">禁用</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="用户角色">
       <el-checkbox-group v-model="form.type">
