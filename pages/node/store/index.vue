@@ -76,6 +76,10 @@
       }
     },
     methods: {
+      chooseIcon (item) {
+        console.log(item);
+        this.form.icon = item
+      },
       onSubmit() {
         console.log('submit!');
       }
