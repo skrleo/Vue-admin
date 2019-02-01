@@ -22,15 +22,6 @@
               </el-form-item>
           </el-form>
         </div>
-        <!-- <el-tree
-            :data="data"
-            :props="name"
-            show-checkbox
-            node-key="nodeId"
-            default-expand-all
-            :expand-on-click-node="false"
-            :render-content="renderContent">
-        </el-tree> -->
         <el-tree
           :data="data"
           :props="name"
