@@ -8,7 +8,7 @@
           <el-breadcrumb-item>关联节点</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
-        <el-form label-width="80px" size="medium" @selection-change="selsChange">
+        <el-form label-width="80px" size="medium">
           <el-form-item label="角色名称" prop="name">
             <span style="color:#000;">超级管理员</span>
           </el-form-item>
@@ -17,8 +17,10 @@
                 :data="node"
                 show-checkbox
                 node-key="nodeId"
+                ref="node"
                 default-expand-all
-                :expand-on-click-node="false">
+                :expand-on-click-node="false"
+                @check-change="handleCheckChange">
             </el-tree>
           </el-form-item>
           <el-form-item>
@@ -43,18 +45,18 @@
       }
     },
     data() {
-
+      return{
+        data:{
+          nodeId:''
+        },
+        nodeIds:[]
+      }
     },
     methods: {
-      selsChange(val){
-        this.nodeIds = val;
-        console.log(val);
-      },
       onUpdate(val){
-        // let nodeIds = this.nodes.map(item => item.nodeId)
         axios.put('rbac/purview/role/node',qs.stringify({
             roleId: val,
-            nodeIds: this.nodeIds
+            nodeIds: this.$refs.node.getCheckedKeys()
           })).then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
