@@ -54,7 +54,7 @@
                     <nuxt-link :to="{name:'user-edit-id',params:{ id: scope.row.uid }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini"  @click="destroy(scope.row.uid)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -104,7 +104,6 @@
         dialogVisible: false
       }
     },
-
     methods: {
         handleSizeChange(val) {
             axios.get(`/user/lists?pageSize=${val}`)
@@ -120,11 +119,19 @@
                 this.pageNow = res.data.page.now || 1;
             });
         },
-        sumbit(data){
-
-        },
-        cancel(data) {
-            this.dialogVisible = false;     
+        destroy(val){
+            axios.delete(`/user/${val}`, {data: qs.stringify({uid:val})})
+            .then(res => {
+                //判断是否请求成功
+                if(res.data.errorId === 'OK'){
+                    this.$message({
+                        message: '成功删除用户',
+                        type: 'success'
+                        });    
+                    }
+                }).catch(res => {
+                    this.$message.error('请求错误，请重试');
+                });
         }
     }
   };
