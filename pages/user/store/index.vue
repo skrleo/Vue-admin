@@ -12,21 +12,21 @@
     </el-form-item>
     <el-form-item label="用户头像">
       <el-upload
-        class="upload-demo"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="1"
-        :on-exceed="handleExceed"
-        :file-list="fileList">
-        <el-button size="small" type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-      </el-upload>    
+        class="avatar-uploader"
+        action="http://api.example.com/v1.0/api/upload/img"
+        :headers="application/x-www-form-urlencoded"
+        :show-file-list="false"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload">
+        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
     </el-form-item>
-    <el-form-item label="是否可用">
-      <el-switch v-model="form.status"></el-switch>
+    <el-form-item label="是否启用">
+      <el-radio-group v-model="form.status">
+        <el-radio label="0">启用</el-radio>
+        <el-radio label="1">禁用</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="性别">
       <el-radio-group v-model="form.sex">
@@ -60,6 +60,31 @@
   </el-form>
 </div>
 </template>
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 118px;
+    height: 118px;
+    line-height: 118px;
+    text-align: center;
+  }
+  .avatar {
+    width: 118px;
+    height: 118px;
+    display: block;
+  }
+</style>
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js'

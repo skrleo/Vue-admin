@@ -22,8 +22,11 @@
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </el-form-item>
-    <el-form-item label="是否可用">
-      <el-switch v-model="form.status"></el-switch>
+    <el-form-item label="是否启用">
+      <el-radio-group v-model="form.status">
+        <el-radio label="0">启用</el-radio>
+        <el-radio label="1">禁用</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="性别">
       <el-radio-group v-model="form.sex">

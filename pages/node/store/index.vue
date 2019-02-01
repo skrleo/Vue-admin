@@ -58,7 +58,6 @@
     },
     async asyncData () {
       let {data} = await axios.get('/rbac/node/lists');
-      console.log(data.lists);
       return {
         nodeParent: data.lists,
       }
@@ -77,7 +76,6 @@
     },
     methods: {
       chooseIcon (item) {
-        console.log(item);
         this.node.icon = item
       },
       onSubmit() {

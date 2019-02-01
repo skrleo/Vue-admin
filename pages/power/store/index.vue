@@ -17,7 +17,7 @@
             <el-button type="primary" size="small" @click="chooseUsers">选择用户</el-button>
           </el-form-item>
           <el-form-item label="用户角色">
-            <el-checkbox-group v-model="form.role" @change="checkinlist" style="width:580px;">
+            <el-checkbox-group v-model="form.role" @change="checkinlist">
               <el-checkbox v-for="item in role" :key="item.roleId" :label="item.roleId" :value="item.name">{{item.name}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
