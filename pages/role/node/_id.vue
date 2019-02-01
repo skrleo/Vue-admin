@@ -10,16 +10,17 @@
         <br>
         <el-form ref="role" :model="role" label-width="80px" size="medium">
           <el-form-item label="角色名称" prop="name">
-            <span>超级管理员</span>
+            <span style="color:#000;">超级管理员</span>
           </el-form-item>
           <el-form-item label="关联节点">
-             <el-tree
-              :data="data"
-              show-checkbox
-              node-key="id"
-              :default-expanded-keys="[2, 3]"
-              :default-checked-keys="[5]"
-              :props="defaultProps">
+            <el-tree
+                :data="node"
+                :props="name"
+                show-checkbox
+                node-key="nodeId"
+                default-expand-all
+                :expand-on-click-node="false"
+                :render-content="renderContent">
             </el-tree>
           </el-form-item>
           <el-form-item>
@@ -37,47 +38,15 @@
   
   export default {
     layout: 'main',
+    async asyncData () {
+      let { data } = await axios.get('/rbac/node/lists')
+      return {
+        node: JSON.parse(JSON.stringify(data.lists))
+      }
+    },
     data() {
       return {
-        data: [{
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }, {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        }, {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }],
-        defaultProps: {
-          children: 'children',
-          label: 'label'
-        }
+        
       };
     }
   };
