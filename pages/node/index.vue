@@ -80,23 +80,13 @@
         }
         data.children.push(newChild);
       },
-
-      remove(node, data) {
-        this.destroy(data.nodeId);
-        //删除当前节点
-        const parent = node.parent;
-        const children = parent.data.children || parent.data;
-        const index = children.findIndex(d => d.id === data.id);
-        children.splice(index, 1);
-      },
-
       renderContent(h, { node, data, store }) {
         return (
           <span class="custom-tree-node">
             <span>{node.label}</span>
             <span>
               <el-button size="mini" type="text" on-click={ () => this.$router.push({ path: '/node/' + data.nodeId }) } >查看</el-button>
-              <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>删除</el-button>
+              <el-button size="mini" type="text" on-click={ () => this.destroy(node, data) }>删除</el-button>
             </span>
           </span>);
       },
@@ -128,8 +118,8 @@
       allowDrag(draggingNode) {
         return draggingNode.data.label.indexOf('三级 3-2-2') === -1;
       },
-      destroy(val){
-        axios.delete(`/rbac/node/${val}`, {data: qs.stringify({nodeId:val})})
+      destroy(node, data){
+        axios.delete(`/rbac/node/${data.nodeId}`, {data: qs.stringify({nodeId:data.nodeId})})
         .then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
@@ -138,6 +128,11 @@
                     type: 'success'
                     });    
                 }
+                //删除当前节点
+                const parent = node.parent;
+                const children = parent.data.children || parent.data;
+                const index = children.findIndex(d => d.id === data.id);
+                children.splice(index, 1);
             }).catch(res => {
                 this.$message.error('请求错误，请重试');
             });
