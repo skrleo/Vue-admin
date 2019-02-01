@@ -18,15 +18,18 @@
                 <el-radio label="1">禁用</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="图标icon">
-                <i class="el-icon-edit"></i>
-                <i class="el-icon-share"></i>
-                <i class="el-icon-delete"></i>
+            <el-form-item label="图标icon" style="width:680px;">
+              <div :class="{
+                'system-auth__icon': 1,
+                'system-auth__iconnow': item === node.icon
+                }" v-for="(item, index) in iconLists" :key="index" @click="chooseIcon(item)" style="color:#000;float:left;margin-right:8px;">
+                <i :class="item"></i>
+              </div>
             </el-form-item>
             <el-form-item label="父级节点">
-                <el-select v-model="node.parentId" placeholder="请选择父级节点">
+              <el-select v-model="node.parentId" placeholder="请选择父级节点">
                 <el-option v-for="item in nodeParent" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
-                </el-select>
+              </el-select>
             </el-form-item>
             <el-form-item label="路由地址">
                 <el-input v-model="node.path" style="width:280px"></el-input>
@@ -65,9 +68,11 @@
         node: {
           name: '',
           state: 1,
+          icon:'',
           parentId:'',
           description: ''
-        }
+        },
+        iconLists: require('~/assets/icon/icon.json'),
       }
     },
     methods: {
@@ -77,3 +82,28 @@
     }
   }
 </script>
+<style type="text/css" scoped>
+@component-namespace system {
+  @b auth {
+    @e icon {
+      float: left;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+    @e iconnow>i {
+      color: red;
+    }
+    @e api {
+      float: left;
+      margin-right: 20px;
+      min-width: 1170px;
+    }
+    @e span {
+      color: #606266;
+    }
+    @e iconfont {
+      font-size: 20px;
+    }
+  }
+}
+</style>
