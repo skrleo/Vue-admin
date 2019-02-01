@@ -52,6 +52,11 @@
             </el-table-column>
             <el-table-column prop="name" label="角色名称" width="180">
             </el-table-column>
+             <el-table-column prop="status" label="是否启用" width="110">
+                <template slot-scope="scope">
+                    <span>{{scope.row.status ? '启用':'禁用'}}</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="description" label="角色描述">
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间" width="180">
@@ -59,7 +64,7 @@
                     <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="360">
                 <template slot-scope="scope">
                     <nuxt-link :to="{name:'role-id',params:{ id: scope.row.roleId }}">
                         <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
