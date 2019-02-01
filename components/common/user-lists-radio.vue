@@ -7,15 +7,15 @@
         :before-close="handleClose">
         <el-row :gutter="20" style="margin-bottom:30px;">
             <el-col :span="5">
-                <el-input v-model="phone" placeholder="输入注册手机搜索" size="medium">
+                <el-input v-model="phone" placeholder="输入注册手机搜索" size="small">
                 </el-input>
             </el-col>
             <el-col :span="5">
-                <el-input v-model="name"  placeholder="输入用户真实姓名搜索" size="medium">
+                <el-input v-model="name"  placeholder="输入用户真实姓名搜索" size="small">
                 </el-input>
             </el-col>
             <el-col :span="5"> 
-                <el-button type="primary" size="medium">搜索</el-button>
+                <el-button type="primary" size="small">搜索</el-button>
             </el-col>
         </el-row>
       <!-- <span>{{lists}}</span> -->
@@ -39,18 +39,18 @@
                 </template>
             </el-table-column>
         </el-table>
-     <br>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage"
-      :page-size="100"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-    </el-pagination>
+      <br>
+      <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="pageNow"
+          :page-size="pageSize"
+          layout="total, prev, pager, next, jumper"
+          :total="pageCount">
+      </el-pagination>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="sendUserId()">确 定</el-button>
+        <el-button @click="dialogVisible = false" size="medium">取 消</el-button>
+        <el-button type="primary" @click="sendUserId()" size="medium">确 定</el-button>
       </span>
     </el-dialog>
   </section>
@@ -63,26 +63,40 @@
     props: [ 'dialogVisible'],
     data () {
       return {
-          uid: 0,
+        uid: 0,
         lists:[],
         name:'',
         phone:'',
-        currentPage: 4
+        pageNow:1,
+        pageSize:10,
+        pageCount:0,
+        currentPage: 1
       }
     },
     created: function () {
       axios.get('/user/lists')
         .then(res => {
           console.log(res.data);
+          this.pageNow = res.data.page.now || 1;
+          this.pageSize = res.data.page.size || 10 ;
+          this.pageCount = res.data.page.count || 0 ;
           this.lists = res.data.lists || [];
         });
     },
     methods: {
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        axios.get(`/user/lists?pageSize=${val}`)
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageSize = res.data.page.size || 10;
+          });
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        axios.get(`/user/lists?pageNow=${val}`)
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageNow = res.data.page.now || 1;
+          });
       },
       handleClose(done) {
         this.$emit('update:dialogVisible', false)
