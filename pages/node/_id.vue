@@ -36,7 +36,7 @@
                 <el-input type="textarea" v-model="node.description" style="width:380px;"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                <el-button type="primary" @click="onUpdate(node.nodeId)">立即修改</el-button>
                 <el-button type="primary">取消</el-button>
             </el-form-item>
         </el-form>
@@ -46,19 +46,17 @@
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js'
+import { all } from 'q';
   export default {
     layout:'main',
     validate ({ params }) {
       // Must be a number
-      if(/^\d+$/.test(params.id)){
-        this.id = params.id;
-      }
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
       let {data} = await axios.get(`/rbac/node/${params.id}`);
       return {
-        node: data.data,
+        node: data.data
       }
     },
     data() {
@@ -77,8 +75,26 @@
         chooseIcon (item) {
             this.node.icon = item
         },
-        onSubmit() {
-            console.log('submit!');
+        onUpdate(val) {
+          axios.post(`rbac/node/${val}`,qs.stringify({
+            nodeId: val,
+            label: this.node.label,
+            icon: this.node.icon,
+            state: this.node.state,
+            path: this.node.path || '',
+            parentId: this.node.parentId || 0,
+            description: this.node.description
+          })).then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              this.$message({
+                  message: '成功修改节点',
+                  type: 'success'
+                });
+            }
+          }).catch(res => {
+            this.$message.error('请求错误，请重试');
+          });
         }
     }
   }
