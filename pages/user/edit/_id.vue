@@ -3,7 +3,7 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>添加用户</el-breadcrumb-item>
+      <el-breadcrumb-item>修改用户</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
     <el-form ref="form" :model="form" label-width="80px" size="small" >
@@ -11,7 +11,7 @@
       <el-input v-model="form.account" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="上传头像" prop="cover">
-      <el-upload
+      <!-- <el-upload
         class="avatar-uploader"
         action="http://api.example.com/v1.0/api/upload/img"
         :headers="application/x-www-form-urlencoded"
@@ -20,7 +20,7 @@
         :before-upload="beforeAvatarUpload">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
+      </el-upload> -->
     </el-form-item>
     <el-form-item label="是否启用">
       <el-radio-group v-model="form.status">
@@ -35,9 +35,9 @@
         <el-radio label="2">保密</el-radio>
       </el-radio-group>
     </el-form-item>
-    <!-- <el-form-item label="账号密码">
+    <el-form-item label="账号密码">
       <el-input v-model="form.password" style="width:280px" ></el-input>
-    </el-form-item> -->
+    </el-form-item>
     <el-form-item label="真实姓名">
       <el-input v-model="form.name" style="width:280px" ></el-input>
     </el-form-item>
@@ -54,7 +54,7 @@
       <el-input type="textarea" v-model="form.desc" ></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">立即创建</el-button>
+      <el-button type="primary" @click="onUpdate(form.uid)">立即修改</el-button>
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
@@ -152,8 +152,9 @@
         }
         return isJPG && isLt2M;
       },
-      onSubmit() {
-        axios.post('/user',qs.stringify({
+      onUpdate(val) {
+        axios.put(`/user/${val}`,qs.stringify({
+            uid: val,
             account: this.form.account,
             name: this.form.name,
             status: 1,
@@ -167,7 +168,7 @@
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
               this.$message({
-                  message: '成功添加用户',
+                  message: '成功编辑用户',
                   type: 'success'
                 });  
               this.dialogVisible = false;   
