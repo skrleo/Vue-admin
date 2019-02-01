@@ -39,7 +39,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button type="primary" @click="cancel">取消</el-button>
+                <el-button type="primary">取消</el-button>
             </el-form-item>
         </el-form>
     </el-row>
@@ -78,7 +78,7 @@
     methods: {
       chooseIcon (item) {
         console.log(item);
-        this.form.icon = item
+        this.node.icon = item
       },
       onSubmit() {
         console.log('submit!');
