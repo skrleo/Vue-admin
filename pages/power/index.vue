@@ -32,7 +32,12 @@
             </el-table-column>
             <el-table-column prop="hasOneUserBaseModel.name" label="用户账号">
             </el-table-column>
-            <el-table-column prop="address" label="角色名称">
+            <el-table-column label="角色名称" prop="hasManyUserToRoleModel"  width="150">
+                <template slot-scope="scope">
+                <span v-for="(item,index) in scope.row.hasManyUserToRoleModel" :key="item.roleId">
+                    <span v-show="index > 0">/</span>{{item.hasOneRoleModel}}
+                </span>
+                </template>
             </el-table-column>
             <el-table-column prop="address" label="权限描述">
             </el-table-column>
