@@ -35,8 +35,18 @@
         <el-radio :label="2">保密</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="账号密码">
-      <el-input v-model="form.password" style="width:280px" ></el-input>
+    <el-form-item v-if="visible" label="账号密码">
+      <el-input type="password" v-model="form.password" style="width:280px" placeholder="请输入密码">
+        <i slot="suffix" title="显示密码" @click="changePass('show')" style="cursor:pointer;"
+            class="el-input__icon el-icon-third-mima"></i>
+      </el-input>
+    </el-form-item>
+    <el-form-item v-else label="账号密码">
+      <el-input type="text" v-model="form.password" style="width:280px" placeholder="请输入密码">
+        <i slot="suffix" title="隐藏密码" @click="changePass('hide')" style="cursor:pointer;"
+            class="el-input__icon el-icon-third-mima"></i>
+      </el-input>
+      <!-- <el-input v-model="form.password" style="width:280px" ></el-input> -->
     </el-form-item>
     <el-form-item label="真实姓名">
       <el-input v-model="form.name" style="width:280px" ></el-input>
@@ -112,10 +122,14 @@
           email: '',
           phone: ''
         },
-        imageUrl: ''
+        imageUrl: '',
+        visible: true
       }
     },
     methods: {
+      changePass(value) {
+        this.visible = !(value === 'show');
+      },    //判断渲染，true:暗文显示，false:明文显示
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
