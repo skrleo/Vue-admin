@@ -28,20 +28,20 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
-            <el-table-column prop="manageId" label="权限ID" width="120">
+            <el-table-column prop="manageId" label="权限ID" width="80">
             </el-table-column>
             <el-table-column prop="hasOneUserBaseModel.name" label="用户账号">
             </el-table-column>
-            <el-table-column label="角色名称" prop="hasManyUserToRoleModel"  width="150">
+            <el-table-column label="角色名称" prop="hasManyUserToRoleModel">
                 <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.hasManyUserToRoleModel" :key="item.roleId">
-                    <span v-show="index > 0">/</span>{{item.hasOneRoleModel}}
+                    <span v-show="index > 0">/</span>{{item.hasOneRoleModel.name}}
                 </span>
                 </template>
             </el-table-column>
             <el-table-column prop="address" label="权限描述">
             </el-table-column>
-            <el-table-column prop="status" label="状态">
+            <el-table-column prop="status" label="状态" width="80">
                  <template slot-scope="scope">
                     <span>{{scope.row.status ? '启用':'禁用'}}</span>
                 </template>
