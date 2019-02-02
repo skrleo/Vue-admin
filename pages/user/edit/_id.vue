@@ -46,7 +46,6 @@
         <i slot="suffix" title="隐藏密码" @click="changePass('hide')" style="cursor:pointer;"
             class="el-input__icon el-icon-third-mima"></i>
       </el-input>
-      <!-- <el-input v-model="form.password" style="width:280px" ></el-input> -->
     </el-form-item>
     <el-form-item label="真实姓名">
       <el-input v-model="form.name" style="width:280px" ></el-input>

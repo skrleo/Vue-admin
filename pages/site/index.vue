@@ -10,30 +10,26 @@
     <el-form-item label="网站名称" style="width:400px" >
       <el-input v-model="siteConfig.title"></el-input>
     </el-form-item>
+    <el-form-item label="网站状态" style="width:400px" >
+       <el-radio-group v-model="siteConfig.status">
+        <el-radio :label="0">启用</el-radio>
+        <el-radio :label="1">禁用</el-radio>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item label="网站Logo" prop="logo">
+      <el-upload
+        class="avatar-uploader"
+        action="string"
+        :show-file-list="false"
+        :before-upload="onBeforeUploadImage"
+        :on-change="fileChange"
+        :http-request="UploadImage">
+        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
+    </el-form-item>
     <el-form-item label="ICP备案号" style="width:400px" >
        <el-input v-model="siteConfig.icpBeian"></el-input>
-    </el-form-item>
-    <el-form-item label="网站状态" style="width:400px" >
-       <el-switch
-        v-model="status"
-        active-text="启用"
-        inactive-text="关闭">
-        </el-switch>
-    </el-form-item>
-    <el-form-item label="网站Logo" size="mini">
-        <el-upload
-          class="upload-demo"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :before-remove="beforeRemove"
-          multiple
-          :limit="1"
-          :on-exceed="handleExceed"
-          :file-list="fileList">
-          <el-button size="small" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-        </el-upload>
     </el-form-item>
     <el-form-item label="SEO关键字" style="width:400px" >
        <el-input v-model="siteConfig.keywords"></el-input>
@@ -62,16 +58,46 @@
       }
     },
     data() {
-      return {
-        status:true
+      return{
+        imageUrl:''
       }
     },
     methods: {
+      onBeforeUploadImage(file) {
+        const isIMAGE = file.type === 'image/jpeg' || 'image/jpg' || 'image/png'
+        const isLt1M = file.size / 1024 / 1024 < 1
+        if (!isIMAGE) {
+          this.$message.error('上传文件只能是图片格式!')
+        }
+        if (!isLt1M) {
+          this.$message.error('上传文件大小不能超过 1MB!')
+        }
+        return isIMAGE && isLt1M
+      },
+      UploadImage(param){
+        var formData = new FormData();
+        formData.append("file", params.file);
+        axios.post('upload/img',qs.stringify({
+          'file': params.file
+        }), {
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              }
+          }).then(function(response) {
+              console.log(response);
+              const data = response.data;
+          }, function(response) {
+            console.log(response);
+          });
+      },
+      fileChange(file, fileList) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
       onSubmit() {
         axios.put('site/1',qs.stringify({
             logo: 123,
             cover: 123,
-            status: 1,
+            status: this.siteConfig.status,
             title: this.siteConfig.title,
             icpBeian: this.siteConfig.icpBeian,
             keywords: this.siteConfig.keywords,
@@ -83,7 +109,6 @@
                   message: '成功修改站点配置',
                   type: 'success'
                 });  
-              this.dialogVisible = false;   
             }
           }).catch(res => {
             if(res.response.data.message === ''){
@@ -96,3 +121,28 @@
     }
   }
 </script>
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 118px;
+    height: 118px;
+    line-height: 118px;
+    text-align: center;
+  }
+  .avatar {
+    width: 118px;
+    height: 118px;
+    display: block;
+  }
+</style>

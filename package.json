@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@antv/data-set": "^0.10.1",
+    "ali-oss": "^6.1.0",
     "axios": "^0.18.0",
     "boostrap": "^2.0.0",
     "bootstrap": "^4.1.3",
