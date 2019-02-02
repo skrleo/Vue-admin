@@ -4,8 +4,8 @@
       <el-row class="panel-body clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/power' }">权限管理</el-breadcrumb-item>
-          <el-breadcrumb-item>添加权限</el-breadcrumb-item>
+          <el-breadcrumb-item>权限管理</el-breadcrumb-item>
+          <el-breadcrumb-item>编辑权限</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
         <el-form ref="manage" :model="manage" label-width="80px" size="medium">
@@ -18,7 +18,7 @@
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="备注" style="width:600px">
-            <el-input type="textarea" v-model="form.desc" ></el-input>
+            <el-input type="textarea" v-model="manage.description" ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onUpdate(form.manageId)">立即修改</el-button>

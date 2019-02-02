@@ -4,7 +4,7 @@
       <el-row class="panel-body clearfix">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/power' }">权限管理</el-breadcrumb-item>
+          <el-breadcrumb-item>权限管理</el-breadcrumb-item>
           <el-breadcrumb-item>添加权限</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
