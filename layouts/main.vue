@@ -72,7 +72,11 @@
     name: 'main',
     created:function(){
         let Uid = Cookie.get('Uid');
-        axios.get('/rbac/node/lists')
+        axios.get('/base/lists',{
+                params: {
+                    uid: Uid
+                }
+            })
             .then(res => {
                 this.nodeList = res.data.lists
               });

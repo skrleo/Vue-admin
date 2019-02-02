@@ -1,89 +1,84 @@
 <template>
-  <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>添加用户</el-breadcrumb-item>
-    </el-breadcrumb>
-    <br>
-    <el-form ref="form" :model="form" label-width="80px" size="medium">
-      <el-form-item label="用户名称" style="width:400px" >
-        <el-button type="primary" size="small" @click="dialogVisible = true">选择用户</el-button>
-      </el-form-item>
-      <el-form-item label="所属部门">
-        <el-select v-model="form.region" placeholder="请选择所属部门">
-          <el-option v-for="item in department" :key="item.nodeId" :label="item.label" :value="item.nodeId"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="是否可用">
-        <el-switch v-model="form.delivery"></el-switch>
-      </el-form-item>
-      <el-form-item label="用户角色">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox v-for="item in role" :key="item.roleId" :label="item.name" :value="item.roleId"></el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="备注" style="width:600px">
-        <el-input type="textarea" v-model="form.desc" ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button>取消</el-button>
-      </el-form-item>
-    </el-form>
-  <el-dialog
-      title="添加角色"
-      :visible.sync="dialogVisible"
-      width="65%">
-      <el-user-list></el-user-list>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-  </el-dialog>
-</div>
+  <section>
+    <el-row class="panel panel-flat">
+      <el-row class="panel-body clearfix">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/power' }">权限管理</el-breadcrumb-item>
+          <el-breadcrumb-item>添加权限</el-breadcrumb-item>
+        </el-breadcrumb>
+        <br>
+        <el-form ref="manage" :model="manage" label-width="80px" size="medium">
+          <el-form-item v-model="manage" label="用户名称" style="width:400px">
+              <span style="color:#000;">{{manage.hasOneUserBaseModel.name}}</span>
+          </el-form-item>
+          <el-form-item label="用户角色">
+            <el-checkbox-group v-model="manage.hasManyUserToRoleModel" @change="checkinlist">
+              <el-checkbox v-for="item in role" :key="item.roleId" :label="item.roleId" :value="item.name">{{item.name}}</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="备注" style="width:600px">
+            <el-input type="textarea" v-model="form.desc" ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onUpdate(form.manageId)">立即修改</el-button>
+            <el-button>取消</el-button>
+          </el-form-item>
+      </el-form>
+    </el-row>
+  </el-row>
+  </section>
 </template>
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
-  import userlist from '~/components/common/userlist.vue'
+  
   export default {
     layout: 'main',
-    components: {
-      'el-user-list':userlist
+    validate ({ params }) {
+      // Must be a number
+      return /^\d+$/.test(params.id)
     },
-    async asyncData () {
-      let {data} = await axios.get('/rbac/role/lists');
-      console.log(data.lists);
+    async asyncData ({ params }) {
+      let [role, manage] = await Promise.all([
+        axios.get('/rbac/role/lists'),
+        axios.get(`/rbac/manage/${params.id}`)
+      ])
       return {
-        role: data.lists
+        role: role.data.lists,
+        manage: manage.data.data
       }
     },
     data() {
       return {
         form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          role:[]
         },
-        dialogVisible: false
+        user: '',
       }
     },
     methods: {
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      },
-      onSubmit() {
-        console.log('submit!');
+      onUpdate(val) {
+        // let uids = this.users.map(item => item.uid)
+        axios.put('rbac/purview/user/role',qs.stringify({
+            uid: this.user.uid,
+            roleIds: this.roleIds
+          })).then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              this.$message({
+                  message: '成功添加节点',
+                  type: 'success'
+                });  
+              this.dialogVisible = false;   
+            }
+          }).catch(res => {
+            if(res.response.data.message === ''){
+              this.$message.error('请求异常，请稍后重试！');
+            }else{
+              this.$message.error(res.response.data.message);
+            }
+          });
       }
     }
   }
