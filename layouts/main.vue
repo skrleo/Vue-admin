@@ -37,20 +37,18 @@
             <el-container class="aside">
                 <el-aside :width="tabWidth+'px'">
                     <el-menu
+                        router="router"
                         default-active="2"
                         class="el-menu-vertical-demo">
+
                         <el-submenu index="1">
                             <template slot="title">
                                 <i class="el-icon-location"></i>
                                 <span>个人中心</span>
                             </template>
                             <el-menu-item-group>
-                                <nuxt-link :to="{name:'user-id'}">
-                                    <el-menu-item index="1-1">个人中心</el-menu-item>
-                                </nuxt-link>
-                                <nuxt-link :to="{name:'main'}">
-                                    <el-menu-item index="1-2">选项2</el-menu-item>
-                                </nuxt-link>
+                                <el-menu-item index="user">个人中心</el-menu-item>
+                                <el-menu-item index="main">选项2</el-menu-item>
                                 <!-- <nuxt-link :to="{name:'main',params:{newsId:'3306'}}">
                                     <el-menu-item index="1-2">选项2</el-menu-item>
                                 </nuxt-link> -->
@@ -63,22 +61,17 @@
                                 <span slot="title">用户管理</span>
                             </template>
                             <el-menu-item-group>
-                                <nuxt-link :to="{name:'user'}">
-                                    <el-menu-item index="2-1">用户管理</el-menu-item>
-                                </nuxt-link>
+                                <el-menu-item index="user">用户管理</el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
-
                         <el-submenu index="3">
                             <template slot="title">
                                 <i class="el-icon-document"></i>
                                 <span slot="title">媒体管理</span>
                             </template>
                             <el-menu-item-group>
-                                <nuxt-link :to="{name:'artcle'}">
-                                    <el-menu-item index="3-1">文章管理</el-menu-item>
-                                </nuxt-link>
-                                <el-menu-item index="3-2">微信管理</el-menu-item>
+                                <el-menu-item index="artcle">文章管理</el-menu-item>
+                                <el-menu-item index="artcle">微信管理</el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
         
@@ -88,21 +81,11 @@
                                 <span slot="title">系统管理</span>
                             </template>
                             <el-menu-item-group>
-                                <nuxt-link :to="{name:'user'}">
-                                    <el-menu-item index="4-1">用户管理</el-menu-item>
-                                </nuxt-link>
-                                <nuxt-link :to="{name:'node'}">
-                                    <el-menu-item index="4-2">节点管理</el-menu-item>
-                                </nuxt-link>
-                                <nuxt-link :to="{name:'power'}">
-                                    <el-menu-item index="4-3">权限管理</el-menu-item>
-                                </nuxt-link>
-                                <nuxt-link :to="{name:'role'}">
-                                    <el-menu-item index="4-4">角色管理</el-menu-item>
-                                </nuxt-link>
-                                <nuxt-link :to="{name:'site'}">
-                                    <el-menu-item index="4-5">站点管理</el-menu-item>
-                                </nuxt-link>
+                                <el-menu-item index="user">用户管理</el-menu-item>
+                                <el-menu-item index="node">节点管理</el-menu-item>
+                                <el-menu-item index="power">权限管理</el-menu-item>
+                                <el-menu-item index="role">角色管理</el-menu-item>
+                                <el-menu-item index="site">站点管理</el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
 
@@ -193,24 +176,15 @@
             .then(res => {
                 this.userInfo = res.data.data
               });
-    //   this.$router.push('/'); // 页面加载时跳转
     },
     async asyncData () {
-        let CardNo = Cookie.get('Uid');
-        console.log(CardNo);
+        let {data} = await axios.get('/rbac/node/lists');
+        console.log(data.data);
+        return {
+            nodeList: data.data
+        }
     },
     methods:{
-        loadData(){
-            axios.get(urls.api, { params: this.param })
-            .then(res => {
-            //请求成功回调
-            //   this.$router.push('/main'); // 页面加载时跳转
-            })
-            .catch(error => {
-            //请求失败
-                
-            });
-        },
         loginOut(){
             Cookie.remove('token');
             this.$message({
