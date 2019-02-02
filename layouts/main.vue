@@ -37,7 +37,7 @@
             <el-container class="aside">
                 <el-aside :width="tabWidth+'px'">
                     <el-menu
-                        router="router"
+                        router
                         default-active="2"
                         class="el-menu-vertical-demo">
 
@@ -102,6 +102,53 @@
         </el-container>
     </div>
 </template>
+
+<script>
+  import qs from 'qs';
+  import axios from '~/plugins/axios.js'
+  import Cookie from 'js-cookie'
+
+  export default {
+    middleware: 'checkLogin',
+    name: 'index',
+    created:function(){
+        let Uid = Cookie.get('Uid');
+        axios.get(`/user/${Uid}`)
+            .then(res => {
+                this.userInfo = res.data.data
+              });
+    },
+    async asyncData () {
+        let {data} = await axios.get('/rbac/node/lists');
+        console.log(data.data);
+        return {
+            nodeList: data.lists
+        }
+    },
+    methods:{
+        loginOut(){
+            Cookie.remove('token');
+            this.$message({
+                message: '退出成功',
+                type: 'success'
+            });
+            this.$router.push('/login'); 
+        }
+    },
+    data() {
+        return {
+            isCollapse: false,
+            tabWidth: 200,
+            test1: 1,
+            intelval: null,
+            userInfo:{
+                uid: 0 ,
+                name: ''
+            }
+        };
+    }
+  }
+</script>
 <style scoped lang="scss">
     $header-height:50px;
     $background-color:rgb(253, 253, 253);
@@ -161,51 +208,3 @@
     }
 
 </style>
-
-<script>
-  import qs from 'qs';
-  import axios from '~/plugins/axios.js'
-  import Cookie from 'js-cookie'
-
-  export default {
-    middleware: 'checkLogin',
-    name: 'index',
-    created:function(){
-        let Uid = Cookie.get('Uid');
-        axios.get(`/user/${Uid}`)
-            .then(res => {
-                this.userInfo = res.data.data
-              });
-    },
-    async asyncData () {
-        let {data} = await axios.get('/rbac/node/lists');
-        console.log(data.data);
-        return {
-            nodeList: data.data
-        }
-    },
-    methods:{
-        loginOut(){
-            Cookie.remove('token');
-            this.$message({
-                message: '退出成功',
-                type: 'success'
-            });
-            this.$router.push('/login'); 
-        }
-    },
-    data() {
-        return {
-            isCollapse: false,
-            tabWidth: 200,
-            test1: 1,
-            intelval: null,
-            userInfo:{
-                uid: 0 ,
-                name: ''
-            }
-        };
-    }
-  }
-</script>
-
