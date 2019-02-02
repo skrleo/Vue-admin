@@ -12,7 +12,7 @@
                                 <img src="../assets/images/33d243824a318f1819630542733a21eb.jpeg" alt="">
                             </el-badge>
                         </nuxt-link>       
-                        <span>{{userInfo.name || '管理员'}}<i class="el-icon-arrow-down el-icon--right"></i></span>
+                        <span style="line-height:45px;">{{userInfo.name || '匿名用户'}}<i class="el-icon-arrow-down el-icon--right"></i></span>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <nuxt-link :to="{name:'user-id'}">
@@ -41,58 +41,17 @@
                         default-active="2"
                         class="el-menu-vertical-demo">
 
-                        <el-submenu index="1">
+                        <el-submenu :index="item.nodeId + ''" v-for="(item, index) in nodeList" :key="index">
                             <template slot="title">
-                                <i class="el-icon-location"></i>
-                                <span>个人中心</span>
+                                <i :class="item.icon"></i>
+                                <span>{{item.label}}</span>
                             </template>
-                            <el-menu-item-group>
-                                <el-menu-item index="user">个人中心</el-menu-item>
-                                <el-menu-item index="main">选项2</el-menu-item>
-                                <!-- <nuxt-link :to="{name:'main',params:{newsId:'3306'}}">
-                                    <el-menu-item index="1-2">选项2</el-menu-item>
-                                </nuxt-link> -->
+                            <el-menu-item-group v-if="item.children">
+                                <el-menu-item :index="node.path + ''" v-for="(node, index) in item.children" :key="index">
+                                    {{node.label}}
+                                </el-menu-item>
                             </el-menu-item-group>
                         </el-submenu>
-                        
-                        <el-submenu index="2">
-                            <template slot="title">
-                                <i class="el-icon-menu"></i>
-                                <span slot="title">用户管理</span>
-                            </template>
-                            <el-menu-item-group>
-                                <el-menu-item index="user">用户管理</el-menu-item>
-                            </el-menu-item-group>
-                        </el-submenu>
-                        <el-submenu index="3">
-                            <template slot="title">
-                                <i class="el-icon-document"></i>
-                                <span slot="title">媒体管理</span>
-                            </template>
-                            <el-menu-item-group>
-                                <el-menu-item index="artcle">文章管理</el-menu-item>
-                                <el-menu-item index="artcle">微信管理</el-menu-item>
-                            </el-menu-item-group>
-                        </el-submenu>
-        
-                        <el-submenu index="4">
-                            <template slot="title">
-                                <i class="el-icon-setting"></i>
-                                <span slot="title">系统管理</span>
-                            </template>
-                            <el-menu-item-group>
-                                <el-menu-item index="user">用户管理</el-menu-item>
-                                <el-menu-item index="node">节点管理</el-menu-item>
-                                <el-menu-item index="power">权限管理</el-menu-item>
-                                <el-menu-item index="role">角色管理</el-menu-item>
-                                <el-menu-item index="site">站点管理</el-menu-item>
-                            </el-menu-item-group>
-                        </el-submenu>
-
-                        <el-menu-item index="5">
-                            <i class="el-icon-info"></i>
-                            <span slot="title">变更日志</span>
-                        </el-menu-item>
                     </el-menu>
                 </el-aside>
                 <el-main>
@@ -110,20 +69,17 @@
 
   export default {
     middleware: 'checkLogin',
-    name: 'index',
+    name: 'main',
     created:function(){
         let Uid = Cookie.get('Uid');
-        axios.get(`/user/${Uid}`)
+        axios.get('/rbac/node/lists')
             .then(res => {
+                this.nodeList = res.data.lists
+              });
+        axios.get(`/user/${Uid}`)
+        .then(res => {
                 this.userInfo = res.data.data
               });
-    },
-    async asyncData () {
-        let {data} = await axios.get('/rbac/node/lists');
-        console.log(data.data);
-        return {
-            nodeList: data.lists
-        }
     },
     methods:{
         loginOut(){
@@ -141,6 +97,7 @@
             tabWidth: 200,
             test1: 1,
             intelval: null,
+            nodeList:[],
             userInfo:{
                 uid: 0 ,
                 name: ''
