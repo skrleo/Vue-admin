@@ -9,7 +9,7 @@
                     <span class="el-dropdown-link">
                         <nuxt-link :to="{name:'user-id',params:{ id: userInfo.uid }}">
                             <el-badge class="item">
-                                <img src="../assets/images/33d243824a318f1819630542733a21eb.jpeg" alt="">
+                                <img :src="userInfo.headimg" :alt="用户头像">
                             </el-badge>
                         </nuxt-link>       
                         <span style="line-height:45px;">{{userInfo.name || '匿名用户'}}<i class="el-icon-arrow-down el-icon--right"></i></span>
