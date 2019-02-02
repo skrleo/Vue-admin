@@ -12,8 +12,8 @@
       </el-form-item>
       <el-form-item label="角色状态" prop="state">
           <el-radio-group v-model="role.state">
-          <el-radio label="0">启用</el-radio>
-          <el-radio label="1">禁用</el-radio>
+          <el-radio :label="0">启用</el-radio>
+          <el-radio :label="1">禁用</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="备注" style="width:600px" prop="description">

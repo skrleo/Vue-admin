@@ -12,8 +12,8 @@
             </el-form-item>
             <el-form-item label="是否启用">
               <el-radio-group v-model="node.state">
-                <el-radio label="0">启用</el-radio>
-                <el-radio label="1">禁用</el-radio>
+                <el-radio :label="0">启用</el-radio>
+                <el-radio :label="1">禁用</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="图标icon" style="width:680px;">
