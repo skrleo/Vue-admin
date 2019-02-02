@@ -9,12 +9,18 @@
               <i slot="prefix" class="el-input__icon el-icon-third-zhanghao"></i>
           </el-input>
         </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-              type="password"
-              v-model="ruleForm.password"
-              placeholder="请输入密码">
-              <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
+        <el-form-item v-if="visible" prop="password">
+          <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码">
+            <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
+            <i slot="suffix" title="显示密码" @click="changePass('show')" style="cursor:pointer;"
+                class="el-input__icon el-icon-third-mima"></i>
+          </el-input>
+        </el-form-item>
+        <el-form-item v-else>
+          <el-input type="text" v-model="ruleForm.password" placeholder="请输入密码">
+            <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
+            <i slot="suffix" title="隐藏密码" @click="changePass('hide')" style="cursor:pointer;"
+                class="el-input__icon el-icon-third-mima"></i>
           </el-input>
         </el-form-item>
         <div style="margin-top: 15px;">
@@ -71,10 +77,14 @@ export default {
           password: [
             { required: true, message: '密码 不能为空'}
           ]
-        }
+        },
+        visible: true
       };
     },
     methods: {
+      changePass(value) {
+        this.visible = !(value === 'show');
+      },    //判断渲染，true:暗文显示，false:明文显示
       submit (ruleForm) {
         this.$refs[ruleForm].validate((valid) => {
           if (valid) {
