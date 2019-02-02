@@ -8,7 +8,7 @@
         <br>
         <div style="height:62px;">
           <!--搜索框-->
-          <el-form :inline="true" :model="formInline" style="float:left;" size="small">
+          <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
                 <nuxt-link :to="{name:'power-store'}">
                     <el-button type="primary">添加权限</el-button>
@@ -18,7 +18,7 @@
                   <el-input placeholder="查找用户"></el-input>
               </el-form-item>
               <el-form-item>
-                  <el-button type="primary" @click="onSubmit">查询</el-button>
+                  <el-button type="primary">查询</el-button>
               </el-form-item>
           </el-form>
         </div>
@@ -106,8 +106,21 @@
         dialogVisible: false
       }
     },
-
     methods: {
+        handleSizeChange(val) {
+            axios.get(`/rbac/manage/lists?pageSize=${val}`)
+            .then(res => {
+                this.lists = res.data.lists || [];
+                this.pageSize = res.data.page.size || 10;
+            });
+        },
+        handleCurrentChange(val) {
+            axios.get(`/rbac/manage/lists?pageNow=${val}`)
+            .then(res => {
+                this.lists = res.data.lists || [];
+                this.pageNow = res.data.page.now || 1;
+            });
+        },
         destroy(val){
             axios.delete(`/rbac/manage/${val}`, {data: qs.stringify({manageId:val})})
             .then(res => {

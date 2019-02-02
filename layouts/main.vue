@@ -15,7 +15,7 @@
                         <span>{{userInfo.name || '管理员'}}<i class="el-icon-arrow-down el-icon--right"></i></span>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <nuxt-link :to="{name:'message'}">
+                        <nuxt-link :to="{name:'user-id'}">
                             <el-dropdown-item>
                                 <i class="el-icon-third-tubiaozhizuomoban13"></i>
                                 消息

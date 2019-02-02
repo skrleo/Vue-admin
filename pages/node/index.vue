@@ -8,7 +8,7 @@
         <br>
         <div style="height:62px;">
           <!--搜索框-->
-          <el-form :inline="true" :model="formInline" style="float:left;" size="small">
+          <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
                 <nuxt-link :to="{name:'node-store'}">
                   <el-button type="primary">添加节点</el-button>
@@ -18,13 +18,12 @@
                   <el-input placeholder="搜索节点"></el-input>
               </el-form-item>
               <el-form-item>
-                  <el-button type="primary" @click="onSubmit">查询</el-button>
+                  <el-button type="primary">查询</el-button>
               </el-form-item>
           </el-form>
         </div>
         <el-tree
           :data="data"
-          :props="name"
           node-key="nodeId"
           default-expand-all
           @node-drag-start="handleDragStart"

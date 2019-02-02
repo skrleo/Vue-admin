@@ -11,7 +11,7 @@
       <el-input v-model="form.account" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="用户头像">
-      <el-upload
+      <!-- <el-upload
         class="avatar-uploader"
         action="http://api.example.com/v1.0/api/upload/img"
         :headers="application/x-www-form-urlencoded"
@@ -20,7 +20,7 @@
         :before-upload="beforeAvatarUpload">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
+      </el-upload> -->
     </el-form-item>
     <el-form-item label="是否启用">
       <el-radio-group v-model="form.status">
