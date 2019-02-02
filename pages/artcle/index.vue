@@ -18,7 +18,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">查询</el-button>
+                <el-button type="primary">查询</el-button>
             </el-form-item>
         </el-form>
         <!--表格数据及操作-->

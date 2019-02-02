@@ -3,7 +3,7 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>系统管理</el-breadcrumb-item>
-        <el-breadcrumb-item>角色管理</el-breadcrumb-item>
+        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
         <div style="height:62px;">
@@ -14,8 +14,8 @@
                     <el-button type="primary">添加用户</el-button>
                 </nuxt-link>
               </el-form-item>
-              <el-form-item label="节点">
-                  <el-input placeholder="搜索节点"></el-input>
+              <el-form-item label="用户">
+                  <el-input placeholder="搜索用户"></el-input>
               </el-form-item>
               <el-form-item>
                   <el-button type="primary">查询</el-button>

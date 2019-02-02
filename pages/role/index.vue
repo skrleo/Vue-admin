@@ -22,26 +22,6 @@
               </el-form-item>
           </el-form>
         </div>
-        <!-- <el-dialog
-            title="添加角色"
-            :visible.sync="dialogVisible"
-            width="35%">
-          <el-form ref="form" :model="form" label-width="80px" size="small">
-            <el-form-item label="角色名称">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="是否启用">
-                <el-switch v-model="form.state"></el-switch>
-            </el-form-item>
-            <el-form-item label="角色描述">
-                <el-input type="textarea" v-model="form.description"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="sumbit">立即创建</el-button>
-                <el-button type="primary" @click="cancel">取消</el-button>
-            </el-form-item>
-          </el-form>
-        </el-dialog> -->
         <!--表格数据及操作-->
         <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
             <!--勾选框-->
