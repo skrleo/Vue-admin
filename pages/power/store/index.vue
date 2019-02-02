@@ -19,7 +19,7 @@
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="备注" style="width:600px">
-            <el-input type="textarea" v-model="form.desc" ></el-input>
+            <el-input type="textarea" v-model="form.description" ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -71,7 +71,7 @@
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
               this.$message({
-                  message: '成功添加节点',
+                  message: '成功添加权限',
                   type: 'success'
                 });  
               this.dialogVisible = false;   

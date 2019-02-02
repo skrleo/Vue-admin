@@ -9,11 +9,11 @@
         </el-breadcrumb>
         <br>
         <el-form ref="manage" :model="manage" label-width="80px" size="medium">
-          <el-form-item v-model="manage" label="用户名称" style="width:400px">
+          <el-form-item v-model="manage.uid" label="用户名称" style="width:400px">
               <span style="color:#000;">{{manage.hasOneUserBaseModel.name}}</span>
           </el-form-item>
           <el-form-item label="用户角色">
-            <el-checkbox-group v-model="manage.hasManyUserToRoleModel" @change="checkinlist">
+            <el-checkbox-group v-model="manage.roleIds" @change="checkinlist">
               <el-checkbox v-for="item in role" :key="item.roleId" :label="item.roleId" :value="item.name">{{item.name}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
@@ -21,7 +21,7 @@
             <el-input type="textarea" v-model="manage.description" ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onUpdate(form.manageId)">立即修改</el-button>
+            <el-button type="primary" @click="onUpdate(manage.manageId)">立即修改</el-button>
             <el-button>取消</el-button>
           </el-form-item>
       </el-form>
@@ -51,23 +51,24 @@
     },
     data() {
       return {
-        form: {
-          role:[]
-        },
-        user: '',
+        manage: {
+          uid:'',
+          role:[],
+          description:''
+        }
       }
     },
     methods: {
       onUpdate(val) {
-        // let uids = this.users.map(item => item.uid)
-        axios.put('rbac/purview/user/role',qs.stringify({
-            uid: this.user.uid,
-            roleIds: this.roleIds
+        axios.put( `/rbac/manage/${val}`,qs.stringify({
+            uid: this.manage.uid,
+            roleIds: this.manage.roleIds,
+            description: this.manage.description
           })).then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
               this.$message({
-                  message: '成功添加节点',
+                  message: '成功编辑权限',
                   type: 'success'
                 });  
               this.dialogVisible = false;   
