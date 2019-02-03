@@ -1,168 +1,146 @@
 <template>
-  <el-upload
-    drag
-    multiple
-    :auto-upload="true"
-    :http-request="checkedFile"
-    :before-remove="removeFile"
-    :limit="10"
-    action="/"
-  >
-    <i class="el-icon-upload"></i>
-    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-  </el-upload>
+    <div>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+        <el-breadcrumb-item>文章管理</el-breadcrumb-item>
+        </el-breadcrumb>
+        <br>
+        <div style="height:62px;">
+          <!--搜索框-->
+          <el-form :inline="true" style="float:left;" size="small">
+              <el-form-item>
+                  <nuxt-link :to="{name:'artcle-store'}">
+                    <el-button type="primary">添加文章</el-button>
+                  </nuxt-link>
+              </el-form-item>
+              <el-form-item label="查询文章">
+                  <el-input placeholder="搜索文章"></el-input>
+              </el-form-item>
+              <el-form-item>
+                  <el-button type="primary">查询</el-button>
+              </el-form-item>
+          </el-form>
+        </div>
+        <!--表格数据及操作-->
+        <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+            <!--勾选框-->
+            <el-table-column type="selection" width="55">
+            </el-table-column>
+            <!--索引-->
+            <el-table-column prop="roleId" label="文章ID" width="80">
+            </el-table-column>
+            <el-table-column prop="name" label="文章标题">
+            </el-table-column>
+             <el-table-column prop="status" label="状态">
+                <template slot-scope="scope">
+                    <span>{{scope.row.status ? '发布中':'下架'}}</span>
+                </template>
+            </el-table-column>
+             <el-table-column prop="status" label="文章类型">
+                <template slot-scope="scope">
+                    <span>{{scope.row.status ? '启用':'禁用'}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="createdAt" label="创建时间" width="180">
+                <template slot-scope="scope">
+                    <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作" width="260">
+                <template slot-scope="scope">
+                    <nuxt-link :to="{name:'artcle-id',params:{ id: scope.row.roleId }}">
+                        <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
+                    </nuxt-link>
+                    <nuxt-link :to="{name:'artcle-id',params:{ id: scope.row.roleId }}">
+                        <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+                    </nuxt-link>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.roleId)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <br>
+        <!--分页条-->
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageNow"
+            :page-sizes="[10, 50, 100, 150]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pageCount">
+        </el-pagination>
+    </div>
 </template>
-<script>
-import axios from 'axios'
-export default {
-   layout: 'main',
-   data () {
-    return {
-      maxSize: 5 * 1024 * 1024 * 1024, // 上传最大文件限制
-      multiUploadSize: 500 * 1024 * 1024, // 大于这个大小的文件使用分块上传(后端可以支持断点续传)
-      eachSize: 500 * 1024 * 1024, // 每块文件大小
-      requestCancelQueue: [], // 请求方法队列（调用取消上传
+
+
+ <script>
+
+  import qs from 'qs';
+  import axios from '~/plugins/axios.js';
+
+  let id = 1000;
+  export default {
+    layout:'main',
+    name:'node',
+    async asyncData () {
+      let { data } = await axios.get('/admin/rbac/role/lists')
+      console.log(data.lists);
+      return {
+          pageNow: data.page.now || 1 ,
+          pageSize: data.page.size || 10 ,
+          pageCount: data.page.count || 0 ,
+          lists: data.lists || []
+      }
+    },
+    data() {
+      return {
+        form: {
+          name: '',
+          state: true,
+          description: ''
+        },
+        //查询输入框数据
+        input: '',
+        //导航条默认选项
+        activeIndex: '1',
+        activeIndex2: '1',
+        dialogVisible: false
+      }
+    },
+    methods: {
+       handleSizeChange(val) {
+        axios.get(`/admin/rbac/role/lists?pageSize=${val}`)
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageSize = res.data.page.size || 10;
+          });
+      },
+      handleCurrentChange(val) {
+        axios.get(`/admin/rbac/role/lists?pageNow=${val}`)
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageNow = res.data.page.now || 1;
+          });
+      },
+      destroy(val){
+        axios.delete(`/admin/rbac/role/${val}`, {data: qs.stringify({roleId:val})})
+        .then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+                this.$message({
+                    message: '成功删除角色',
+                    type: 'success'
+                    });    
+                }
+            }).catch(res => {
+                 if(res.response.data.message === ''){
+                    this.$message.error('请求异常，请稍后重试！');
+                }else{
+                    this.$message.error(res.response.data.message);
+                }
+            });
+        }
     }
-  },
-  mounted () {
-  },
-  methods: {
-    async checkedFile (options) {
-      const { maxSize, multiUploadSize, getSize, splitUpload, singleUpload } = this
-      const { file, onProgress, onSuccess, onError } = options
-      if (file.size > maxSize) {
-        return this.$message({
-          message: `您选择的文件大于${getSize(maxSize)}`,
-          type: 'error'
-        })
-      }
-      const uploadFunc = file.size > multiUploadSize ? splitUpload : singleUpload
-      try {
-        await uploadFunc(file, onProgress)
-        this.$message({
-          message: '上传成功',
-          type: 'success'
-        })
-        onSuccess()
-      } catch (e) {
-        console.error(e)
-        this.$message({
-          message: e.message,
-          type: 'error'
-        })
-        onError()
-      }
-      const prom = new Promise((resolve, reject) => {})
-      prom.abort = () => {}
-      return prom
-    },
-    // 格式化文件大小显示文字
-    getSize (size) {
-      return size > 1024
-        ? size / 1024 > 1024
-          ? size / (1024 * 1024) > 1024
-            ? (size / (1024 * 1024 * 1024)).toFixed(2) + 'GB'
-            : (size / (1024 * 1024)).toFixed(2) + 'MB'
-          : (size / 1024).toFixed(2) + 'KB'
-        : (size).toFixed(2) + 'B'
-    },
-    // 单文件直接上传
-    singleUpload (file, onProgress) {
-      return this.postFile({ file, uid: file.uid, fileName: file.fileName }, onProgress)
-    },
-    // 大文件分块上传
-    splitUpload (file, onProgress) {
-      return new Promise(async (resolve, reject) => {
-        try {
-          const { eachSize } = this
-          const chunks = Math.ceil(file.size / eachSize)
-          const fileChunks = await this.splitFile(file, eachSize, chunks)
-          let currentChunk = 0
-          for (let i = 0; i < fileChunks.length; i++) {
-            // 服务端检测已经上传到第currentChunk块了，那就直接跳到第currentChunk块，实现断点续传
-            console.log(currentChunk, i)
-            if (Number(currentChunk) === i) {
-              // 每块上传完后则返回需要提交的下一块的index
-              currentChunk = await this.postFile({
-                chunked: true,
-                chunk: i,
-                chunks,
-                eachSize,
-                fileName: file.name,
-                fullSize: file.size,
-                uid: file.uid,
-                file: fileChunks[i]
-              }, onProgress)
-            }
-          }
-          const isValidate = await this.validateFile({
-            chunks: fileChunks.length,
-            fileName: file.name,
-            fullSize: file.size,
-            uid: file.uid
-          })
-          if (!isValidate) {
-            throw new Error('文件校验异常')
-          }
-          resolve()
-        } catch (e) {
-          reject(e)
-        }
-      })
-    },
-    // 文件分块,利用Array.prototype.slice方法
-    splitFile (file, eachSize, chunks) {
-      return new Promise((resolve, reject) => {
-        try {
-          setTimeout(() => {
-            const fileChunk = []
-            for (let chunk = 0; chunks > 0; chunks--) {
-              fileChunk.push(file.slice(chunk, chunk + eachSize))
-              chunk += eachSize
-            }
-            resolve(fileChunk)
-          }, 0)
-        } catch (e) {
-          console.error(e)
-          reject(new Error('文件切块发生错误'))
-        }
-      })
-    },
-    removeFile (file) {
-      this.requestCancelQueue[file.uid]()
-      delete this.requestCancelQueue[file.uid]
-      return true
-    },
-    // 提交文件方法,将参数转换为FormData, 然后通过axios发起请求
-    postFile (param, onProgress) {
-      const formData = new FormData()
-      for (let p in param) {
-        formData.append(p, param[p])
-      }
-      const { requestCancelQueue } = this
-      const config = {
-        cancelToken: new axios.CancelToken(function executor (cancel) {
-          if (requestCancelQueue[param.uid]) {
-            requestCancelQueue[param.uid]()
-            delete requestCancelQueue[param.uid]
-          }
-          requestCancelQueue[param.uid] = cancel
-        }),
-        onUploadProgress: e => {
-          if (param.chunked) {
-            e.percent = Number(((((param.chunk * (param.eachSize - 1)) + (e.loaded)) / param.fullSize) * 100).toFixed(2))
-          } else {
-            e.percent = Number(((e.loaded / e.total) * 100).toFixed(2))
-          }
-          onProgress(e)
-        }
-      }
-      return axios.post('http://localhost:8888', formData, config).then(rs => rs.data)
-    },
-    // 文件校验方法
-    validateFile (file) {
-      return axios.post('http://localhost:8888/validateFile', file).then(rs => rs.data)
-    }
-  }
-}
+  };
 </script>

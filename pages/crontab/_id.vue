@@ -5,7 +5,7 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>任务管理</el-breadcrumb-item>
-          <el-breadcrumb-item>添加任务</el-breadcrumb-item>
+          <el-breadcrumb-item>任务详情</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
         <el-form ref="role" :model="role" label-width="80px" size="medium">
