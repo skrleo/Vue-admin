@@ -126,8 +126,8 @@
         axios.post('/admin/user',qs.stringify({
             account: this.form.account,
             name: this.form.name,
-            status: 1,
-            sex: 1,
+            status:  this.form.status,
+            sex:  this.form.sex,
             password: this.form.password,
             nickname: this.form.nickname,
             headimg: this.headimg,

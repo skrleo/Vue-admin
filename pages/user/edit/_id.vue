@@ -107,6 +107,7 @@
       let {data} = await axios.get(`/admin/user/${params.id}`);
       return {
         form: data.data,
+        imageUrl: data.data.headimg,
       }
     },
     data() {
@@ -141,18 +142,18 @@
         this.imageUrl = URL.createObjectURL(file.raw);
       },
       uploadSuccess(response, file, fileList){
-        this.cover = response.data.filePath;
+        this.headimg = response.data.filePath;
       },
       onUpdate(val) {
         axios.put(`/admin/user/${val}`,qs.stringify({
             uid: val,
             account: this.form.account,
             name: this.form.name,
-            status: 1,
-            sex: 1,
+            status: this.form.status,
+            sex: this.form.sex,
             password: this.form.password,
             nickname: this.form.nickname,
-            headimg: 1,
+            headimg: this.headimg,
             email: this.form.email,
             phone: this.form.phone
           })).then(res => {
