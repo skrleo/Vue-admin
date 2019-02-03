@@ -11,16 +11,16 @@
       <el-input v-model="form.account" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="用户头像">
-      <!-- <el-upload
+      <el-upload
         class="avatar-uploader"
         action="http://api.example.com/v1.0/api/upload/img"
-        :headers="application/x-www-form-urlencoded"
         :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
+        :on-success="uploadSuccess"
+        :before-upload="onBeforeUploadImage"
+        :on-change="fileChange">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload> -->
+      </el-upload>
     </el-form-item>
     <el-form-item label="是否启用">
       <el-radio-group v-model="form.status">
@@ -105,6 +105,23 @@
       }
     },
     methods: {
+       onBeforeUploadImage(file) {
+        const isIMAGE = file.type === 'image/jpeg' || 'image/jpg' || 'image/png'
+        const isLt1M = file.size / 1024 / 1024 < 1
+        if (!isIMAGE) {
+          this.$message.error('上传文件只能是图片格式!')
+        }
+        if (!isLt1M) {
+          this.$message.error('上传文件大小不能超过 1MB!')
+        }
+        return isIMAGE && isLt1M
+      },
+      fileChange(file, fileList) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      uploadSuccess(response, file, fileList){
+        this.headimg = response.data.filePath;
+      },
       onSubmit() {
         axios.post('/admin/user',qs.stringify({
             account: this.form.account,
@@ -113,7 +130,7 @@
             sex: 1,
             password: this.form.password,
             nickname: this.form.nickname,
-            headimg: 1,
+            headimg: this.headimg,
             email: this.form.email,
             phone: this.form.phone
           })).then(res => {

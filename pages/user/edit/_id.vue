@@ -10,17 +10,17 @@
     <el-form-item label="账户名称">
       <el-input v-model="form.account" style="width:280px" ></el-input>
     </el-form-item>
-    <el-form-item label="上传头像" prop="cover">
-      <!-- <el-upload
+    <el-form-item label="用户头像">
+      <el-upload
         class="avatar-uploader"
         action="http://api.example.com/v1.0/api/upload/img"
-        :headers="application/x-www-form-urlencoded"
         :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
+        :on-success="uploadSuccess"
+        :before-upload="onBeforeUploadImage"
+        :on-change="fileChange">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload> -->
+      </el-upload>
     </el-form-item>
     <el-form-item label="是否启用">
       <el-radio-group v-model="form.status">
@@ -126,20 +126,22 @@
       }
     },
     methods: {
-      changePass(value) {
-        this.visible = !(value === 'show');
-      },    //判断渲染，true:暗文显示，false:明文显示
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+       onBeforeUploadImage(file) {
+        const isIMAGE = file.type === 'image/jpeg' || 'image/jpg' || 'image/png'
+        const isLt1M = file.size / 1024 / 1024 < 1
+        if (!isIMAGE) {
+          this.$message.error('上传文件只能是图片格式!')
         }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+        if (!isLt1M) {
+          this.$message.error('上传文件大小不能超过 1MB!')
         }
-        return isJPG && isLt2M;
+        return isIMAGE && isLt1M
+      },
+      fileChange(file, fileList) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      uploadSuccess(response, file, fileList){
+        this.cover = response.data.filePath;
       },
       onUpdate(val) {
         axios.put(`/admin/user/${val}`,qs.stringify({
