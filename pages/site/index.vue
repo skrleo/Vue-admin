@@ -19,11 +19,11 @@
     <el-form-item label="网站Logo" prop="logo">
       <el-upload
         class="avatar-uploader"
-        action="string"
+        action="http://api.example.com/v1.0/api/upload/img"
         :show-file-list="false"
+        :on-success="uploadSuccess"
         :before-upload="onBeforeUploadImage"
-        :on-change="fileChange"
-        :http-request="UploadImage">
+        :on-change="fileChange">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
@@ -54,7 +54,8 @@
       let { data } = await axios.get('/admin/site/1')
       console.log(data.lists);
       return {
-        siteConfig: data.data
+        siteConfig: data.data,
+        imageUrl:data.data.logo
       }
     },
     data() {
@@ -74,29 +75,16 @@
         }
         return isIMAGE && isLt1M
       },
-      UploadImage(param){
-        var formData = new FormData();
-        formData.append("file", params.file);
-        axios.post('upload/img',qs.stringify({
-          'file': params.file
-        }), {
-              headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded'
-              }
-          }).then(function(response) {
-              console.log(response);
-              const data = response.data;
-          }, function(response) {
-            console.log(response);
-          });
-      },
       fileChange(file, fileList) {
         this.imageUrl = URL.createObjectURL(file.raw);
       },
+      uploadSuccess(response, file, fileList){
+        this.cover = response.data.filePath;
+      },
       onSubmit() {
         axios.put('/admin/site/1',qs.stringify({
-            logo: 123,
-            cover: 123,
+            logo: this.cover,
+            cover: this.cover,
             status: this.siteConfig.status,
             title: this.siteConfig.title,
             icpBeian: this.siteConfig.icpBeian,
