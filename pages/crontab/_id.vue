@@ -83,7 +83,7 @@
     },
     methods: {
       onSubmit() {
-        axios.post('/admin/rbac/role',qs.stringify({
+        axios.post('/admin/task',qs.stringify({
             name: this.role.name,
             state: this.role.state,
             description: this.role.description

@@ -28,7 +28,7 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
-            <el-table-column prop="roleId" label="任务ID" width="80">
+            <el-table-column prop="crontabId" label="任务ID" width="80">
             </el-table-column>
             <el-table-column prop="name" label="任务名称">
             </el-table-column>
@@ -37,9 +37,9 @@
                     <span>{{scope.row.status ? '运行中':'暂停'}}</span>
                 </template>
             </el-table-column>
-             <el-table-column prop="status" label="任务类型">
+             <el-table-column prop="type" label="任务类型">
                 <template slot-scope="scope">
-                    <span>{{scope.row.status ? '启用':'禁用'}}</span>
+                    <span>{{scope.row.status ? '执行一次':'循环执行'}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="description" label="任务描述">
@@ -51,13 +51,13 @@
             </el-table-column>
             <el-table-column label="操作" width="260">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'crontab-id',params:{ id: scope.row.roleId }}">
+                    <nuxt-link :to="{name:'crontab-id',params:{ id: scope.row.crontabId }}">
                         <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
                     </nuxt-link>
-                    <nuxt-link :to="{name:'crontab-id',params:{ id: scope.row.roleId }}">
+                    <nuxt-link :to="{name:'crontab-id',params:{ id: scope.row.crontabId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.roleId)">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.crontabId)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -86,7 +86,7 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/admin/rbac/role/lists')
+      let { data } = await axios.get('/admin/task/lists')
       console.log(data.lists);
       return {
           pageNow: data.page.now || 1 ,
@@ -97,8 +97,8 @@
     },
     data() {
       return {
-        form: {
-          name: '',
+        lists: {
+          crontabId: '',
           state: true,
           description: ''
         },
@@ -112,21 +112,21 @@
     },
     methods: {
        handleSizeChange(val) {
-        axios.get(`/admin/rbac/role/lists?pageSize=${val}`)
+        axios.get(`/admin/task/lists?pageSize=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageSize = res.data.page.size || 10;
           });
       },
       handleCurrentChange(val) {
-        axios.get(`/admin/rbac/role/lists?pageNow=${val}`)
+        axios.get(`/admin/task/lists?pageNow=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageNow = res.data.page.now || 1;
           });
       },
       destroy(val){
-        axios.delete(`/admin/rbac/role/${val}`, {data: qs.stringify({roleId:val})})
+        axios.delete(`/admin/task/${val}`, {data: qs.stringify({roleId:val})})
         .then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
