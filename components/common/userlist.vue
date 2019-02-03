@@ -67,7 +67,7 @@
       }
     },
     created: function () {
-      axios.get('/user/lists')
+      axios.get('/admin/user/lists')
         .then(res => {
           console.log(res.data);
           this.lists = res.data.lists || [];
