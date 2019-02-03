@@ -43,7 +43,7 @@
        'el-user-list':userlist
     },
     async asyncData () {
-      let {data} = await axios.get('/rbac/role/lists');
+      let {data} = await axios.get('/admin/rbac/role/lists');
       return {
         role: data.lists,
       }
@@ -64,7 +64,7 @@
       },
       onSubmit() {
         // let uids = this.users.map(item => item.uid)
-        axios.put('rbac/purview/user/role',qs.stringify({
+        axios.put('/admin/rbac/purview/user/role',qs.stringify({
             uid: this.user.uid,
             roleIds: this.roleIds
           })).then(res => {

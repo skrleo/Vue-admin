@@ -106,7 +106,7 @@
     },
     methods: {
       onSubmit() {
-        axios.post('/user',qs.stringify({
+        axios.post('/admin/user',qs.stringify({
             account: this.form.account,
             name: this.form.name,
             status: 1,

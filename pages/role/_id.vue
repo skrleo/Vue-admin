@@ -39,7 +39,7 @@
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
-      let {data} = await axios.get(`/rbac/role/${params.id}`);
+      let {data} = await axios.get(`/admin/rbac/role/${params.id}`);
       console.log(data.data);
       return {
         role: data.data,
@@ -56,7 +56,7 @@
     },
     methods: {
       onUpdate(val) {
-        axios.put(`rbac/role/${val}`,qs.stringify({
+        axios.put(`/admin/rbac/role/${val}`,qs.stringify({
             roleId: val,
             name: this.role.name,
             state: this.role.state,

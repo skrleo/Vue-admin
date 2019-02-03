@@ -54,7 +54,7 @@ import { all } from 'q';
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
-      let {data} = await axios.get(`/rbac/node/${params.id}`);
+      let {data} = await axios.get(`/admin/rbac/node/${params.id}`);
       return {
         node: data.data
       }
@@ -76,7 +76,7 @@ import { all } from 'q';
             this.node.icon = item
         },
         onUpdate(val) {
-          axios.put(`rbac/node/${val}`,qs.stringify({
+          axios.put(`/admin/rbac/node/${val}`,qs.stringify({
             nodeId: val,
             label: this.node.label,
             icon: this.node.icon,

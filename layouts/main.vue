@@ -72,7 +72,7 @@
     name: 'main',
     created:function(){
         let Uid = Cookie.get('Uid');
-        axios.get('/base/lists',{
+        axios.get('/admin/base/lists',{
                 params: {
                     uid: Uid
                 }
@@ -80,7 +80,7 @@
             .then(res => {
                 this.nodeList = res.data.lists
               });
-        axios.get(`/user/${Uid}`)
+        axios.get(`/admin/user/${Uid}`)
         .then(res => {
                 this.userInfo = res.data.data
               });

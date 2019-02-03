@@ -84,7 +84,7 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/rbac/role/lists')
+      let { data } = await axios.get('/admin/rbac/role/lists')
       console.log(data.lists);
       return {
           pageNow: data.page.now || 1 ,
@@ -110,21 +110,21 @@
     },
     methods: {
        handleSizeChange(val) {
-        axios.get(`/rbac/role/lists?pageSize=${val}`)
+        axios.get(`/admin/rbac/role/lists?pageSize=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageSize = res.data.page.size || 10;
           });
       },
       handleCurrentChange(val) {
-        axios.get(`/rbac/role/lists?pageNow=${val}`)
+        axios.get(`/admin/rbac/role/lists?pageNow=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageNow = res.data.page.now || 1;
           });
       },
       destroy(val){
-        axios.delete(`/rbac/role/${val}`, {data: qs.stringify({roleId:val})})
+        axios.delete(`/admin/rbac/role/${val}`, {data: qs.stringify({roleId:val})})
         .then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){

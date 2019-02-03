@@ -44,8 +44,8 @@
     },
     async asyncData ({ params }) {
       let [node, role] = await Promise.all([
-        axios.get('/rbac/node/lists'),
-        axios.get(`/rbac/role/${params.id}`)
+        axios.get('/admin/rbac/node/lists'),
+        axios.get(`/admin/rbac/role/${params.id}`)
       ])
       return {
         node: JSON.parse(JSON.stringify(node.data.lists)),
@@ -63,7 +63,7 @@
     },
     methods: {
       onUpdate(val){
-        axios.put('rbac/purview/role/node',qs.stringify({
+        axios.put('/admin/rbac/purview/role/node',qs.stringify({
             roleId: val,
             nodeIds: this.$refs.node.getCheckedKeys()
           })).then(res => {

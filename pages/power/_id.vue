@@ -41,8 +41,8 @@
     },
     async asyncData ({ params }) {
       let [role, manage] = await Promise.all([
-        axios.get('/rbac/role/lists'),
-        axios.get(`/rbac/manage/${params.id}`)
+        axios.get('/admin/rbac/role/lists'),
+        axios.get(`/admin/rbac/manage/${params.id}`)
       ])
       return {
         role: role.data.lists,
@@ -60,7 +60,7 @@
     },
     methods: {
       onUpdate(val) {
-        axios.put( `/rbac/manage/${val}`,qs.stringify({
+        axios.put( `/admin/rbac/manage/${val}`,qs.stringify({
             uid: this.manage.uid,
             roleIds: this.manage.roleIds,
             description: this.manage.description

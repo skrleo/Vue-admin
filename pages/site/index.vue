@@ -51,7 +51,7 @@
     layout: 'main',
     name:'site',
     async asyncData () {
-      let { data } = await axios.get('site/1')
+      let { data } = await axios.get('/admin/site/1')
       console.log(data.lists);
       return {
         siteConfig: data.data
@@ -94,7 +94,7 @@
         this.imageUrl = URL.createObjectURL(file.raw);
       },
       onSubmit() {
-        axios.put('site/1',qs.stringify({
+        axios.put('/admin/site/1',qs.stringify({
             logo: 123,
             cover: 123,
             status: this.siteConfig.status,

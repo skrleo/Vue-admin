@@ -88,7 +88,7 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('rbac/manage/lists')
+      let { data } = await axios.get('/admin/rbac/manage/lists')
       return {
          pageNow: data.page.now || 1 ,
          pageSize: data.page.size || 10 ,
@@ -108,21 +108,21 @@
     },
     methods: {
         handleSizeChange(val) {
-            axios.get(`/rbac/manage/lists?pageSize=${val}`)
+            axios.get(`/admin/rbac/manage/lists?pageSize=${val}`)
             .then(res => {
                 this.lists = res.data.lists || [];
                 this.pageSize = res.data.page.size || 10;
             });
         },
         handleCurrentChange(val) {
-            axios.get(`/rbac/manage/lists?pageNow=${val}`)
+            axios.get(`/admin/rbac/manage/lists?pageNow=${val}`)
             .then(res => {
                 this.lists = res.data.lists || [];
                 this.pageNow = res.data.page.now || 1;
             });
         },
         destroy(val){
-            axios.delete(`/rbac/manage/${val}`, {data: qs.stringify({manageId:val})})
+            axios.delete(`/admin/rbac/manage/${val}`, {data: qs.stringify({manageId:val})})
             .then(res => {
                 //判断是否请求成功
                 if(res.data.errorId === 'OK'){

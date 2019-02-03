@@ -81,7 +81,7 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/user/lists')
+      let { data } = await axios.get('/admin/user/lists')
       return {
          pageNow: data.page.now || 1 ,
          pageSize: data.page.size || 10 ,
@@ -106,21 +106,21 @@
     },
     methods: {
         handleSizeChange(val) {
-            axios.get(`/user/lists?pageSize=${val}`)
+            axios.get(`/admin/user/lists?pageSize=${val}`)
             .then(res => {
                 this.lists = res.data.lists || [];
                 this.pageSize = res.data.page.size || 10;
             });
         },
         handleCurrentChange(val) {
-            axios.get(`/user/lists?pageNow=${val}`)
+            axios.get(`/admin/user/lists?pageNow=${val}`)
             .then(res => {
                 this.lists = res.data.lists || [];
                 this.pageNow = res.data.page.now || 1;
             });
         },
         destroy(val){
-            axios.delete(`/user/${val}`, {data: qs.stringify({uid:val})})
+            axios.delete(`/admin/user/${val}`, {data: qs.stringify({uid:val})})
             .then(res => {
                 //判断是否请求成功
                 if(res.data.errorId === 'OK'){

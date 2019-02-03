@@ -52,7 +52,7 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/rbac/node/lists')
+      let { data } = await axios.get('/admin/rbac/node/lists')
       return {
         nodeParent: data.lists,
         data: JSON.parse(JSON.stringify(data.lists))
@@ -111,7 +111,7 @@
         return draggingNode.data.label.indexOf('三级 3-2-2') === -1;
       },
       destroy(node, data){
-        axios.delete(`/rbac/node/${data.nodeId}`, {data: qs.stringify({nodeId:data.nodeId})})
+        axios.delete(`/admin/rbac/node/${data.nodeId}`, {data: qs.stringify({nodeId:data.nodeId})})
         .then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){

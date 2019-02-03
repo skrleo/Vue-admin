@@ -57,7 +57,7 @@
        'el-user-list':userlist
     },
     async asyncData () {
-      let {data} = await axios.get('/rbac/node/lists');
+      let {data} = await axios.get('/admin/rbac/node/lists');
       return {
         nodeParent: data.lists,
       }
@@ -79,7 +79,7 @@
         this.node.icon = item
       },
       onSubmit() {
-        axios.post('rbac/node',qs.stringify({
+        axios.post('/admin/rbac/node',qs.stringify({
             label: this.node.label,
             icon: this.node.icon,
             state: this.node.state,

@@ -104,7 +104,7 @@
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
-      let {data} = await axios.get(`user/${params.id}`);
+      let {data} = await axios.get(`/admin/user/${params.id}`);
       return {
         form: data.data,
       }
@@ -142,7 +142,7 @@
         return isJPG && isLt2M;
       },
       onUpdate(val) {
-        axios.put(`/user/${val}`,qs.stringify({
+        axios.put(`/admin/user/${val}`,qs.stringify({
             uid: val,
             account: this.form.account,
             name: this.form.name,
