@@ -8,8 +8,9 @@
               <span>快捷方式</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
             </div>
-            <div v-for="o in 4" :key="o" class="text item">
-              {{'列表内容 ' + o }}
+            <div v-for="shortcut in shortcuts" :key="shortcut" class="text item">
+              <i :class="shortcut.icon"></i>
+              {{shortcut.label }}
             </div>
           </el-card>
         </el-col>
@@ -19,8 +20,23 @@
               <span>待办事件</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
             </div>
-            <div v-for="o in 4" :key="o" class="text item">
+            <!-- <div v-for="o in 4" :key="o" class="text item">
               {{'列表内容 ' + o }}
+            </div> -->
+            <div class="text item">
+                我的邮件
+            </div>
+            <div class="text item">
+                我的消息
+            </div>
+            <div class="text item">
+                操作历史
+            </div>
+            <div class="text item">
+                备忘录
+            </div>
+            <div class="text item">
+                注意事项
             </div>
           </el-card>
         </el-col>
@@ -30,8 +46,8 @@
               <span>网站配置</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
             </div>
-            <div v-for="o in 4" :key="o" class="text item">
-              {{'列表内容 ' + o }}
+            <div v-for="o in 6" :key="o" class="text item">
+              {{'列表内容 ' }}
             </div>
           </el-card>
         </el-col>
@@ -62,8 +78,25 @@
 </div>
 </template>
 <script>
+  import qs from 'qs';
+  import axios from '~/plugins/axios.js';
+  import Cookie from 'js-cookie'
+
   export default {
     layout: 'main',
+    async asyncData () {
+      const Uid = Cookie.get('Uid');
+      console.log(Uid);
+      let [node,shortcut] = await Promise.all([
+        axios.get('/admin/rbac/node/lists'),
+        axios.get(`/admin/base/shortcut/lists?uid=2`)
+      ])
+      console.log(shortcut);
+      return {
+        node: JSON.parse(JSON.stringify(node.data.lists)),
+        shortcuts: JSON.parse(JSON.stringify(shortcut.data.lists))
+      }
+    },
     data() {
       return {
         chartData: {
@@ -99,11 +132,12 @@
     border-radius: 4px;
   }
   .text {
+    float: left;
+    margin: 8px 6px;
     font-size: 14px;
   }
 
   .item {
-    margin-bottom: 18px;
   }
 
   .clearfix:before,
