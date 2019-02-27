@@ -9,7 +9,9 @@
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
             </div>
             <div v-for="shortcut in shortcuts" :key="shortcut" class="text item">
-              <i :class="shortcut.icon"></i>
+              <div class="icon-text">
+                <i :class="shortcut.icon"></i>
+              </div>
               {{shortcut.label }}
             </div>
           </el-card>
@@ -121,7 +123,7 @@
   }
 </script>
 
-<style>
+<style scoped lang="scss">
   .el-row {
     margin-bottom: 20px;
     &:last-child {
@@ -135,6 +137,14 @@
     float: left;
     margin: 8px 6px;
     font-size: 14px;
+    .icon-text{
+      margin-bottom: 8px;
+      text-align: center;
+      width: 100%;
+      i{
+        font-size: 28px;
+      }
+    }
   }
 
   .item {
