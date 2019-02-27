@@ -6,13 +6,15 @@
                     <h3>后台管理系统</h3>
                 </div>
                 <el-dropdown>
-                    <span class="el-dropdown-link">
+                    <span class="el-head-img">
                         <nuxt-link :to="{name:'user-id',params:{ id: userInfo.uid }}">
                             <el-badge class="item">
                                 <img :src="userInfo.headimg" alt="用户头像">
                             </el-badge>
                         </nuxt-link>       
-                        <span style="line-height:45px;">{{userInfo.name || '匿名用户'}}<i class="el-icon-arrow-down el-icon--right"></i></span>
+                    </span>
+                    <span class="el-dropdown-link">
+                        <span style="line-height:45px;">{{userInfo.name || '普通管理员'}}<i class="el-icon-arrow-down el-icon--right"></i></span>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <nuxt-link :to="{name:'user-id'}">
@@ -137,8 +139,7 @@
                 cursor: pointer;
                 float: right;
             }
-            .el-dropdown-link{
-                margin-right: 35px;
+            .el-head-img{
                 img{
                     $imgMargin: (($header-height - 45)/2);
                     display:inline-block;
@@ -147,6 +148,9 @@
                     border-radius: 25px;
                     margin-top: $imgMargin;
                 }
+            }
+            .el-dropdown-link{
+                margin-right: 35px;
             }
         }
     }

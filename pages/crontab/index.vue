@@ -21,6 +21,7 @@
                   <el-button type="primary">查询</el-button>
               </el-form-item>
           </el-form>
+          <span style="float:right;color:#000;line-height:42px;"><span style="width:8px;height:8px;border-radius:50%;background:#67C23A;display:inline-block;margin-right:6px;"></span>队列执行中</span>
         </div>
         <!--表格数据及操作-->
         <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">

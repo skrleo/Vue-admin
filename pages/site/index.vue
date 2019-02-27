@@ -79,12 +79,12 @@
         this.imageUrl = URL.createObjectURL(file.raw);
       },
       uploadSuccess(response, file, fileList){
-        this.cover = response.data.filePath;
+        this.imageUrl = response.data.filePath;
       },
       onSubmit() {
         axios.put('/admin/site/1',qs.stringify({
-            logo: this.cover,
-            cover: this.cover,
+            logo: this.imageUrl,
+            cover: this.imageUrl,
             status: this.siteConfig.status,
             title: this.siteConfig.title,
             icpBeian: this.siteConfig.icpBeian,

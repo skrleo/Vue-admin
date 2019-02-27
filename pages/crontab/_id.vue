@@ -14,8 +14,8 @@
           </el-form-item>
           <el-form-item label="类型" prop="state">
              <el-radio-group v-model="task.type">
-              <el-radio label="0">执行一次</el-radio>
-              <el-radio label="1">循环执行</el-radio>
+              <el-radio :label="0">执行一次</el-radio>
+              <el-radio :label="1">循环执行</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="时间间隔">
