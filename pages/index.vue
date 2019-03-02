@@ -182,6 +182,7 @@
     .del_shortcut{
       margin-right: 2px;
       color:red;
+      font-size: 18px;
     }
     .icon-text{
       margin-bottom: 8px;
