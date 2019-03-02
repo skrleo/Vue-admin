@@ -12,7 +12,7 @@
               <div class="icon-text">
                 <i :class="shortcut.icon"></i>
               </div>
-              {{shortcut.label }}
+              {{shortcut.label}}
             </div>
           </el-card>
         </el-col>
@@ -26,19 +26,28 @@
               {{'列表内容 ' + o }}
             </div> -->
             <div class="text item">
-                我的邮件
+              <div class="icon-text">
+                <i class="el-icon-circle-plus-outline"></i>
+              </div>
+              我的邮件
             </div>
             <div class="text item">
-                我的消息
+              <div class="icon-text">
+                <i class="el-icon-circle-plus-outline"></i>
+              </div>
+              我的邮件
             </div>
             <div class="text item">
-                操作历史
+              <div class="icon-text">
+                <i class="el-icon-circle-plus-outline"></i>
+              </div>
+              我的邮件
             </div>
             <div class="text item">
-                备忘录
-            </div>
-            <div class="text item">
-                注意事项
+              <div class="icon-text">
+                <i class="el-icon-circle-plus-outline"></i>
+              </div>
+              我的邮件
             </div>
           </el-card>
         </el-col>
@@ -142,7 +151,7 @@
       text-align: center;
       width: 100%;
       i{
-        font-size: 28px;
+        font-size: 23px;
       }
     }
   }
