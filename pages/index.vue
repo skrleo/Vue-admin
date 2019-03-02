@@ -9,7 +9,10 @@
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
             </div>
             <div v-for="shortcut in shortcuts" :key="shortcut" class="text item">
-              <nuxt-link :to="{name: `${shortcuts.path}`}">
+              <span  @click="delShortcut(shortcut.shortcutId)">
+                <i class="el-icon-circle-close-outline del_shortcut"></i>
+              </span>
+              <nuxt-link :to="{name: `${shortcut.path}`}">
                 <div class="icon-text">
                   <i :class="shortcut.icon"></i>
                 </div>
@@ -125,6 +128,9 @@
       }
     },
     methods: {
+      delShortcut(val){
+        console.log('shortcut:'.val.data);
+      },
       onSubmit() {
         console.log('submit!');
       }
@@ -133,6 +139,10 @@
 </script>
 
 <style scoped lang="scss">
+  a{
+    text-decoration-line: none;
+    color: #000000;
+  }
   .el-row {
     margin-bottom: 20px;
     &:last-child {
@@ -146,6 +156,10 @@
     float: left;
     margin: 8px 6px;
     font-size: 14px;
+    .del_shortcut{
+      margin-right: 2px;
+      color:red;
+    }
     .icon-text{
       margin-bottom: 8px;
       text-align: center;
