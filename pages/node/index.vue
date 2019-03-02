@@ -45,13 +45,19 @@
  <script>
  
   import qs from 'qs';
-  import axios from '~/plugins/axios.js'
+  import axios from '~/plugins/axios.js';
+  import Cookie from 'js-cookie'
 
   let id = 1000;
   export default {
     layout:'main',
     name:'node',
     async asyncData () {
+      const Uid = Cookie.get('Uid');
+      await axios.post('/admin/base/shortcut',qs.stringify({
+          nodeId: '6',
+          uid: Uid,
+          }));
       let { data } = await axios.get('/admin/rbac/node/lists')
       return {
         nodeParent: data.lists,

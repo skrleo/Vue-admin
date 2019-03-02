@@ -9,10 +9,12 @@
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
             </div>
             <div v-for="shortcut in shortcuts" :key="shortcut" class="text item">
-              <div class="icon-text">
-                <i :class="shortcut.icon"></i>
-              </div>
-              {{shortcut.label}}
+              <nuxt-link :to="{name: `${shortcuts.path}`}">
+                <div class="icon-text">
+                  <i :class="shortcut.icon"></i>
+                </div>
+                {{shortcut.label}}
+              </nuxt-link>
             </div>
           </el-card>
         </el-col>
@@ -29,7 +31,7 @@
               <div class="icon-text">
                 <i class="el-icon-circle-plus-outline"></i>
               </div>
-              我的邮件
+              我的消息
             </div>
             <div class="text item">
               <div class="icon-text">
@@ -41,7 +43,7 @@
               <div class="icon-text">
                 <i class="el-icon-circle-plus-outline"></i>
               </div>
-              我的邮件
+              备忘录
             </div>
             <div class="text item">
               <div class="icon-text">
@@ -97,12 +99,10 @@
     layout: 'main',
     async asyncData () {
       const Uid = Cookie.get('Uid');
-      console.log(Uid);
       let [node,shortcut] = await Promise.all([
         axios.get('/admin/rbac/node/lists'),
         axios.get(`/admin/base/shortcut/lists?uid=2`)
       ])
-      console.log(shortcut);
       return {
         node: JSON.parse(JSON.stringify(node.data.lists)),
         shortcuts: JSON.parse(JSON.stringify(shortcut.data.lists))
@@ -111,15 +111,15 @@
     data() {
       return {
         chartData: {
-          columns: ['日期', '访问用户', '注册用户', '下单率'],
+          columns: ['日期', '访问用户', '新增用户'],
           rows: [
-            { '日期': '星期日', '访问用户': 393, '注册用户': 43, '下单率': 78 },
-            { '日期': '星期一', '访问用户': 193, '注册用户': 13, '下单率': 32 },
-            { '日期': '星期二', '访问用户': 330, '注册用户': 30, '下单率': 26 },
-            { '日期': '星期三', '访问用户': 223, '注册用户': 23, '下单率': 76 },
-            { '日期': '星期四', '访问用户': 123, '注册用户': 13, '下单率': 49 },
-            { '日期': '星期五', '访问用户': 392, '注册用户': 32, '下单率': 323 },
-            { '日期': '星期六', '访问用户': 153, '注册用户': 42, '下单率': 508 },
+            { '日期': '星期日', '访问用户': 393, '新增用户': 43, },
+            { '日期': '星期一', '访问用户': 193, '新增用户': 13, },
+            { '日期': '星期二', '访问用户': 330, '新增用户': 30, },
+            { '日期': '星期三', '访问用户': 223, '新增用户': 23, },
+            { '日期': '星期四', '访问用户': 123, '新增用户': 13, },
+            { '日期': '星期五', '访问用户': 392, '新增用户': 32, },
+            { '日期': '星期六', '访问用户': 153, '新增用户': 42, },
           ]
         }
       }

@@ -47,10 +47,17 @@
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
+  import Cookie from 'js-cookie'
+  
   export default {
     layout: 'main',
     name:'site',
     async asyncData () {
+      const Uid = Cookie.get('Uid');
+      await axios.post('/admin/base/shortcut',qs.stringify({
+            nodeId: '9',
+            uid: Uid,
+          }));
       let { data } = await axios.get('/admin/site/1')
       console.log(data.lists);
       return {
