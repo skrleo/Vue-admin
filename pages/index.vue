@@ -6,10 +6,10 @@
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>快捷方式</span>
-              <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+              <el-button style="float: right; padding: 3px 0" type="text" @click="showDel">操作按钮</el-button>
             </div>
             <div v-for="shortcut in shortcuts" :key="shortcut" class="text item">
-              <span  @click="delShortcut(shortcut.shortcutId)">
+              <span @click="delShortcut(shortcut.shortcutId)" v-if="isCollapse == true">
                 <i class="el-icon-circle-close-outline del_shortcut"></i>
               </span>
               <nuxt-link :to="{name: `${shortcut.path}`}">
@@ -113,6 +113,7 @@
     },
     data() {
       return {
+        isCollapse:false,
         chartData: {
           columns: ['日期', '访问用户', '新增用户'],
           rows: [
@@ -128,8 +129,30 @@
       }
     },
     methods: {
+      showDel(){
+        if(this.isCollapse == true){
+          this.isCollapse = false
+        }else{
+          this.isCollapse = true
+        }
+      },
       delShortcut(val){
-        console.log('shortcut:'.val.data);
+        axios.delete(`/admin/base/shortcut/${val}`, {data: qs.stringify({shortcutId:val})})
+            .then(res => {
+                //判断是否请求成功
+                if(res.data.errorId === 'OK'){
+                    this.$message({
+                        message: '成功删除快捷方式',
+                        type: 'success'
+                        });    
+                    }
+                }).catch(res => {
+                    if(res.response.data.message === ''){
+                        this.$message.error('请求异常，请稍后重试！');
+                    }else{
+                        this.$message.error(res.response.data.message);
+                    }
+                });
       },
       onSubmit() {
         console.log('submit!');
