@@ -13,14 +13,14 @@
           <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码">
             <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
             <i slot="suffix" title="显示密码" @click="changePass('show')" style="cursor:pointer;"
-                class="el-input__icon el-icon-third-mima"></i>
+                class="el-input__icon el-icon-third-biyan"></i>
           </el-input>
         </el-form-item>
         <el-form-item v-else>
           <el-input type="text" v-model="ruleForm.password" placeholder="请输入密码">
             <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
             <i slot="suffix" title="隐藏密码" @click="changePass('hide')" style="cursor:pointer;"
-                class="el-input__icon el-icon-third-mima"></i>
+                class="el-input__icon el-icon-third-biyan"></i>
           </el-input>
         </el-form-item>
         <div style="margin-top: 15px;">
