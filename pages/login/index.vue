@@ -5,12 +5,12 @@
         <el-form-item prop="account">
           <el-input
               v-model="ruleForm.account"
-              placeholder="请输入账号/邮箱/手机号码">
+              placeholder="请输入账号/邮箱/手机号码" clearable>
               <i slot="prefix" class="el-input__icon el-icon-third-zhanghao"></i>
           </el-input>
         </el-form-item>
         <el-form-item v-if="visible" prop="password">
-          <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码">
+          <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码" clearable>
             <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
             <i slot="suffix" title="显示密码" @click="changePass('show')" style="cursor:pointer;"
                 class="el-input__icon el-icon-third-biyan"></i>
