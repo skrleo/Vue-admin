@@ -10,7 +10,7 @@
           <!--搜索框-->
           <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
-                  <nuxt-link :to="{name:'artcle-store'}">
+                  <nuxt-link :to="{name:'article-store'}">
                     <el-button type="primary">添加文章</el-button>
                   </nuxt-link>
               </el-form-item>
@@ -28,18 +28,29 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
-            <el-table-column prop="roleId" label="文章ID" width="80">
+            <el-table-column prop="articleId" label="文章ID" width="80">
             </el-table-column>
-            <el-table-column prop="name" label="文章标题">
+            <el-table-column prop="title" label="文章标题">
             </el-table-column>
-             <el-table-column prop="status" label="状态">
+             <el-table-column prop="status" label="状态" width="120">
                 <template slot-scope="scope">
-                    <span>{{scope.row.status ? '发布中':'下架'}}</span>
+                    <span v-if="scope.row.status === 1">已发布</span>
+                    <span v-else-if="scope.row.status === 0">等待审核</span>
+                    <span v-else>审核失败</span>
                 </template>
             </el-table-column>
-             <el-table-column prop="status" label="文章类型">
+            <el-table-column prop="status" label="发布人" width="120">
                 <template slot-scope="scope">
-                    <span>{{scope.row.status ? '启用':'禁用'}}</span>
+                    <span>{{scope.row.status ? '管理员':'超级管理员'}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="category" label="文章类目" width="120">
+                <template slot-scope="scope">
+                     <span v-if="scope.row.category === 0">推荐</span>
+                    <span v-else-if="scope.row.category === 1">景点</span>
+                    <span v-else-if="scope.row.category === 2">活动</span>
+                    <span v-else-if="scope.row.category === 3">产品</span>
+                    <span v-else>游记</span>
                 </template>
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间" width="180">
@@ -49,13 +60,13 @@
             </el-table-column>
             <el-table-column label="操作" width="260">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'artcle-id',params:{ id: scope.row.roleId }}">
+                    <nuxt-link :to="{name:'article-id',params:{ id: scope.row.articleId }}">
                         <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
                     </nuxt-link>
-                    <nuxt-link :to="{name:'artcle-id',params:{ id: scope.row.roleId }}">
+                    <nuxt-link :to="{name:'article-id',params:{ id: scope.row.articleId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.roleId)">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.articleId)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -84,7 +95,7 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/admin/rbac/role/lists')
+      let { data } = await axios.get('/admin/article/lists')
       console.log(data.lists);
       return {
           pageNow: data.page.now || 1 ,
@@ -110,26 +121,26 @@
     },
     methods: {
        handleSizeChange(val) {
-        axios.get(`/admin/rbac/role/lists?pageSize=${val}`)
+        axios.get(`/admin/article/lists?pageSize=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageSize = res.data.page.size || 10;
           });
       },
       handleCurrentChange(val) {
-        axios.get(`/admin/rbac/role/lists?pageNow=${val}`)
+        axios.get(`/admin/article/lists?pageNow=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageNow = res.data.page.now || 1;
           });
       },
       destroy(val){
-        axios.delete(`/admin/rbac/role/${val}`, {data: qs.stringify({roleId:val})})
+        axios.delete(`/admin/article/${val}`, {data: qs.stringify({articleId:val})})
         .then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
                 this.$message({
-                    message: '成功删除角色',
+                    message: '成功删除文章',
                     type: 'success'
                     });    
                 }

@@ -1,0 +1,186 @@
+<template>
+  <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item>文章管理</el-breadcrumb-item>
+    <el-breadcrumb-item>添加文章</el-breadcrumb-item>
+    </el-breadcrumb>
+    <br>
+    <el-form :model="article" ref="article" label-width="80px" size="medium">
+      <el-form-item label="文章标题" prop="title">
+        <el-input  v-model="article.title" style="width:360px;"></el-input>
+      </el-form-item>
+      <el-form-item label="文章状态" prop="status">
+        <el-radio-group v-model="article.status">
+          <el-radio :label="0">待审核</el-radio>
+          <el-radio :label="1">审核通过</el-radio>
+          <el-radio :label="2">审核不通过</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="文章简介">
+        <el-input
+          type="textarea"
+           style="width:480px;"
+          :autosize="{ minRows: 2, maxRows: 4}"
+          placeholder="请输入内容"
+          v-model="textarea3">
+        </el-input>
+      </el-form-item>
+      <el-form-item label="文章封面">
+        <el-upload
+          action="https://jsonplaceholder.typicode.com/posts/"
+          list-type="picture-card"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove">
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="dialogImageUrl" alt="">
+        </el-dialog>
+      </el-form-item>
+      <el-form-item label="文章类目" prop="category">
+        <el-select v-model="article.category" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="文章内容" prop="related">
+        <no-ssr><mavon-editor :toolbars="markdownOption" v-model="article.related"/></no-ssr>
+      </el-form-item>
+      <el-form-item label="文章内容" prop="recommend">
+        <no-ssr><mavon-editor :toolbars="markdownOption" v-model="article.recommend"/></no-ssr>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="update(article.articleId)">立即修改</el-button>
+        <el-button>取消</el-button>
+      </el-form-item>
+    </el-form>
+    
+  </div>
+</template>
+<script>
+import qs from 'qs';
+import axios from '~/plugins/axios.js';
+import Cookie from 'js-cookie'
+export default {
+  layout: 'main',
+  validate ({ params }) {
+      // Must be a number
+      return /^\d+$/.test(params.id)
+    },
+  async asyncData ({ params }) {
+    let {data} = await axios.get(`/admin/article/${params.id}`);
+    return {
+      article: data.data
+    }
+  },
+  data() {
+    return {
+      article:{
+        title:'',
+        related: '', 
+        status: 0,     
+        recommend:'',      
+        category:''
+      },
+      options: [{
+        value: '0',
+        label: '推荐'
+      }, {
+        value: '1',
+        label: '景点'
+      }, {
+        value: '2',
+        label: '活动'
+      }, {
+        value: '3',
+        label: '产品'
+      }],
+      markdownOption:{
+        bold: true, // 粗体
+        italic: true, // 斜体
+        header: true, // 标题
+        underline: true, // 下划线
+        strikethrough: true, // 中划线
+        mark: true, // 标记
+        superscript: true, // 上角标
+        subscript: true, // 下角标
+        quote: true, // 引用
+        ol: true, // 有序列表
+        ul: true, // 无序列表
+        link: true, // 链接
+        imagelink: true, // 图片链接
+        code: true, // code
+        table: true, // 表格
+        fullscreen: false, // 全屏编辑
+        readmodel: false, // 沉浸式阅读
+        htmlcode: true, // 展示html源码
+        help: true, // 帮助
+        undo: true, // 上一步
+        redo: true, // 下一步
+        trash: true, // 清空
+        save: true, // 保存（触发events中的save事件）
+        navigation: true, // 导航目录
+        alignleft: true, // 左对齐
+        aligncenter: true, // 居中
+        alignright: true, // 右对齐
+        subfield: true, // 单双栏模式
+        preview: true, // 预览
+      },
+      handbook:"#### 开始编写",
+      codeStyle: "dark"
+    }
+  },
+  methods: {
+        // 绑定@imgAdd event
+        $imgAdd(pos, $file){
+            // 第一步.将图片上传到服务器.
+           var formdata = new FormData();
+           formdata.append('image', $file);
+           axios({
+               url: 'server url',
+               method: 'post',
+               data: formdata,
+               headers: { 'Content-Type': 'multipart/form-data' },
+           }).then((url) => {
+               // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+               /**
+               * $vm 指为mavonEditor实例，可以通过如下两种方式获取
+               * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
+               * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
+               */
+               $vm.$img2Url(pos, url);
+           })
+        },
+        update(val) {
+          let Uid = Cookie.get('Uid');
+          axios.put(`/admin/article/${val}`,qs.stringify({
+              uid: Uid,
+              title: this.article.title,
+              related: this.article.related || '',
+              status: this.article.status,
+              recommend: this.article.recommend || '',
+              category: this.article.category || 0,
+            })).then(res => {
+              //判断是否请求成功
+              if(res.data.errorId === 'OK'){
+                this.$message({
+                    message: '成功修改文章',
+                    type: 'success'
+                  });
+              }
+            }).catch(res => {
+              if(res.response.data.message === ''){
+                this.$message.error('请求异常，请稍后重试！');
+              }else{
+                this.$message.error(res.response.data.message);
+              }
+            });
+        }
+    }
+}
+</script>

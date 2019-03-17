@@ -46,7 +46,7 @@
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js'
-import { all } from 'q';
+  import { all } from 'q';
   export default {
     layout:'main',
     validate ({ params }) {
