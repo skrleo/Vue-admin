@@ -35,7 +35,7 @@
             <el-table-column label="角色名称" prop="hasManyUserToRoleModel">
                 <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.hasManyUserToRoleModel" :key="item.roleId">
-                    <span v-show="index > 0">/</span>{{item.hasOneRoleModel.name}}
+                    <span v-show="index > 0">/</span>{{item.hasOneRoleModel ?  (item.hasOneRoleModel.name || '') : '' }}
                 </span>
                 </template>
             </el-table-column>
