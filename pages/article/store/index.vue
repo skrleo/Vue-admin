@@ -175,7 +175,6 @@ export default {
         handleClose(tag) {
           this.tags.splice(this.tags.indexOf(tag), 1);
         },
-
         showInput() {
           this.tagVisible = true;
           this.$nextTick(_ => {
@@ -205,10 +204,10 @@ export default {
         },
         onSubmit() {
           let Uid = Cookie.get('Uid');
-          console.log(this.article.tag);
           axios.post('/admin/article',qs.stringify({
               uid: Uid,
               title: this.article.title,
+              tagIds: this.tags||[],
               related: this.article.related || '',
               status: this.article.status,
               recommend: this.article.recommend || '',
