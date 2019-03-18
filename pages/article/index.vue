@@ -66,7 +66,7 @@
                     <nuxt-link :to="{name:'article-id',params:{ id: scope.row.articleId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.articleId)">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.articleId,scope.$index, lists)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -134,11 +134,12 @@
             this.pageNow = res.data.page.now || 1;
           });
       },
-      destroy(val){
-        axios.delete(`/admin/article/${val}`, {data: qs.stringify({articleId:val})})
+      destroy(articleId,index,rows){
+        axios.delete(`/admin/article/${articleId}`, {data: qs.stringify({articleId:articleId})})
         .then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
+                rows.splice(index, 1);
                 this.$message({
                     message: '成功删除文章',
                     type: 'success'

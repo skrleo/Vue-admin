@@ -54,7 +54,7 @@
                     <nuxt-link :to="{name:'user-edit-id',params:{ id: scope.row.uid }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.uid)">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.uid,scope.$index, lists)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -126,11 +126,12 @@
                 this.pageNow = res.data.page.now || 1;
             });
         },
-        destroy(val){
-            axios.delete(`/admin/user/${val}`, {data: qs.stringify({uid:val})})
+        destroy(uid,index,rows){
+            axios.delete(`/admin/user/${uid}`, {data: qs.stringify({uid:uid})})
             .then(res => {
                 //判断是否请求成功
                 if(res.data.errorId === 'OK'){
+                    rows.splice(index, 1);
                     this.$message({
                         message: '成功删除用户',
                         type: 'success'

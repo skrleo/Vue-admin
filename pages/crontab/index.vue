@@ -58,7 +58,7 @@
                     <nuxt-link :to="{name:'crontab-id',params:{ id: scope.row.crontabId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.crontabId)">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.crontabId,scope.$index, lists)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -126,11 +126,12 @@
             this.pageNow = res.data.page.now || 1;
           });
       },
-      destroy(val){
-        axios.delete(`/admin/task/${val}`, {data: qs.stringify({roleId:val})})
+      destroy(crontabId,index,rows){
+        axios.delete(`/admin/task/${crontabId}`, {data: qs.stringify({crontabId:crontabId})})
         .then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
+                rows.splice(index, 1);
                 this.$message({
                     message: '成功删除角色',
                     type: 'success'
