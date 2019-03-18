@@ -11,7 +11,7 @@
           <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
                   <nuxt-link :to="{name:'tag-store'}">
-                    <el-button type="primary">添加文章</el-button>
+                    <el-button type="primary">添加标签</el-button>
                   </nuxt-link>
               </el-form-item>
               <el-form-item label="查询标签">

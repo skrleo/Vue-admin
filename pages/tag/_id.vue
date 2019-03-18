@@ -10,7 +10,7 @@
       <el-form-item label="标签名称" prop="name">
         <el-input  v-model="tag.name" style="width:360px;"></el-input>
       </el-form-item>
-      <el-form-item label="文章状态" prop="status">
+      <el-form-item label="标签状态" prop="status">
         <el-radio-group v-model="tag.status">
           <el-radio :label="0">启用</el-radio>
           <el-radio :label="1">禁用</el-radio>

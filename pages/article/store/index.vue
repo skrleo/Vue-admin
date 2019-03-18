@@ -17,16 +17,39 @@
           <el-radio label="2">审核不通过</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="文章标签">
+        <el-tag
+          v-for="tag in tags"
+          closable
+          :key="tag.tagId"
+          :label="tag.tagName"
+          v-model="article.tag"
+          :disable-transitions="false"
+          @close="handleClose(tag)">
+          {{tag.tagName}}
+        </el-tag>
+        <el-input
+          class="input-new-tag"
+          v-if="tagVisible"
+          v-model="article.tagName"
+          ref="saveTagInput"
+          size="small"
+          @keyup.enter.native="handleInputConfirm"
+          @blur="handleInputConfirm"
+        >
+        </el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+      </el-form-item>
       <el-form-item label="文章简介">
         <el-input
           type="textarea"
-           style="width:480px;"
+          style="width:480px;"
           :autosize="{ minRows: 2, maxRows: 4}"
           placeholder="请输入内容"
-          v-model="textarea3">
+          v-model="article.description">
         </el-input>
       </el-form-item>
-      <el-form-item label="文章封面">
+      <!-- <el-form-item label="文章封面">
         <el-upload
           action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card"
@@ -37,7 +60,7 @@
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="文章类目" prop="category">
         <el-select v-model="article.category" placeholder="请选择">
           <el-option
@@ -70,9 +93,12 @@ export default {
   layout: 'main',
   data() {
     return {
+      tags: [],
+      tagVisible: false,
       article:{
         title:'',
         related: '', 
+        tagName:'',
         status: 0,     
         recommend:'',      
         category:''
@@ -146,14 +172,47 @@ export default {
                $vm.$img2Url(pos, url);
            })
         },
+        handleClose(tag) {
+          this.tags.splice(this.tags.indexOf(tag), 1);
+        },
+
+        showInput() {
+          this.tagVisible = true;
+          this.$nextTick(_ => {
+            this.$refs.saveTagInput.$refs.input.focus();
+          });
+        },
+
+        handleInputConfirm() {
+          axios.post('/admin/article/tag',qs.stringify({
+              name: this.article.tagName
+            })).then(res => {
+              //判断是否请求成功
+              if(res.data.errorId === 'OK'){
+                /**
+                 * 获取tagId
+                 */
+                let tagId = res.data.data.tagId;
+                let tagName = this.article.tagName;
+                this.tags.push({
+                      tagId : tagId,
+                      tagName : tagName
+                  });
+                this.tagVisible = false;
+                this.article.tagName = '';
+              }
+            })
+        },
         onSubmit() {
           let Uid = Cookie.get('Uid');
+          console.log(this.article.tag);
           axios.post('/admin/article',qs.stringify({
               uid: Uid,
               title: this.article.title,
               related: this.article.related || '',
               status: this.article.status,
               recommend: this.article.recommend || '',
+              description: this.article.description || '',
               category: this.article.category || 0,
             })).then(res => {
               //判断是否请求成功
@@ -174,3 +233,21 @@ export default {
     }
 }
 </script>
+
+<style>
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+  }
+</style>
