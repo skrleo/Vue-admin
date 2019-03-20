@@ -17,13 +17,35 @@
           <el-radio :label="2">审核不通过</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="文章标签">
+        <el-tag
+          v-for="tag in article.tags"
+          closable
+          :key="tag.tagId"
+          :label="tag.name"
+          :disable-transitions="false"
+          @close="handleClose(tag)">
+          {{tag.name}}
+        </el-tag>
+        <el-input
+          class="input-new-tag"
+          v-if="tagVisible"
+          v-model="article.name"
+          ref="saveTagInput"
+          size="small"
+          @keyup.enter.native="handleInputConfirm"
+          @blur="handleInputConfirm"
+        >
+        </el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+      </el-form-item>
       <el-form-item label="文章简介">
         <el-input
           type="textarea"
            style="width:480px;"
           :autosize="{ minRows: 2, maxRows: 4}"
           placeholder="请输入内容"
-          v-model="textarea3">
+          v-model="article.description">
         </el-input>
       </el-form-item>
       <el-form-item label="文章封面">
@@ -136,6 +158,36 @@ export default {
     }
   },
   methods: {
+        handleClose(tag) {
+          this.tags.splice(this.tags.indexOf(tag), 1);
+        },
+        showInput() {
+          this.tagVisible = true;
+          this.$nextTick(_ => {
+            this.$refs.saveTagInput.$refs.input.focus();
+          });
+        },
+
+        handleInputConfirm() {
+          axios.post('/admin/article/tag',qs.stringify({
+              name: this.article.name
+            })).then(res => {
+              //判断是否请求成功
+              if(res.data.errorId === 'OK'){
+                /**
+                 * 获取tagId
+                 */
+                let tagId = res.data.data.tagId;
+                let tagName = this.article.name;
+                this.tags.push({
+                      tagId : tagId,
+                      name : tagName
+                  });
+                this.tagVisible = false;
+                this.article.tagName = '';
+              }
+            })
+        },
         // 绑定@imgAdd event
         $imgAdd(pos, $file){
             // 第一步.将图片上传到服务器.
@@ -162,7 +214,9 @@ export default {
               uid: Uid,
               title: this.article.title,
               related: this.article.related || '',
+              tagIds: this.tags||[],
               status: this.article.status,
+              description: this.article.description || '',
               recommend: this.article.recommend || '',
               category: this.article.category || 0,
             })).then(res => {

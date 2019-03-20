@@ -22,16 +22,15 @@
           v-for="tag in tags"
           closable
           :key="tag.tagId"
-          :label="tag.tagName"
-          v-model="article.tag"
+          :label="tag.name"
           :disable-transitions="false"
           @close="handleClose(tag)">
-          {{tag.tagName}}
+          {{tag.name}}
         </el-tag>
         <el-input
           class="input-new-tag"
           v-if="tagVisible"
-          v-model="article.tagName"
+          v-model="article.name"
           ref="saveTagInput"
           size="small"
           @keyup.enter.native="handleInputConfirm"
@@ -184,7 +183,7 @@ export default {
 
         handleInputConfirm() {
           axios.post('/admin/article/tag',qs.stringify({
-              name: this.article.tagName
+              name: this.article.name
             })).then(res => {
               //判断是否请求成功
               if(res.data.errorId === 'OK'){
@@ -192,10 +191,10 @@ export default {
                  * 获取tagId
                  */
                 let tagId = res.data.data.tagId;
-                let tagName = this.article.tagName;
+                let tagName = this.article.name;
                 this.tags.push({
                       tagId : tagId,
-                      tagName : tagName
+                      name : tagName
                   });
                 this.tagVisible = false;
                 this.article.tagName = '';
