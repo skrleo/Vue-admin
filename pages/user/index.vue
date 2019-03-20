@@ -30,7 +30,12 @@
             <!--索引-->
             <el-table-column prop="uid" label="用户ID" width="120">
             </el-table-column>
-            <el-table-column prop="name" label="用户账号" width="150">
+            <el-table-column label="用户账号" prop="hasManyUserAccountModel">
+                <template slot-scope="scope">
+                <span v-for="(item,index) in scope.row.hasManyUserAccountModel" :key="index">
+                    <span v-show="index > 0">/</span>{{item.account || ''}}
+                </span>
+                </template>
             </el-table-column>
             <el-table-column prop="name" label="姓名" width="150">
             </el-table-column>

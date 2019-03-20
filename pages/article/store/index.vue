@@ -39,7 +39,17 @@
         </el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
       </el-form-item>
-      <el-form-item label="文章简介">
+      <el-form-item label="文章类目" prop="category">
+        <el-select v-model="article.category" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="文章简介" prop="description">
         <el-input
           type="textarea"
           style="width:480px;"
@@ -48,7 +58,7 @@
           v-model="article.description">
         </el-input>
       </el-form-item>
-      <!-- <el-form-item label="文章封面">
+      <el-form-item label="文章封面">
         <el-upload
           action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card"
@@ -59,16 +69,6 @@
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
-      </el-form-item> -->
-      <el-form-item label="文章类目" prop="category">
-        <el-select v-model="article.category" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
       </el-form-item>
       <el-form-item label="文章内容" prop="related">
         <no-ssr><mavon-editor :toolbars="markdownOption" v-model="article.related"/></no-ssr>
