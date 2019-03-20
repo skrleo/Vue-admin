@@ -58,7 +58,7 @@
           v-model="article.description">
         </el-input>
       </el-form-item>
-      <el-form-item label="文章封面">
+      <!-- <el-form-item label="文章封面">
         <el-upload
           action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card"
@@ -69,7 +69,7 @@
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="文章内容" prop="related">
         <no-ssr><mavon-editor :toolbars="markdownOption" v-model="article.related"/></no-ssr>
       </el-form-item>
@@ -97,7 +97,7 @@ export default {
       article:{
         title:'',
         related: '', 
-        tagName:'',
+        name:'',
         status: 0,     
         recommend:'',      
         category:''

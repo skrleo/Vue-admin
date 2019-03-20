@@ -20,6 +20,16 @@
               <el-form-item>
                   <el-button type="primary">查询</el-button>
               </el-form-item>
+              <el-form-item>
+                  <el-select v-model="value" placeholder="请选择">
+                    <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                    </el-option>
+                </el-select>
+              </el-form-item>
           </el-form>
         </div>
         <!--表格数据及操作-->
@@ -116,7 +126,17 @@
         //导航条默认选项
         activeIndex: '1',
         activeIndex2: '1',
-        dialogVisible: false
+        dialogVisible: false,
+        options: [{
+          value: '0',
+          label: '全部'
+        }, {
+          value: '1',
+          label: '待审核'
+        }, {
+          value: '2',
+          label: '已审核'
+        }],
       }
     },
     methods: {

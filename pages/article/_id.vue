@@ -48,7 +48,7 @@
           v-model="article.description">
         </el-input>
       </el-form-item>
-      <el-form-item label="文章封面">
+      <!-- <el-form-item label="文章封面">
         <el-upload
           action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card"
@@ -59,7 +59,7 @@
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="文章类目" prop="category">
         <el-select v-model="article.category" placeholder="请选择">
           <el-option
@@ -102,6 +102,8 @@ export default {
   },
   data() {
     return {
+      tags: [],
+      tagVisible: false,
       article:{
         title:'',
         related: '', 
