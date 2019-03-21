@@ -89,12 +89,25 @@
     },
     methods:{
         loginOut(){
-            Cookie.remove('token');
-            this.$message({
-                message: '退出成功',
-                type: 'success'
-            });
-            this.$router.push('/login'); 
+            axios.delete('/login').then(res => {
+                console.log(res);
+                //判断是否请求成功
+                if(res.data.statusCode == '200'){
+                    Cookie.remove('token');
+                    this.$message({
+                        message: '退出成功',
+                        type: 'success'
+                    });
+                    this.$router.push('/login'); 
+                }
+              })
+              .catch(res => {
+                if(res.response.data.message === ''){
+                  this.$message.error('请求异常，请稍后重试！');
+                }else{
+                  this.$message.error(res.response.data.message);
+                }
+              });
         }
     },
     data() {
