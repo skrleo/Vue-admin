@@ -80,6 +80,7 @@ export default {
         this.$refs[ruleForm].validate((valid) => {
           if (valid) {
             axios.post('/login',qs.stringify({
+                type: 1,
                 account: this.ruleForm.account,
                 password: this.ruleForm.password
               })).then(res => {
