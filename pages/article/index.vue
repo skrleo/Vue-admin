@@ -30,6 +30,12 @@
                     </el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item>
+                  <el-button type="primary">审核通过</el-button>
+              </el-form-item>
+              <el-form-item>
+                  <el-button type="primary">审核不通过</el-button>
+              </el-form-item>
           </el-form>
         </div>
         <!--表格数据及操作-->

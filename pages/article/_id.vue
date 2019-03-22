@@ -7,17 +7,30 @@
     </el-breadcrumb>
     <br>
     <el-form :model="article" ref="article" label-width="80px" size="medium">
-      <el-form-item label="文章标题" prop="title">
+      <el-form-item label="景点名称" prop="title">
         <el-input  v-model="article.title" style="width:360px;"></el-input>
       </el-form-item>
-      <el-form-item label="文章状态" prop="status">
+      <el-form-item label="详细地址" prop="address">
+        <el-input  v-model="article.address" style="width:360px;"></el-input>
+      </el-form-item>
+      <el-form-item label="开放时间" prop="openTime">
+        <el-date-picker
+          v-model="article.openTime"
+          value-format="timestamp"
+          type="date"
+          placeholder="选择日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="人均消费" prop="price">
+        <el-input  v-model="article.price" style="width:360px;"></el-input>
+      </el-form-item>
+      <el-form-item label="状态" prop="status">
         <el-radio-group v-model="article.status">
-          <el-radio :label="0">待审核</el-radio>
-          <el-radio :label="1">审核通过</el-radio>
-          <el-radio :label="2">审核不通过</el-radio>
+          <el-radio :label="0">封锁</el-radio>
+          <el-radio :label="1">解封</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="文章标签">
+      <el-form-item label="标签">
         <el-tag
           v-for="tag in article.tags"
           closable
@@ -39,7 +52,7 @@
         </el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
       </el-form-item>
-      <el-form-item label="文章简介">
+      <el-form-item label="景点简介">
         <el-input
           type="textarea"
            style="width:480px;"
@@ -70,11 +83,8 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="文章内容" prop="related">
-        <no-ssr><mavon-editor :toolbars="markdownOption" v-model="article.related"/></no-ssr>
-      </el-form-item>
-      <el-form-item label="文章内容" prop="recommend">
-        <no-ssr><mavon-editor :toolbars="markdownOption" v-model="article.recommend"/></no-ssr>
+      <el-form-item label="推荐理由" prop="reason">
+        <no-ssr><mavon-editor :toolbars="markdownOption" v-model="article.reason"/></no-ssr>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="update(article.articleId)">立即修改</el-button>
@@ -106,7 +116,11 @@ export default {
       tagVisible: false,
       article:{
         title:'',
-        related: '', 
+        reason: '', 
+        name:'',
+        price:'',
+        address:'',
+        openTime:'',
         status: 0,     
         recommend:'',      
         category:''
@@ -215,11 +229,14 @@ export default {
           axios.put(`/admin/article/${val}`,qs.stringify({
               uid: Uid,
               title: this.article.title,
-              related: this.article.related || '',
               tagIds: this.tags||[],
+              reason: this.article.reason || '',
+              price: this.article.price || '',
+              address: this.article.address || '',
+              openTime: this.article.openTime || '',
               status: this.article.status,
-              description: this.article.description || '',
               recommend: this.article.recommend || '',
+              description: this.article.description || '',
               category: this.article.category || 0,
             })).then(res => {
               //判断是否请求成功
