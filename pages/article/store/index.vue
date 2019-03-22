@@ -67,8 +67,8 @@
         </el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
       </el-form-item>
-      <el-form-item label="景点类目" prop="category">
-        <el-select v-model="article.category" placeholder="请选择">
+      <el-form-item label="景点类目" prop="categoryId">
+        <el-select v-model="article.categoryId" placeholder="请选择">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -119,7 +119,7 @@ export default {
         openTime:'',
         status: 0,     
         recommend:'',      
-        category:''
+        categoryId:''
       },
       options: [{
         value: '0',
@@ -259,7 +259,7 @@ export default {
           status: this.article.status,
           cover: this.imageUrls || '',
           description: this.article.description || '',
-          category: this.article.category || 0,
+          categoryId: this.article.categoryId || 0,
         })).then(res => {
           //判断是否请求成功
           if(res.data.errorId === 'OK'){
