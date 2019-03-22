@@ -30,6 +30,21 @@
           <el-radio label="1">解封</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="文章封面">
+        <el-upload
+          action="http://api.example.com/v1.0/api/upload/img"
+          list-type="picture-card"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove"
+          :on-success="uploadSuccess"
+          :before-upload="onBeforeUploadImage"
+          :on-change="fileChange">
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="imageUrl" alt="">
+        </el-dialog>
+      </el-form-item>
       <el-form-item label="景点标签">
         <el-tag
           v-for="tag in tags"
@@ -71,18 +86,6 @@
           v-model="article.description">
         </el-input>
       </el-form-item>
-      <!-- <el-form-item label="文章封面">
-        <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
-          list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove">
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt="">
-        </el-dialog>
-      </el-form-item> -->
       <el-form-item label="推荐理由" prop="reason">
         <no-ssr><mavon-editor :toolbars="markdownOption" v-model="article.reason"/></no-ssr>
       </el-form-item>
@@ -102,6 +105,9 @@ export default {
   layout: 'main',
   data() {
     return {
+      imageUrl: '',
+      imageUrls:[],
+      dialogVisible: false,
       tags: [],
       tagVisible: false,
       article:{
@@ -164,87 +170,113 @@ export default {
     }
   },
   methods: {
-        // 绑定@imgAdd event
-        $imgAdd(pos, $file){
-            // 第一步.将图片上传到服务器.
-           var formdata = new FormData();
-           formdata.append('image', $file);
-           axios({
-               url: 'server url',
-               method: 'post',
-               data: formdata,
-               headers: { 'Content-Type': 'multipart/form-data' },
-           }).then((url) => {
-               // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-               /**
-               * $vm 指为mavonEditor实例，可以通过如下两种方式获取
-               * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
-               * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
-               */
-               $vm.$img2Url(pos, url);
-           })
-        },
-        handleClose(tag) {
-          this.tags.splice(this.tags.indexOf(tag), 1);
-        },
-        showInput() {
-          this.tagVisible = true;
-          this.$nextTick(_ => {
-            this.$refs.saveTagInput.$refs.input.focus();
-          });
-        },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    onBeforeUploadImage(file) {
+      const isIMAGE = file.type === 'image/jpeg' || 'image/jpg' || 'image/png'
+      const isLt1M = file.size / 1024 / 1024 < 1
+      if (!isIMAGE) {
+        this.$message.error('上传文件只能是图片格式!')
+      }
+      if (!isLt1M) {
+        this.$message.error('上传文件大小不能超过 1MB!')
+      }
+      return isIMAGE && isLt1M
+    },
+    fileChange(file, fileList) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    uploadSuccess(response, file, fileList){
+      this.imageUrl = response.data.filePath;
+      this.imageUrls.push(response.data.filePath);
+      console.log(this.imageUrls);
+    },
+    // 绑定@imgAdd event
+    $imgAdd(pos, $file){
+        // 第一步.将图片上传到服务器.
+        var formdata = new FormData();
+        formdata.append('image', $file);
+        axios({
+            url: 'server url',
+            method: 'post',
+            data: formdata,
+            headers: { 'Content-Type': 'multipart/form-data' },
+        }).then((url) => {
+            // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
+            /**
+           * $vm 指为mavonEditor实例，可以通过如下两种方式获取
+           * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
+           * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
+           */
+            $vm.$img2Url(pos, url);
+        })
+    },
+    handleClose(tag) {
+      this.tags.splice(this.tags.indexOf(tag), 1);
+    },
+    showInput() {
+      this.tagVisible = true;
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
 
-        handleInputConfirm() {
-          axios.post('/admin/article/tag',qs.stringify({
-              name: this.article.name
-            })).then(res => {
-              //判断是否请求成功
-              if(res.data.errorId === 'OK'){
-                /**
-                 * 获取tagId
-                 */
-                let tagId = res.data.data.tagId;
-                let tagName = this.article.name;
-                this.tags.push({
-                      tagId : tagId,
-                      name : tagName
-                  });
-                this.tagVisible = false;
-                this.article.tagName = '';
-              }
-            })
-        },
-        onSubmit() {
-          let Uid = Cookie.get('Uid');
-          axios.post('/admin/article',qs.stringify({
-              uid: Uid,
-              title: this.article.title,
-              tagIds: this.tags||[],
-              reason: this.article.reason || '',
-              price: this.article.price || '',
-              address: this.article.address || '',
-              openTime: this.article.openTime || '',
-              status: this.article.status,
-              recommend: this.article.recommend || '',
-              description: this.article.description || '',
-              category: this.article.category || 0,
-            })).then(res => {
-              //判断是否请求成功
-              if(res.data.errorId === 'OK'){
-                this.$message({
-                    message: '成功发布文章',
-                    type: 'success'
-                  });
-              }
-            }).catch(res => {
-              if(res.response.data.message === ''){
-                this.$message.error('请求异常，请稍后重试！');
-              }else{
-                this.$message.error(res.response.data.message);
-              }
-            });
-        }
+    handleInputConfirm() {
+      axios.post('/admin/article/tag',qs.stringify({
+          name: this.article.name
+        })).then(res => {
+          //判断是否请求成功
+          if(res.data.errorId === 'OK'){
+            /**
+             * 获取tagId
+             */
+            let tagId = res.data.data.tagId;
+            let tagName = this.article.name;
+            this.tags.push({
+                  tagId : tagId,
+                  name : tagName
+              });
+            this.tagVisible = false;
+            this.article.tagName = '';
+          }
+        })
+    },
+    onSubmit() {
+      let Uid = Cookie.get('Uid');
+      axios.post('/admin/article',qs.stringify({
+          uid: Uid,
+          title: this.article.title,
+          tagIds: this.tags||[],
+          reason: this.article.reason || '',
+          price: this.article.price || '',
+          address: this.article.address || '',
+          openTime: this.article.openTime || '',
+          status: this.article.status,
+          cover: this.imageUrls || '',
+          description: this.article.description || '',
+          category: this.article.category || 0,
+        })).then(res => {
+          //判断是否请求成功
+          if(res.data.errorId === 'OK'){
+            this.$message({
+                message: '成功发布文章',
+                type: 'success'
+              });
+          }
+        }).catch(res => {
+          if(res.response.data.message === ''){
+            this.$message.error('请求异常，请稍后重试！');
+          }else{
+            this.$message.error(res.response.data.message);
+          }
+        });
     }
+  }
 }
 </script>
 
