@@ -30,20 +30,17 @@
           <el-radio :label="1">解封</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="文章封面">
+       <el-form-item label="文章封面">
         <el-upload
+          class="avatar-uploader"
           action="http://api.example.com/v1.0/api/upload/img"
-          list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
+          :show-file-list="false"
           :on-success="uploadSuccess"
           :before-upload="onBeforeUploadImage"
           :on-change="fileChange">
-          <i class="el-icon-plus"></i>
+          <img v-if="article.cover" :src="article.cover" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="imageUrl" alt="">
-        </el-dialog>
       </el-form-item>
       <el-form-item label="标签">
         <el-tag
@@ -110,12 +107,12 @@ export default {
   async asyncData ({ params }) {
     let {data} = await axios.get(`/admin/article/${params.id}`);
     return {
-
       article: data.data
     }
   },
   data() {
     return {
+      cover: '',
       tags: [],
       tagVisible: false,
       article:{
@@ -177,13 +174,6 @@ export default {
     }
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
     onBeforeUploadImage(file) {
       const isIMAGE = file.type === 'image/jpeg' || 'image/jpg' || 'image/png'
       const isLt1M = file.size / 1024 / 1024 < 1
@@ -196,12 +186,10 @@ export default {
       return isIMAGE && isLt1M
     },
     fileChange(file, fileList) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+      this.cover = URL.createObjectURL(file.raw);
     },
     uploadSuccess(response, file, fileList){
-      this.imageUrl = response.data.filePath;
-      this.imageUrls.push(response.data.filePath);
-      console.log(this.imageUrls);
+      this.cover = response.data.filePath;
     },
     handleClose(tag) {
       this.tags.splice(this.tags.indexOf(tag), 1);
@@ -264,7 +252,7 @@ export default {
           address: this.article.address || '',
           openTime: this.article.openTime || '',
           status: this.article.status,
-          cover: this.imageUrls || '',
+          cover: this.cover || '',
           description: this.article.description || '',
           categoryId: this.article.categoryId || 0,
         })).then(res => {
@@ -286,3 +274,29 @@ export default {
   }
 }
 </script>
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 118px;
+    height: 118px;
+    line-height: 118px;
+    text-align: center;
+  }
+  .avatar {
+    width: 118px;
+    height: 118px;
+    display: block;
+  }
+</style>
+
