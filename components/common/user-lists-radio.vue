@@ -74,7 +74,7 @@
       }
     },
     created: function () {
-      axios.get('/user/lists')
+      axios.get('/admin/user/lists')
         .then(res => {
           console.log(res.data);
           this.pageNow = res.data.page.now || 1;
@@ -85,14 +85,14 @@
     },
     methods: {
       handleSizeChange(val) {
-        axios.get(`/user/lists?pageSize=${val}`)
+        axios.get(`/admin/user/lists?pageSize=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageSize = res.data.page.size || 10;
           });
       },
       handleCurrentChange(val) {
-        axios.get(`/user/lists?pageNow=${val}`)
+        axios.get(`/admin/user/lists?pageNow=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageNow = res.data.page.now || 1;
