@@ -306,4 +306,21 @@ export default {
     height: 118px;
     display: block;
   }
+  a{
+    color: #000;
+    text-decoration-line: none;
+  }
+  ul li{
+    list-style-type: none;
+  }
+ .el-footer {
+    background-color: #39393b;
+    color: #fafafa;
+    text-align: center;
+    line-height: 60px;
+  }
+  .el-main {
+    width: 80%;
+    margin: 0 auto;
+  }
 </style>
