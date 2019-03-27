@@ -112,10 +112,10 @@ export default {
   },
   data() {
     return {
-      cover: '',
       tags: [],
       tagVisible: false,
       article:{
+        cover:'',
         title:'',
         reason: '', 
         name:'',
@@ -185,11 +185,8 @@ export default {
       }
       return isIMAGE && isLt1M
     },
-    fileChange(file, fileList) {
-      this.cover = URL.createObjectURL(file.raw);
-    },
     uploadSuccess(response, file, fileList){
-      this.cover = response.data.filePath;
+      this.article.cover = response.data.filePath;
     },
     handleClose(tag) {
       this.tags.splice(this.tags.indexOf(tag), 1);
@@ -252,7 +249,7 @@ export default {
           address: this.article.address || '',
           openTime: this.article.openTime || '',
           status: this.article.status,
-          cover: this.cover || '',
+          cover: this.article.cover || '',
           description: this.article.description || '',
           categoryId: this.article.categoryId || 0,
         })).then(res => {

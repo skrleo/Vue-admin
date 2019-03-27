@@ -116,9 +116,6 @@
         }
         return isIMAGE && isLt1M
       },
-      fileChange(file, fileList) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
       uploadSuccess(response, file, fileList){
         this.headimg = response.data.filePath;
       },
