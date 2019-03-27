@@ -18,7 +18,7 @@
         :on-success="uploadSuccess"
         :before-upload="onBeforeUploadImage"
         :on-change="fileChange">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <img v-if="form.headimg" :src="form.headimg" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </el-form-item>
@@ -105,12 +105,12 @@
           name: '',
           status: '',
           sex: '',
+          headimg:'',
           password: '',
           nickname: '',
           email: '',
           phone: ''
         },
-        imageUrl: '',
         visible: true
       }
     },
@@ -126,11 +126,8 @@
         }
         return isIMAGE && isLt1M
       },
-      fileChange(file, fileList) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
       uploadSuccess(response, file, fileList){
-        this.headimg = response.data.filePath;
+        this.form.headimg = response.data.filePath;
       },
       onUpdate(val) {
         axios.put(`/admin/user/${val}`,qs.stringify({
@@ -141,7 +138,7 @@
             sex: this.form.sex,
             password: this.form.password,
             nickname: this.form.nickname,
-            headimg: this.headimg,
+            headimg: this.form.headimg,
             email: this.form.email,
             phone: this.form.phone
           })).then(res => {
