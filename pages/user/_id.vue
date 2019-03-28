@@ -24,9 +24,9 @@
         </el-col>
         <el-col :span="6">邮箱地址：{{user.email}} </el-col>
         <el-col :span="4">联系方式：{{user.phone}}</el-col>
-        <el-col :span="4">登录次数：{{user.loginNum}} </el-col>
+        <el-col :span="3">登录次数：{{user.loginNum}} </el-col>
         <el-col :span="6">最后登录时间：{{user.lastLoginTime | d('yyyy-MM-dd hh:mm:ss')}}</el-col>
-        <el-col :span="2"><el-button type="text">修改密码</el-button></el-col>
+        <el-col :span="3"><el-button type="text">修改密码</el-button></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="16">
@@ -34,6 +34,7 @@
             <el-tab-pane label="用户管理">用户管理</el-tab-pane>
             <el-tab-pane label="操作历史">操作历史</el-tab-pane>
             <el-tab-pane label="角色管理">角色管理</el-tab-pane>
+            <el-tab-pane label="用户消息">用户消息</el-tab-pane>
           </el-tabs>
         </el-col>
         <el-col :span="8">
@@ -82,6 +83,7 @@
 
 <style scoped lang="scss">
   .el-row {
+    line-height: 32px;
     margin-bottom: 20px;
     &:last-child {
       margin-bottom: 0;
