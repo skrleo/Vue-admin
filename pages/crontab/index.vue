@@ -20,6 +20,12 @@
               <el-form-item>
                   <el-button type="primary">查询</el-button>
               </el-form-item>
+              <el-form-item>
+                  <el-button type="primary">执行</el-button>
+              </el-form-item>
+              <el-form-item>
+                  <el-button type="primary">暂停</el-button>
+              </el-form-item>
           </el-form>
           <span style="float:right;color:#000;line-height:42px;"><span style="width:8px;height:8px;border-radius:50%;background:#67C23A;display:inline-block;margin-right:6px;"></span>队列执行中</span>
         </div>
@@ -33,12 +39,12 @@
             </el-table-column>
             <el-table-column prop="name" label="任务名称">
             </el-table-column>
-             <el-table-column prop="status" label="状态">
+             <el-table-column prop="status" label="状态" width="90">
                 <template slot-scope="scope">
-                    <span>{{scope.row.status ? '运行中':'暂停'}}</span>
+                    <span>{{scope.row.status ? '暂停':'运行中'}}</span>
                 </template>
             </el-table-column>
-             <el-table-column prop="type" label="任务类型">
+             <el-table-column prop="type" label="任务类型" width="90">
                 <template slot-scope="scope">
                     <span>{{scope.row.status ? '执行一次':'循环执行'}}</span>
                 </template>

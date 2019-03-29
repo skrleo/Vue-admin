@@ -73,7 +73,7 @@
     },
     methods: {
         chooseIcon (item) {
-            this.node.icon = item
+            this.node.icon = item;
         },
         onUpdate(val) {
           axios.put(`/admin/rbac/node/${val}`,qs.stringify({
@@ -103,3 +103,31 @@
     }
   }
 </script>
+
+<style type="text/css" scoped>
+@component-namespace system {
+  @b auth {
+    @e icon {
+      float: left;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+    @e iconnow > i {
+      color: red;
+    }
+    @e api {
+      float: left;
+      margin-right: 20px;
+      min-width: 1170px;
+    }
+    @e span {
+      color: #606266;
+    }
+    @e iconfont {
+      font-size: 20px;
+    }
+  }
+}
+</style>
+
+

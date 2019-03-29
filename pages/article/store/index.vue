@@ -36,8 +36,7 @@
           action="http://api.example.com/v1.0/api/upload/img"
           :show-file-list="false"
           :on-success="uploadSuccess"
-          :before-upload="onBeforeUploadImage"
-          :on-change="fileChange">
+          :before-upload="onBeforeUploadImage">
           <img v-if="article.cover" :src="article.cover" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
