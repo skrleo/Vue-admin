@@ -88,12 +88,12 @@
                 this.$message({
                     message: '成功删除节点',
                     type: 'success'
-                    });    
+                  });    
                 }
                 //删除当前节点
                 const parent = node.parent;
                 const children = parent.data.children || parent.data;
-                const index = children.findIndex(d => d.id === data.id);
+                const index = children.findIndex(d => d.nodeId === data.nodeId);
                 children.splice(index, 1);
             }).catch(res => {
                 if(res.response.data.message === ''){
