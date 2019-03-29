@@ -100,19 +100,15 @@
 
   export default {
     layout: 'main',
-    // async asyncData () {
-    //   const Uid = Cookie.get('Uid');
-    //   let [node,shortcut] = await Promise.all([
-    //     axios.get('/admin/rbac/node/lists'),
-    //     axios.get(`/admin/base/shortcut/lists?uid=2`)
-    //   ])
-    //   return {
-    //     node: JSON.parse(JSON.stringify(node.data.lists)),
-    //     shortcuts: JSON.parse(JSON.stringify(shortcut.data.lists))
-    //   }
-    // },
+    created: function () {
+      axios.get('/admin/base/shortcut/lists')
+        .then(res => {
+          this.shortcuts = res.data.lists || [];
+        });
+    },
     data() {
       return {
+        shortcuts:[],
         isCollapse:false,
         chartData: {
           columns: ['日期', '访问用户', '新增用户'],

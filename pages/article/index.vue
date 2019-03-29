@@ -62,7 +62,7 @@
             </el-table-column>
             <el-table-column prop="category" label="文章类目" width="120">
                 <template slot-scope="scope">
-                     <span v-if="scope.row.category === 0">推荐</span>
+                    <span v-if="scope.row.category === 0">推荐</span>
                     <span v-else-if="scope.row.category === 1">景点</span>
                     <span v-else-if="scope.row.category === 2">活动</span>
                     <span v-else-if="scope.row.category === 3">产品</span>
