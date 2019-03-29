@@ -20,10 +20,10 @@
           </el-form-item>
           <el-form-item label="时间间隔">
                 <el-input placeholder="请输入间隔时间" v-model="task.interval" class="input-with-select" style="width:280px;">
-                    <el-select v-model="select" slot="append" placeholder="秒">
-                    <el-option label="秒" value="1"></el-option>
-                    <el-option label="分" value="2"></el-option>
-                    <el-option label="时" value="3"></el-option>
+                    <el-select v-model="task.intervalType" slot="append" placeholder="秒">
+                    <el-option label="秒" :value="0"></el-option>
+                    <el-option label="分" :value="1"></el-option>
+                    <el-option label="时" :value="2"></el-option>
                     </el-select>
                 </el-input>
           </el-form-item>
@@ -76,6 +76,7 @@
           name: '',
           type: 0,
           interval: 0,
+          intervalType: 0,
           beginTime: 0,
           endTime: 0,
           action: '',
@@ -90,6 +91,7 @@
             name: this.task.name,
             type: this.task.type,
             interval: this.task.interval,
+            intervalType: this.task.intervalType,
             beginTime: this.task.beginTime[0],
             endTime: this.task.beginTime[1],
             action: this.task.action,
