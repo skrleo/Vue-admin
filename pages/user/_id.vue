@@ -72,7 +72,7 @@
     validate ({ params }) {
       // Must be a number
       if(/^\d+$/.test(params.id)){
-        this.id = params.id;
+        this.uid = params.id;
       }
       return /^\d+$/.test(params.id)
     },
@@ -84,6 +84,13 @@
     },
     data() {
       return {
+        user: {
+          headimg:'',
+          password: '',
+          nickname: '',
+          email: '',
+          phone: ''
+        },
         operations: {
           detail: '',
           createdAt: '',
@@ -98,7 +105,11 @@
             this.categoryId = 0;
             break;
           case 'operationLog':
-            axios.get('/admin/base/operation/log/lists')
+            axios.get('/admin/base/operation/log/lists', {
+                params: {
+                  uid:  this.user.uid
+                }
+              })
               .then(res => {
                 this.operations = res.data.lists || [];
               });
