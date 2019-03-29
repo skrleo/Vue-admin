@@ -38,7 +38,7 @@
                   <el-timeline-item
                     v-for="(operation, index) in operations"
                     :key="index"
-                    :type="operation.type"
+                    color="#0bbd87"
                     :timestamp="operation.createdAt| d('yyyy-MM-dd hh:mm:ss')">
                     {{operation.detail}}
                   </el-timeline-item>
