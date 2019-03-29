@@ -54,9 +54,13 @@
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
-      let {data} = await axios.get(`/admin/rbac/node/${params.id}`);
+      let [node,nodeParent] = await Promise.all([
+        axios.get(`/admin/rbac/node/${params.id}`),
+        axios.get('/admin/rbac/node/lists')
+      ])
       return {
-        node: data.data
+        node: node.data.data,
+        nodeParent: JSON.parse(JSON.stringify(nodeParent.data.lists))
       }
     },
     data() {
