@@ -30,11 +30,23 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="16">
-          <el-tabs type="border-card">
-            <el-tab-pane label="用户管理">用户管理</el-tab-pane>
-            <el-tab-pane label="操作历史">操作历史</el-tab-pane>
-            <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-            <el-tab-pane label="用户消息">用户消息</el-tab-pane>
+          <el-tabs type="border-card" @tab-click="handleClick">
+            <el-tab-pane label="用户管理" name="user">用户管理</el-tab-pane>
+            <el-tab-pane label="操作历史" name="operationLog">
+              <div class="block">
+                <el-timeline>
+                  <el-timeline-item
+                    v-for="(operation, index) in operations"
+                    :key="index"
+                    :type="operation.type"
+                    :timestamp="operation.createdAt| d('yyyy-MM-dd hh:mm:ss')">
+                    {{operation.detail}}
+                  </el-timeline-item>
+                </el-timeline>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="角色管理" name="role">角色管理</el-tab-pane>
+            <el-tab-pane label="用户消息" name="message">用户消息</el-tab-pane>
           </el-tabs>
         </el-col>
         <el-col :span="8">
@@ -71,9 +83,33 @@
       }
     },
     data() {
-      return {}
+      return {
+        operations: {
+          detail: '',
+          createdAt: '',
+          type: 0,
+        }
+      }
     },
     methods: {
+      handleClick(tab, event) {
+        switch(tab.name){
+          case 'first':
+            this.categoryId = 0;
+            break;
+          case 'operationLog':
+            axios.get('/admin/base/operation/log/lists')
+              .then(res => {
+                this.operations = res.data.lists || [];
+              });
+            break ;
+          case 'fourth':
+            this.categoryId = 3;
+            break ;
+          default:
+            this.categoryId = 1;
+        }
+      },
       onSubmit() {
         console.log('submit!');
       }
