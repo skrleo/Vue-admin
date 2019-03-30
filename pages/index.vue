@@ -8,8 +8,8 @@
               <span>快捷方式</span>
               <el-button style="float: right; padding: 3px 0" type="text" @click="showDel">操作按钮</el-button>
             </div>
-            <div v-for="shortcut in shortcuts" :key="shortcut" class="text item">
-              <span @click="delShortcut(shortcut.shortcutId)" v-if="isCollapse == true">
+            <div v-for="(shortcut,index) in shortcuts" :key="index" class="text item">
+              <span @click="delShortcut(shortcut.shortcutId,index,shortcuts)" v-if="isCollapse == true">
                 <i class="el-icon-circle-close-outline del_shortcut"></i>
               </span>
               <nuxt-link :to="{name: `${shortcut.path}`}">
@@ -27,9 +27,6 @@
               <span>待办事件</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
             </div>
-            <!-- <div v-for="o in 4" :key="o" class="text item">
-              {{'列表内容 ' + o }}
-            </div> -->
             <div class="text item">
               <div class="icon-text">
                 <i class="el-icon-circle-plus-outline"></i>
@@ -132,11 +129,12 @@
           this.isCollapse = true
         }
       },
-      delShortcut(val){
+      delShortcut(val,index,rows){
         axios.delete(`/admin/base/shortcut/${val}`, {data: qs.stringify({shortcutId:val})})
             .then(res => {
                 //判断是否请求成功
                 if(res.data.errorId === 'OK'){
+                    rows.splice(index, 1);
                     this.$message({
                         message: '成功删除快捷方式',
                         type: 'success'

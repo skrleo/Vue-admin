@@ -26,7 +26,7 @@
         <el-col :span="4">联系方式：{{user.phone}}</el-col>
         <el-col :span="3">登录次数：{{user.loginNum}} </el-col>
         <el-col :span="6">最后登录时间：{{user.lastLoginTime | d('yyyy-MM-dd hh:mm:ss')}}</el-col>
-        <el-col :span="3"><el-button type="text">修改密码</el-button></el-col>
+        <el-col :span="3"><el-button type="text" @click="updatePw()">修改密码</el-button></el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="16">
@@ -120,6 +120,38 @@
           default:
             this.categoryId = 1;
         }
+      },
+      updatePw(){
+        this.$prompt('请输入密码', '修改密码', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            placeholder:"请输入密码",
+            inputErrorMessage: '密码格式不正确'
+          }).then(({ value }) => {
+            axios.put('/admin/user/fix/pw',qs.stringify({
+                uid: this.user.uid,
+                password: value,
+              })).then(res => {
+                //判断是否请求成功
+                if(res.data.errorId === 'OK'){
+                  this.$message({
+                      message: '修改密码成功',
+                      type: 'success'
+                    });  
+                }
+              }).catch(res => {
+                if(res.response.data.message === ''){
+                  this.$message.error('请求异常，请稍后重试！');
+                }else{
+                  this.$message.error(res.response.data.message);
+                }
+              });
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '取消输入'
+            });       
+          });
       },
       onSubmit() {
         console.log('submit!');
