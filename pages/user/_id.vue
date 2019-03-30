@@ -29,7 +29,7 @@
         <el-col :span="3"><el-button type="text" @click="updatePw()">修改密码</el-button></el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="16">
+        <el-col :span="24">
           <el-tabs type="border-card" @tab-click="handleClick">
             <el-tab-pane label="用户管理" name="user">用户管理</el-tab-pane>
             <el-tab-pane label="操作历史" name="operationLog">
@@ -46,19 +46,63 @@
               </div>
             </el-tab-pane>
             <el-tab-pane label="角色管理" name="role">角色管理</el-tab-pane>
-            <el-tab-pane label="用户消息" name="message">用户消息</el-tab-pane>
+            <el-tab-pane label="用户消息" name="message">
+                <div style="height:62px;">
+                  <!--搜索框-->
+                  <el-form :inline="true" style="float:left;" size="small">
+                      <el-form-item label="查询消息">
+                          <el-input placeholder="搜索消息"></el-input>
+                      </el-form-item>
+                      <el-form-item>
+                          <el-button type="primary">查询</el-button>
+                      </el-form-item>
+                      <el-form-item>
+                          <el-button type="primary">审核通过</el-button>
+                      </el-form-item>
+                      <el-form-item>
+                          <el-button type="primary">审核不通过</el-button>
+                      </el-form-item>
+                  </el-form>
+                </div>
+              <!--表格数据及操作-->
+              <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+                  <!--勾选框-->
+                  <el-table-column type="selection" width="55">
+                  </el-table-column>
+                  <el-table-column prop="title" label="标题内容">
+                  </el-table-column>
+                  <el-table-column prop="status" label="是否已读">
+                      <template slot-scope="scope">
+                          <span>{{scope.row.status ? '已读':'未读'}}</span>
+                      </template>
+                  </el-table-column>
+                  <el-table-column prop="createdAt" label="创建时间">
+                      <template slot-scope="scope">
+                          <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
+                      </template>
+                  </el-table-column>
+                  <el-table-column label="操作">
+                      <template slot-scope="scope">
+                          <nuxt-link :to="{name:'message-id',params:{ id: scope.row.messageId }}">
+                              <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
+                          </nuxt-link>
+                          <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.messageId,scope.$index, lists)">删除</el-button>
+                      </template>
+                  </el-table-column>
+              </el-table>
+              <br>
+              <!--分页条-->
+              <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="pageNow"
+                  :page-sizes="[10, 50, 100, 150]"
+                  :page-size="pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="pageCount">
+              </el-pagination>
+            </el-tab-pane>
           </el-tabs>
-        </el-col>
-        <el-col :span="8">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span>卡片名称</span>
-              <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-            </div>
-            <div v-for="o in 4" :key="o" class="text item">
-              {{'列表内容 ' + o }}
-            </div>
-          </el-card>
         </el-col>
       </el-row>
     </div>
@@ -114,8 +158,14 @@
                 this.operations = res.data.lists || [];
               });
             break ;
-          case 'fourth':
-            this.categoryId = 3;
+          case 'message':
+            axios.get('/admin/message/lists')
+              .then(res => {
+                this.pageNow = res.data.page.now || 1 ,
+                this.pageSize = res.data.page.size || 10 ,
+                this.pageCount = res.data.page.count || 0 ,
+                this.lists = res.data.lists || []
+              });
             break ;
           default:
             this.categoryId = 1;

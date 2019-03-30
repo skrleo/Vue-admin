@@ -21,10 +21,10 @@
                   <el-button type="primary">查询</el-button>
               </el-form-item>
               <el-form-item>
-                  <el-button type="primary">执行</el-button>
+                  <el-button type="warning">执行</el-button>
               </el-form-item>
               <el-form-item>
-                  <el-button type="primary">暂停</el-button>
+                  <el-button type="danger">暂停</el-button>
               </el-form-item>
           </el-form>
           <span style="float:right;color:#000;line-height:42px;"><span style="width:8px;height:8px;border-radius:50%;background:#67C23A;display:inline-block;margin-right:6px;"></span>队列执行中</span>
