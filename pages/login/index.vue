@@ -10,8 +10,15 @@
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码" show-password>
+          <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码" @blur="showImgVerify" show-password>
             <i slot="prefix" class="el-input__icon el-icon-third-mima"></i>
+          </el-input>
+        </el-form-item>
+        <el-form-item v-if="isShow" prop="imgVerify">
+          <el-input type="text" v-model="ruleForm.imgVerify" auto-complete="off" placeholder="验证码">
+            <template slot="append">
+              <img :src="imgVerifySrc" alt="" class="imgVerifySrc" @click="getImgVerify">
+            </template>
           </el-input>
         </el-form-item>
         <div style="margin-top: 15px;">
@@ -39,6 +46,11 @@
   el-input{
     margin-top: 15px;
   }
+  .imgVerifySrc{
+    margin-top: 2px;
+    width: 80px;
+    height: 32px;
+  }
 </style>
 
 <script>
@@ -57,7 +69,11 @@ export default {
     },
     data() {
       return {
+        isShow:0,
         ruleForm: {
+          imgVerifySrc:'',
+          imgVerify:'',
+          verifyGuid:'123456',
           account:  '',
           password: ''
         },
@@ -73,9 +89,48 @@ export default {
       };
     },
     methods: {
-      changePass(value) {
-        this.visible = !(value === 'show');
-      },    //判断渲染，true:暗文显示，false:明文显示
+      getImgVerify () {
+        axios.get('/verify/img', {
+              params: {
+                verifyGuid: this.ruleForm.verifyGuid,
+                '_rand': parseInt(Math.random() * 9900000)
+              }
+            }).then(res => {
+                console.log(res);
+                //判断是否请求成功
+                if(res.data.statusCode == '200'){
+                  this.imgVerifySrc = res.data.data.base64
+                }
+              })
+              .catch(res => {
+                if(res.response.data.message === ''){
+                  this.$message.error('请求异常，请稍后重试！');
+                }else{
+                  this.$message.error(res.response.data.message);
+                }
+              });
+      },
+      showImgVerify () {
+        if (this.ruleForm.account === '') return
+            axios.get(`code/count?account=${this.ruleForm.account}`)
+              .then(res => {
+                  console.log(res);
+                  //判断是否请求成功
+                  if(res.data.statusCode == '200'){
+                    this.isShow = res.data.data.isShow;
+                    if(this.isShow){
+                      this.getImgVerify;
+                    }
+                  }
+                })
+                .catch(res => {
+                  if(res.response.data.message === ''){
+                    this.$message.error('请求异常，请稍后重试！');
+                  }else{
+                    this.$message.error(res.response.data.message);
+                  }
+                });
+      },
       submit (ruleForm) {
         this.$refs[ruleForm].validate((valid) => {
           if (valid) {

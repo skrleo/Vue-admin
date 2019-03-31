@@ -9,7 +9,7 @@
                     <span class="el-head-img">
                         <nuxt-link :to="{name:'user-id',params:{ id: userInfo.uid }}">
                             <el-badge class="item">
-                                <img :src="userInfo.headimg" alt="用户头像">
+                                <img :src="userInfo.headimg" alt="">
                             </el-badge>
                         </nuxt-link>       
                     </span>
