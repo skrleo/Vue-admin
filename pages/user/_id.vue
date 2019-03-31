@@ -76,17 +76,14 @@
                           <span>{{scope.row.status ? '已读':'未读'}}</span>
                       </template>
                   </el-table-column>
-                  <el-table-column prop="createdAt" label="创建时间">
+                  <el-table-column prop="status" label="消息类型">
                       <template slot-scope="scope">
-                          <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
+                          <span>{{scope.row.status ? '站内信':'系统消息'}}</span>
                       </template>
                   </el-table-column>
-                  <el-table-column label="操作">
+                  <el-table-column prop="createdAt" label="提交时间">
                       <template slot-scope="scope">
-                          <nuxt-link :to="{name:'message-id',params:{ id: scope.row.messageId }}">
-                              <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
-                          </nuxt-link>
-                          <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.messageId,scope.$index, lists)">删除</el-button>
+                          <span>{{scope.row.createdAt | d('yyyy年MM月dd日 hh:mm:ss')}}</span>
                       </template>
                   </el-table-column>
               </el-table>
