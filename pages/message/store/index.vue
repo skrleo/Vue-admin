@@ -105,6 +105,14 @@ export default {
             }
           });
     },
+    // 移除用户
+    removeTag (tag) {
+      this.users.forEach((item, index) => {
+        if (item.uid === tag.uid) {
+          this.users.splice(index, 1)
+        }
+      })
+    },
     chooseUsers(){
       this.dialogVisible = true;
     }
