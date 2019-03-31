@@ -118,9 +118,6 @@ export default {
                   //判断是否请求成功
                   if(res.data.statusCode == '200'){
                     this.isShow = res.data.data.isShow;
-                    if(this.isShow){
-                      this.getImgVerify;
-                    }
                   }
                 })
                 .catch(res => {
@@ -136,6 +133,8 @@ export default {
           if (valid) {
             axios.post('/login',qs.stringify({
                 type: 1,
+                verifyGuid: this.ruleForm.verifyGuid,
+                imgVerify:this.ruleForm.imgVerify,
                 account: this.ruleForm.account,
                 password: this.ruleForm.password
               })).then(res => {
@@ -166,7 +165,8 @@ export default {
       }
     },
 		mounted () {
-       let rediretUrl = this.$route.query.ref;
+      this.getImgVerify();
+      let rediretUrl = this.$route.query.ref;
       if (rediretUrl){
         this.redirectURL = rediretUrl
       }
