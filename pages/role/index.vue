@@ -32,9 +32,9 @@
             </el-table-column>
             <el-table-column prop="name" label="角色名称" width="180">
             </el-table-column>
-             <el-table-column prop="status" label="是否启用" width="110">
+             <el-table-column prop="state" label="状态" width="110">
                 <template slot-scope="scope">
-                    <span>{{scope.row.status ? '启用':'禁用'}}</span>
+                    <span>{{scope.row.state ? '禁用':'启用'}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="description" label="角色描述">
