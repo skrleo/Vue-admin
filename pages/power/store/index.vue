@@ -35,7 +35,7 @@
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
-  import userlist from '~/components/common/user-lists-radio.vue'
+  import userlist from '~/components/common/user-lists-checkbox.vue'
   
   export default {
     layout: 'main',
