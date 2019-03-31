@@ -49,13 +49,13 @@
             </el-table-column>
             <el-table-column label="操作" width="260">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'tag-id',params:{ id: scope.row.tagId }}">
+                    <nuxt-link :to="{name:'message-id',params:{ id: scope.row.messageId }}">
                         <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
                     </nuxt-link>
-                    <nuxt-link :to="{name:'tag-id',params:{ id: scope.row.tagId }}">
+                    <nuxt-link :to="{name:'message-id',params:{ id: scope.row.messageId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.tagId,scope.$index, lists)">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.messageId,scope.$index, lists)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -123,8 +123,8 @@
             this.pageNow = res.data.page.now || 1;
           });
       },
-      destroy(tagId,index,rows){
-        axios.delete(`/admin/message/${tagId}`, {data: qs.stringify({tagId:tagId})})
+      destroy(messageId,index,rows){
+        axios.delete(`/admin/message/${messageId}`, {data: qs.stringify({messageId:messageId})})
         .then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
