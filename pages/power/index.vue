@@ -39,12 +39,12 @@
                 </span>
                 </template>
             </el-table-column>
-            <el-table-column prop="address" label="权限描述">
-            </el-table-column>
-            <el-table-column prop="status" label="状态" width="80">
+            <el-table-column prop="state" label="状态" width="80">
                  <template slot-scope="scope">
-                    <span>{{scope.row.status ? '启用':'禁用'}}</span>
+                    <span>{{scope.row.state ? '禁用':'启用'}}</span>
                 </template>
+            </el-table-column>
+            <el-table-column prop="description" label="权限描述">
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间">
                 <template slot-scope="scope">
