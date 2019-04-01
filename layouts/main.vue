@@ -78,9 +78,22 @@
                 params: {
                     uid: Uid
                 }
-            })
-            .then(res => {
+            }).then(res => {
                 this.nodeList = res.data.lists
+              }).catch(res => {
+                if(res.response.data.message === ''){
+                  this.$message.error('请求异常，请稍后重试！');
+                  Cookie.remove('token');
+                  this.$router.push({
+                    path: '/login',
+                  });
+                }else{
+                  this.$message.error(res.response.data.message);
+                  Cookie.remove('token');
+                  this.$router.push({
+                    path: '/login',
+                  });
+                }
               });
         axios.get(`/admin/user/${Uid}`)
         .then(res => {

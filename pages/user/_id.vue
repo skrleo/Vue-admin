@@ -69,7 +69,12 @@
                   <!--勾选框-->
                   <el-table-column type="selection" width="55">
                   </el-table-column>
-                  <el-table-column prop="title" label="标题内容">
+                  <el-table-column prop="title" label="标题">
+                    <template slot-scope="scope">
+                        <nuxt-link :to="{name:'message-id',params:{ id: scope.row.messageId }}">
+                          <span>{{scope.row.title}}</span>
+                        </nuxt-link>
+                    </template>
                   </el-table-column>
                   <el-table-column prop="status" label="是否已读">
                       <template slot-scope="scope">
@@ -156,7 +161,11 @@
               });
             break ;
           case 'message':
-            axios.get('/admin/message/lists')
+            axios.get('/admin/message/lists', {
+                params: {
+                  uid:  this.user.uid
+                }
+              })
               .then(res => {
                 this.pageNow = res.data.page.now || 1 ,
                 this.pageSize = res.data.page.size || 10 ,
@@ -208,6 +217,10 @@
 </script>
 
 <style scoped lang="scss">
+  a{
+    text-decoration-line: none;
+    color: #000;
+  }
   .el-row {
     line-height: 32px;
     margin-bottom: 20px;
