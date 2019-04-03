@@ -60,12 +60,12 @@
                     <span>{{scope.row.status ? '管理员':'超级管理员'}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="category" label="文章类目" width="120">
+            <el-table-column prop="categoryId" label="文章类目" width="120">
                 <template slot-scope="scope">
-                    <span v-if="scope.row.category === 0">推荐</span>
-                    <span v-else-if="scope.row.category === 1">景点</span>
-                    <span v-else-if="scope.row.category === 2">活动</span>
-                    <span v-else-if="scope.row.category === 3">产品</span>
+                    <span v-if="scope.row.categoryId === 0">推荐</span>
+                    <span v-else-if="scope.row.categoryId === 1">景点</span>
+                    <span v-else-if="scope.row.categoryId === 2">活动</span>
+                    <span v-else-if="scope.row.categoryId === 3">产品</span>
                     <span v-else>游记</span>
                 </template>
             </el-table-column>
