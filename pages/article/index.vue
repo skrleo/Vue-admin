@@ -31,15 +31,15 @@
                 </el-select>
               </el-form-item>
               <el-form-item>
-                  <el-button type="primary">审核通过</el-button>
+                  <el-button type="primary" @click="setReview(1)">审核通过</el-button>
               </el-form-item>
               <el-form-item>
-                  <el-button type="primary">审核不通过</el-button>
+                  <el-button type="primary" @click="setReview(0)">审核不通过</el-button>
               </el-form-item>
           </el-form>
         </div>
         <!--表格数据及操作-->
-        <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+        <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark" @selection-change="selsChange">
             <!--勾选框-->
             <el-table-column type="selection" width="55">
             </el-table-column>
@@ -159,6 +159,30 @@
             this.lists = res.data.lists || [];
             this.pageNow = res.data.page.now || 1;
           });
+      },
+      selsChange(val){
+       this.multipleSelection = val;
+      },
+      setReview(val){
+        axios.put('/admin/article/review', qs.stringify({
+                articleIds:this.multipleSelection,
+                status:val
+            }))
+            .then(res => {
+                //判断是否请求成功
+                if(res.data.errorId === 'OK'){
+                    this.$message({
+                        message: '成功修改文章状态',
+                        type: 'success'
+                        });    
+                    }
+                }).catch(res => {
+                    if(res.response.data.message === ''){
+                        this.$message.error('请求异常，请稍后重试！');
+                    }else{
+                        this.$message.error(res.response.data.message);
+                    }
+                });
       },
       destroy(articleId,index,rows){
         axios.delete(`/admin/article/${articleId}`, {data: qs.stringify({articleId:articleId})})
