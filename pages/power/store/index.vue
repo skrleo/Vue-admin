@@ -35,7 +35,7 @@
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
-  import userlist from '~/components/common/user-lists-checkbox.vue'
+  import userlist from '~/components/common/user-lists-radio'
   
   export default {
     layout: 'main',
@@ -63,6 +63,7 @@
         console.log(val);
       },
       onSubmit() {
+        console.log(this.user.uid);
         // let uids = this.users.map(item => item.uid)
         axios.put('/admin/rbac/purview/user/role',qs.stringify({
             uid: this.user.uid,

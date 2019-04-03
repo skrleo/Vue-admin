@@ -43,7 +43,7 @@
             </el-table-column>
             <el-table-column prop="status" label="是否启用">
                 <template slot-scope="scope">
-                    <span>{{scope.row.status ? '启用':'禁用'}}</span>
+                    <span>{{scope.row.status ? '禁用':'启用'}}</span>
                 </template>
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间" width="180">
