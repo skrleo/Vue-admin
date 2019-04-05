@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height:100%;">
         <div class="top-bar">
             <el-row>
                 <el-col :span="8">当前用户: wechat</el-col>
@@ -8,142 +8,152 @@
             </el-row>
         </div>
         <div class="main">
-        <el-row>
-            <el-col :span="4">
-            <el-menu default-active="1-4-1" class="el-menu-vertical-demo">
-                <el-submenu index="1">
-                    <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">聊天</span>
-                    </template>
-                    <el-menu-item-group>
-                    <span slot="title">分组一</span>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
-                    </el-menu-item-group>
-                    <el-menu-item-group title="分组2">
-                    <el-menu-item index="1-3">选项3</el-menu-item>
-                    </el-menu-item-group>
-                </el-submenu>
-                <el-menu-item index="2">
-                    <i class="el-icon-menu"></i>
-                    <span slot="title">阅读</span>
-                </el-menu-item>
-                <el-menu-item index="3">
-                    <i class="el-icon-document"></i>
-                    <span slot="title">通讯录</span>
-                </el-menu-item>
-                <el-menu-item index="4">
-                    <i class="el-icon-setting"></i>
-                    <span slot="title">其他</span>
-                </el-menu-item>
-            </el-menu>                
-            </el-col>
-            <el-col :span="6">
-                <div class="chat-lists">
-                    <div class="room">
-                        <div class="avatar">
-                            <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+            <el-row>
+                <el-col :span="4">
+                <el-menu default-active="1-4-1" class="el-menu-vertical-demo">
+                    <el-submenu index="1">
+                        <template slot="title">
+                        <i class="el-icon-location"></i>
+                        <span slot="title">聊天</span>
+                        </template>
+                        <el-menu-item-group>
+                        <span slot="title">分组一</span>
+                        <el-menu-item index="1-1">选项1</el-menu-item>
+                        <el-menu-item index="1-2">选项2</el-menu-item>
+                        </el-menu-item-group>
+                        <el-menu-item-group title="分组2">
+                        <el-menu-item index="1-3">选项3</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-menu-item index="2">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">阅读</span>
+                    </el-menu-item>
+                    <el-menu-item index="3">
+                        <i class="el-icon-document"></i>
+                        <span slot="title">通讯录</span>
+                    </el-menu-item>
+                    <el-menu-item index="4">
+                        <i class="el-icon-setting"></i>
+                        <span slot="title">其他</span>
+                    </el-menu-item>
+                </el-menu>                
+                </el-col>
+                <el-col :span="6">
+                    <div class="chat-lists">
+                        <div class="room">
+                            <div class="avatar">
+                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+                            </div>
+                            <div class="info">
+                                <span>微信一群 <small style="float:right">23分钟前</small></span>
+                                <small>
+                                    [12条]微信用户: 新发的消息
+                                </small>
+                            </div>
                         </div>
-                        <div class="info">
-                            <span>微信一群 <small style="float:right">23分钟前</small></span>
-                            <small>
-                                [12条]微信用户: 新发的消息
-                            </small>
+                        <div class="room">
+                            <div class="avatar">
+                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+                            </div>
+                            <div class="info">
+                                <span>微信一群 <small style="float:right">23分钟前</small></span>
+                                <small>
+                                    [12条]微信用户: 新发的消息
+                                </small>
+                            </div>
+                        </div>
+                        <div class="room">
+                            <div class="avatar">
+                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+                            </div>
+                            <div class="info">
+                                <span>微信一群 <small style="float:right">23分钟前</small></span>
+                                <small>
+                                    [12条]微信用户: 新发的消息
+                                </small>
+                            </div>
+                        </div>
+                        <div class="room">
+                            <div class="avatar">
+                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+                            </div>
+                            <div class="info">
+                                <span>微信一群 <small style="float:right">23分钟前</small></span>
+                                <small>
+                                    [12条]微信用户: 新发的消息
+                                </small>
+                            </div>
+                        </div>
+                        <div class="room">
+                            <div class="avatar">
+                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+                            </div>
+                            <div class="info">
+                                <span>微信一群 <small style="float:right">23分钟前</small></span>
+                                <small>
+                                    [12条]微信用户: 新发的消息
+                                </small>
+                            </div>
+                        </div>
+                        <div class="room">
+                            <div class="avatar">
+                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+                            </div>
+                            <div class="info">
+                                <span>微信一群 <small style="float:right">23分钟前</small></span>
+                                <small>
+                                    [12条]微信用户: 新发的消息
+                                </small>
+                            </div>
+                        </div>
+                        <div class="room">
+                            <div class="avatar">
+                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+                            </div>
+                            <div class="info">
+                                <span>微信一群 <small style="float:right">23分钟前</small></span>
+                                <small>
+                                    [12条]微信用户: 新发的消息
+                                </small>
+                            </div>
+                        </div>
+                        <div class="room">
+                            <div class="avatar">
+                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+                            </div>
+                            <div class="info">
+                                <span>微信一群 <small style="float:right">23分钟前</small></span>
+                                <small>
+                                    [12条]微信用户: 新发的消息
+                                </small>
+                            </div>
                         </div>
                     </div>
-                    <div class="room">
-                        <div class="avatar">
-                            <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                        </div>
-                        <div class="info">
-                            <span>微信一群 <small style="float:right">23分钟前</small></span>
-                            <small>
-                                [12条]微信用户: 新发的消息
-                            </small>
-                        </div>
-                    </div>
-                    <div class="room">
-                        <div class="avatar">
-                            <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                        </div>
-                        <div class="info">
-                            <span>微信一群 <small style="float:right">23分钟前</small></span>
-                            <small>
-                                [12条]微信用户: 新发的消息
-                            </small>
-                        </div>
-                    </div>
-                    <div class="room">
-                        <div class="avatar">
-                            <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                        </div>
-                        <div class="info">
-                            <span>微信一群 <small style="float:right">23分钟前</small></span>
-                            <small>
-                                [12条]微信用户: 新发的消息
-                            </small>
-                        </div>
-                    </div>
-                    <div class="room">
-                        <div class="avatar">
-                            <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                        </div>
-                        <div class="info">
-                            <span>微信一群 <small style="float:right">23分钟前</small></span>
-                            <small>
-                                [12条]微信用户: 新发的消息
-                            </small>
-                        </div>
-                    </div>
-                    <div class="room">
-                        <div class="avatar">
-                            <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                        </div>
-                        <div class="info">
-                            <span>微信一群 <small style="float:right">23分钟前</small></span>
-                            <small>
-                                [12条]微信用户: 新发的消息
-                            </small>
-                        </div>
-                    </div>
-                    <div class="room">
-                        <div class="avatar">
-                            <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                        </div>
-                        <div class="info">
-                            <span>微信一群 <small style="float:right">23分钟前</small></span>
-                            <small>
-                                [12条]微信用户: 新发的消息
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </el-col>
-            <el-col :span="14">
-                <div class="message-bar">
-                    <p class="title_wrap">微信一群</p>
-                    <div class="content">
+                </el-col>
+                <el-col :span="14">
+                    <div class="message-bar">
+                        <p class="title_wrap">微信一群</p>
+                        <div class="content">
 
-                    </div>
-                    <div class="box-ft">
-                        <div class="toolbar">
-                            <i class="el-icon-upload el-icon--right"></i>
-                            <i class="el-icon-upload el-icon--right"></i>
-                            <i class="el-icon-upload el-icon--right"></i>
-                            <el-input
-                                type="textarea"
-                                :rows="2"
-                                placeholder="请输入内容"
-                                v-model="textarea">
-                                </el-input>
-                            <el-button type="primary" style="float:right;margin-top:5px;" size="medium">发送</el-button>
+                        </div>
+                        <div class="box-ft">
+                            <div class="toolbar">
+                                <i class="el-icon-upload el-icon--right"></i>
+                                <i class="el-icon-upload el-icon--right"></i>
+                                <i class="el-icon-upload el-icon--right"></i>
+                                <el-input
+                                    type="textarea"
+                                    :rows="5"
+                                    placeholder="请输入内容"
+                                    v-model="textarea">
+                                    </el-input>
+                                <el-button type="primary" style="float:right;margin-top:5px;" size="medium">发送</el-button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </el-col>
-        </el-row>
-
+                </el-col>
+            </el-row>
         </div>
     </div>
 </template>
@@ -171,6 +181,7 @@
   };
 </script>
 <style scoped lang="scss">
+
   .top-bar{
       color: #000;
       padding-bottom: 5px;
@@ -185,43 +196,42 @@
           float: right;
       }
   }
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
-  }
-  .chat-lists{
-      overflow: hidden;
-      padding-right: 6px;
-      border-right: 1px solid #dddddd;
-      .room{
-        float: left;
-        width: 100%;
-        height: 68px;
-        border-bottom: 1px solid #dddddd; 
-        .avatar{
-            margin: 5px 0;
+  .main {
+    margin: 0px;
+    .chat-lists{
+        overflow: hidden;
+        height: 584px;
+        padding:0 6px;
+        border-left: 1px solid #dddddd;
+        border-right: 1px solid #dddddd;
+        .room{
             float: left;
-            border-radius: 3px;
-            img{
-                    
-                height: 58px;
-                width: 58px;
+            width: 100%;
+            height: 68px;
+            border-bottom: 1px solid #dddddd; 
+            .avatar{
+                margin: 5px 0;
+                float: left;
+                border-radius: 3px;
+                img{
+                    height: 58px;
+                    width: 58px;
+                }
+            }
+            .info{
+                color: #000;
+                width: 226px;
+                float: left;
+                padding: 6px 6px;
+                overflow: hidden;
+                span{
+                    display: block;
+                    line-height: 36px;
+                }
             }
         }
-        .info{
-            color: #000;
-            width: 232px;
-            float: left;
-            padding: 6px 6px;
-            overflow: hidden;
-            span{
-                display: block;
-                line-height: 36px;
-            }
-        }
-      }
-  }
-  .message-bar{
+    }
+    .message-bar{
       color: #000;
       .title_wrap{
         line-height: 38px;
@@ -240,4 +250,5 @@
           }
       }
  }   
+}
 </style>
