@@ -26,8 +26,8 @@
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-radio-group v-model="article.status">
-          <el-radio label="0">封锁</el-radio>
-          <el-radio label="1">解封</el-radio>
+          <el-radio label="0">待发布</el-radio>
+          <el-radio label="1">发布</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="文章封面">
