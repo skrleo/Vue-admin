@@ -129,6 +129,11 @@
                                 </small>
                             </div>
                         </div>
+                        <div class="more">
+                            <div class="tip">
+                                查看更多...
+                            </div>
+                        </div>
                     </div>
                 </el-col>
                 <el-col :span="14">
@@ -139,9 +144,14 @@
                         </div>
                         <div class="box-ft">
                             <div class="toolbar">
-                                <i class="el-icon-upload el-icon--right"></i>
-                                <i class="el-icon-upload el-icon--right"></i>
-                                <i class="el-icon-upload el-icon--right"></i>
+                                <span style="float:left;">
+                                    <i class="el-icon-upload el-icon--right"></i>
+                                    <i class="el-icon-upload el-icon--right"></i>
+                                    <i class="el-icon-upload el-icon--right"></i>
+                                </span>
+                                <small style="float:right;font-size:14px;margin-right:8px;">
+                                    聊天记录
+                                </small>
                                 <el-input
                                     type="textarea"
                                     :rows="5"
@@ -229,6 +239,16 @@
                     line-height: 36px;
                 }
             }
+        }
+        .more{
+            color: #000;
+            display: block;
+            float: left;
+            width: 100%;
+            line-height: 38px;
+            text-align: center;
+            height: 38px;
+            margin: 0 auto;
         }
     }
     .message-bar{

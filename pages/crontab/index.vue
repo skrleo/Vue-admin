@@ -139,7 +139,7 @@
             if(res.data.errorId === 'OK'){
                 rows.splice(index, 1);
                 this.$message({
-                    message: '成功删除角色',
+                    message: '成功删除任务',
                     type: 'success'
                     });    
                 }
