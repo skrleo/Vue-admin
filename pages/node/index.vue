@@ -49,7 +49,7 @@
           nodeId: '6',
           uid: Uid,
           }));
-      let { data } = await axios.get('/admin/rbac/node/lists')
+      const { data } = await axios.get('/admin/rbac/node/lists')
       return {
         nodeParent: data.lists,
         data: JSON.parse(JSON.stringify(data.lists))

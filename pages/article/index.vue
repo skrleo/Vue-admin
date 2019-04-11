@@ -101,7 +101,7 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/admin/article/lists')
+      const { data } = await axios.get('/admin/article/lists')
       console.log(data.lists);
       return {
           pageNow: data.page.now || 1 ,

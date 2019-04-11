@@ -39,7 +39,7 @@
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
-      let {data} = await axios.get(`/admin/rbac/role/${params.id}`);
+      const {data} = await axios.get(`/admin/rbac/role/${params.id}`);
       console.log(data.data);
       return {
         role: data.data,

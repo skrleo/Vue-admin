@@ -93,7 +93,7 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      let { data } = await axios.get('/admin/task/lists')
+      const { data } = await axios.get('/admin/task/lists')
       console.log(data.lists);
       return {
           pageNow: data.page.now || 1 ,

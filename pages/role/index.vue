@@ -90,7 +90,7 @@
             nodeId: '8',
             uid: Uid,
             }));
-        let { data } = await axios.get('/admin/rbac/role/lists')
+        const { data } = await axios.get('/admin/rbac/role/lists')
         return {
             pageNow: data.page.now || 1 ,
             pageSize: data.page.size || 10 ,

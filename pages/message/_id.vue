@@ -60,7 +60,7 @@ export default {
       return /^\d+$/.test(params.id)
     },
   async asyncData ({ params }) {
-    let {data} = await axios.get(`/admin/message/${params.id}`);
+    const {data} = await axios.get(`/admin/message/${params.id}`);
     return {
       message: data.data,
       users:data.data.users

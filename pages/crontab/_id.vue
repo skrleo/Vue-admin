@@ -65,7 +65,7 @@
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
-      let {data} = await axios.get(`/admin/task/${params.id}`);
+      const {data} = await axios.get(`/admin/task/${params.id}`);
       return {
         task: data.data,
       }

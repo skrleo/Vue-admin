@@ -40,7 +40,7 @@
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
-      let [role, manage] = await Promise.all([
+      const [role, manage] = await Promise.all([
         axios.get('/admin/rbac/role/lists'),
         axios.get(`/admin/rbac/manage/${params.id}`)
       ])

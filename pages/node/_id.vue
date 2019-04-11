@@ -54,7 +54,7 @@
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
-      let [node,nodeParent] = await Promise.all([
+      const [node,nodeParent] = await Promise.all([
         axios.get(`/admin/rbac/node/${params.id}`),
         axios.get('/admin/rbac/node/lists')
       ])

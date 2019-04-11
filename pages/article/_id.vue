@@ -104,7 +104,7 @@ export default {
       return /^\d+$/.test(params.id)
     },
   async asyncData ({ params }) {
-    let {data} = await axios.get(`/admin/article/${params.id}`);
+    const {data} = await axios.get(`/admin/article/${params.id}`);
     return {
       article: data.data
     }
