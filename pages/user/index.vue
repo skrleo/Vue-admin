@@ -14,6 +14,16 @@
                     <el-button type="primary">添加用户</el-button>
                 </nuxt-link>
               </el-form-item>
+              <el-form-item>
+                <nuxt-link :to="{name:'user-group'}">
+                    <el-button type="primary">用户分组</el-button>
+                </nuxt-link>
+              </el-form-item>
+              <el-form-item>
+                <nuxt-link :to="{name:'user-label'}">
+                    <el-button type="primary">用户标签</el-button>
+                </nuxt-link>
+              </el-form-item>
               <el-form-item label="用户">
                   <el-input placeholder="搜索用户"></el-input>
               </el-form-item>
