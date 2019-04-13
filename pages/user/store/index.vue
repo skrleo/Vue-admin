@@ -7,8 +7,15 @@
     </el-breadcrumb>
     <br>
     <el-form ref="form" :model="form" label-width="80px" size="small" >
-    <el-form-item label="账户名称">
-      <el-input v-model="form.account" style="width:280px" ></el-input>
+      <el-form-item label="真实姓名">
+      <el-input v-model="form.name" style="width:280px" ></el-input>
+    </el-form-item>
+    <el-form-item label="性别">
+      <el-radio-group v-model="form.sex">
+        <el-radio label="0">男</el-radio>
+        <el-radio label="1">女</el-radio>
+        <el-radio label="2">保密</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="用户头像">
       <el-upload
@@ -21,24 +28,35 @@
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </el-form-item>
-    <el-form-item label="是否启用">
-      <el-radio-group v-model="form.status">
-        <el-radio label="0">启用</el-radio>
-        <el-radio label="1">禁用</el-radio>
-      </el-radio-group>
+    <el-form-item label="用户分组">
+      <el-cascader
+        :options="groupLists"
+        expand-trigger="hover"
+        v-model="form.group"
+        @change="handleChange">
+      </el-cascader>
     </el-form-item>
-    <el-form-item label="性别">
-      <el-radio-group v-model="form.sex">
-        <el-radio label="1">男</el-radio>
-        <el-radio label="2">女</el-radio>
-        <el-radio label="0">保密</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="账号密码">
-      <el-input v-model="form.password" style="width:280px" ></el-input>
-    </el-form-item>
-    <el-form-item label="真实姓名">
-      <el-input v-model="form.name" style="width:280px" ></el-input>
+    <el-form-item label="用户标签">
+      <el-tag
+        v-for="label in labels"
+        closable
+        :key="label.labelId"
+        :label="label.labelName"
+        :disable-transitions="false"
+        @close="handleClose(tag)">
+        {{label.labelName}}
+      </el-tag>
+      <el-input
+        class="input-new-tag"
+        v-if="tagVisible"
+        v-model="form.labelName"
+        ref="saveTagInput"
+        size="small"
+        @keyup.enter.native="handleInputConfirm"
+        @blur="handleInputConfirm"
+      >
+      </el-input>
+      <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
     </el-form-item>
     <el-form-item label="用户昵称">
       <el-input v-model="form.nickname" style="width:280px" ></el-input>
@@ -102,6 +120,12 @@
           email: '',
           phone: ''
         }
+      }
+    },
+    async asyncData ({ params }) {
+      const groupLists = await axios.get('/admin/user/group/lists');
+      return {
+        groupLists: JSON.parse(JSON.stringify(groupLists.data.lists)),
       }
     },
     methods: {
