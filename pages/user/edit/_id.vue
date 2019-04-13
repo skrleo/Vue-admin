@@ -7,8 +7,16 @@
     </el-breadcrumb>
     <br>
     <el-form ref="form" :model="form" label-width="80px" size="small" >
-    <el-form-item label="账户名称">
-      <el-input v-model="form.account" style="width:280px" ></el-input>
+      
+    <el-form-item label="真实姓名">
+      <el-input v-model="form.name" style="width:280px" ></el-input>
+    </el-form-item>
+    <el-form-item label="性别">
+      <el-radio-group v-model="form.sex">
+        <el-radio :label="0">男</el-radio>
+        <el-radio :label="1">女</el-radio>
+        <el-radio :label="2">保密</el-radio>
+      </el-radio-group>
     </el-form-item>
     <el-form-item label="用户头像">
       <el-upload
@@ -27,15 +35,35 @@
         <el-radio :label="1">禁用</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="性别">
-      <el-radio-group v-model="form.sex">
-        <el-radio :label="0">男</el-radio>
-        <el-radio :label="1">女</el-radio>
-        <el-radio :label="2">保密</el-radio>
-      </el-radio-group>
+    <el-form-item label="用户分组">
+      <el-cascader
+        :options="groupLists"
+        expand-trigger="hover"
+        v-model="form.group"
+        @change="handleChange">
+      </el-cascader>
     </el-form-item>
-    <el-form-item label="真实姓名">
-      <el-input v-model="form.name" style="width:280px" ></el-input>
+    <el-form-item label="用户标签">
+      <el-tag
+        v-for="label in labels"
+        closable
+        :key="label.labelId"
+        :label="label.labelName"
+        :disable-transitions="false"
+        @close="handleClose(tag)">
+        {{label.labelName}}
+      </el-tag>
+      <el-input
+        class="input-new-tag"
+        v-if="tagVisible"
+        v-model="form.labelName"
+        ref="saveTagInput"
+        size="small"
+        @keyup.enter.native="handleInputConfirm"
+        @blur="handleInputConfirm"
+      >
+      </el-input>
+      <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
     </el-form-item>
     <el-form-item label="用户昵称">
       <el-input v-model="form.nickname" style="width:280px" ></el-input>
@@ -50,37 +78,12 @@
       <el-input type="textarea" v-model="form.desc" ></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onUpdate(form.uid)">立即修改</el-button>
+      <el-button type="primary" @click="onUpdate(form.uid)">{{form.data}}立即修改</el-button>
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
 </div>
 </template>
-<style>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 118px;
-    height: 118px;
-    line-height: 118px;
-    text-align: center;
-  }
-  .avatar {
-    width: 118px;
-    height: 118px;
-    display: block;
-  }
-</style>
 <script>
   import qs from 'qs';
   import axios from '~/plugins/axios.js'
@@ -91,15 +94,21 @@
       return /^\d+$/.test(params.id)
     },
     async asyncData ({ params }) {
-      let {data} = await axios.get(`/admin/user/${params.id}`);
+      const [info,groupLists] = await Promise.all([
+        axios.get(`/admin/user/${params.id}`),
+        axios.get('/admin/user/group/lists')
+      ])
       return {
-        form: data.data,
-        imageUrl: data.data.headimg,
+        form: info.data.data,
+        imageUrl: info.data.data.headimg,
+        groupLists: JSON.parse(JSON.stringify(groupLists.data.lists)),
       }
     },
     data() {
       return {
         form: {
+          labelName:'',
+          group:[],
           account: '',
           name: '',
           status: '',
@@ -109,12 +118,14 @@
           nickname: '',
           email: '',
           phone: ''
-        },
-        visible: true
+        }
       }
     },
     methods: {
-       onBeforeUploadImage(file) {
+      handleChange(value) {
+        console.log(value);
+      },
+      onBeforeUploadImage(file) {
         const isIMAGE = file.type === 'image/jpeg' || 'image/jpg' || 'image/png'
         const isLt1M = file.size / 1024 / 1024 < 1
         if (!isIMAGE) {
@@ -156,7 +167,78 @@
               this.$message.error(res.response.data.message);
             }
           });
-      }
+      },
+      handleClose(tag) {
+        this.tags.splice(this.tags.indexOf(tag), 1);
+      },
+      showInput() {
+        this.tagVisible = true;
+        this.$nextTick(_ => {
+          this.$refs.saveTagInput.$refs.input.focus();
+        });
+      },
+
+      handleInputConfirm() {
+        axios.post('/admin/user/label',qs.stringify({
+            name: this.form.labelName
+          })).then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              /**
+               * 获取tagId
+               */
+              const labelId = res.data.data.labelId;
+              const labelName =this.form.labelName
+              this.tags.push({
+                    labelId : labelId,
+                    labelName : labelName
+                });
+              this.tagVisible = false;
+              this.form.labelName = '';
+            }
+          })
+      },
     }
   }
 </script>
+
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 118px;
+    height: 118px;
+    line-height: 118px;
+    text-align: center;
+  }
+  .avatar {
+    width: 118px;
+    height: 118px;
+    display: block;
+  }
+    .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+  }
+</style>
