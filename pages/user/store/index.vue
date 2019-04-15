@@ -182,6 +182,7 @@
             name: this.form.name,
             status:  this.form.status,
             sex:  this.form.sex,
+            labels: this.labels||[],
             password: this.form.password,
             nickname: this.form.nickname,
             headimg: this.form.headimg,
