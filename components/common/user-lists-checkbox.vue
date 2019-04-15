@@ -23,8 +23,13 @@
         </el-table-column>
         <el-table-column prop="uid" label="用户ID" width="120">
         </el-table-column>
-        <el-table-column prop="account" label="用户账号" width="180">
-        </el-table-column>
+        <el-table-column label="用户账号" prop="hasManyUserAccountModel">
+                <template slot-scope="scope">
+                <span v-for="(item,index) in scope.row.hasManyUserAccountModel" :key="index">
+                    <span v-show="index > 0">/</span>{{item.account || ''}}
+                </span>
+                </template>
+            </el-table-column>
         <el-table-column prop="name" label="姓名" width="180">
         </el-table-column>
         <el-table-column prop="phone" label="联系方式">
