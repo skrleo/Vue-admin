@@ -8,7 +8,7 @@
     <br>
     <el-form ref="form" :model="form" label-width="80px" size="small" >
       <el-form-item label="真实姓名">
-      <el-input v-model="form.name" style="width:280px" ></el-input>
+      <el-input placeholder="请输入用户姓名" v-model="form.name" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="性别">
       <el-radio-group v-model="form.sex">
@@ -59,16 +59,19 @@
       <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
     </el-form-item>
     <el-form-item label="用户昵称">
-      <el-input v-model="form.nickname" style="width:280px" ></el-input>
+      <el-input placeholder="请输入用户昵称" v-model="form.nickname" style="width:280px" ></el-input>
+    </el-form-item>
+    <el-form-item label="账号密码">
+      <el-input placeholder="请输入密码" v-model="form.password" style="width:280px" show-password></el-input>
     </el-form-item>
     <el-form-item label="邮箱地址">
-      <el-input v-model="form.email" style="width:280px" ></el-input>
+      <el-input placeholder="请输入邮箱地址" v-model="form.email" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="联系方式">
-      <el-input v-model="form.phone" style="width:280px" ></el-input>
+      <el-input placeholder="请输入联系方式" v-model="form.phone" style="width:280px" ></el-input>
     </el-form-item>
     <el-form-item label="备注" style="width:600px">
-      <el-input type="textarea" v-model="form.desc" ></el-input>
+      <el-input placeholder="请输入备注" type="textarea" v-model="form.desc" ></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit" size="medium">立即创建</el-button>
@@ -113,9 +116,7 @@
         tagVisible: false,
         labelName:'',
         form: {
-          account: '',
           name: '',
-          status: '',
           sex: '',
           headimg:'',
           password: '',
@@ -178,9 +179,7 @@
       },
       onSubmit() {
         axios.post('/admin/user',qs.stringify({
-            account: this.form.account,
             name: this.form.name,
-            status:  this.form.status,
             sex:  this.form.sex,
             labels: this.labels||[],
             password: this.form.password,
