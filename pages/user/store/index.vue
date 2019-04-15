@@ -28,14 +28,14 @@
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </el-form-item>
-    <el-form-item label="用户分组">
+    <!-- <el-form-item label="用户分组">
       <el-cascader
         :options="groupLists"
         expand-trigger="hover"
         v-model="form.group"
         @change="handleChange">
       </el-cascader>
-    </el-form-item>
+    </el-form-item> -->
     <el-form-item label="用户标签">
       <el-tag
         v-for="label in labels"
@@ -43,13 +43,13 @@
         :key="label.labelId"
         :label="label.labelName"
         :disable-transitions="false"
-        @close="handleClose(tag)">
+        @close="handleClose(label)">
         {{label.labelName}}
       </el-tag>
       <el-input
         class="input-new-tag"
         v-if="tagVisible"
-        v-model="form.labelName"
+        v-model="labelName"
         ref="saveTagInput"
         size="small"
         @keyup.enter.native="handleInputConfirm"
@@ -109,6 +109,9 @@
     layout: 'main',
     data() {
       return {
+        labels: [],
+        tagVisible: false,
+        labelName:'',
         form: {
           account: '',
           name: '',
@@ -142,6 +145,36 @@
       },
       uploadSuccess(response, file, fileList){
         this.form.headimg = response.data.filePath;
+      },
+      handleClose(label) {
+        this.labels.splice(this.labels.indexOf(label), 1);
+      },
+      showInput() {
+        this.tagVisible = true;
+        this.$nextTick(_ => {
+          this.$refs.saveTagInput.$refs.input.focus();
+        });
+      },
+
+      handleInputConfirm() {
+        axios.post('/admin/user/label/store',qs.stringify({
+            name: this.labelName
+          })).then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+              /**
+               * 获取labelId
+               */
+              const labelId = res.data.data.labelId;
+              const labelName = this.labelName;
+              this.labels.push({
+                    labelId : labelId,
+                    labelName : labelName
+                });
+              this.tagVisible = false;
+              this.labelName = '';
+            }
+          })
       },
       onSubmit() {
         axios.post('/admin/user',qs.stringify({

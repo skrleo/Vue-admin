@@ -106,6 +106,7 @@
     },
     data() {
       return {
+        group:[],
         form: {
           labelName:'',
           group:[],

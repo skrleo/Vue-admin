@@ -218,8 +218,8 @@ export default {
             /**
              * 获取tagId
              */
-            let tagId = res.data.data.tagId;
-            let tagName = this.article.name;
+            const tagId = res.data.data.tagId;
+            const tagName = this.article.name;
             this.tags.push({
                   tagId : tagId,
                   name : tagName
@@ -230,7 +230,7 @@ export default {
         })
     },
     onSubmit() {
-      let Uid = Cookie.get('Uid');
+      const Uid = Cookie.get('Uid');
       axios.post('/admin/article',qs.stringify({
           uid: Uid,
           title: this.article.title,
