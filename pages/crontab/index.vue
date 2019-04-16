@@ -46,10 +46,10 @@
             </el-table-column>
              <el-table-column prop="type" label="任务类型" width="90">
                 <template slot-scope="scope">
-                    <span>{{scope.row.status ? '执行一次':'循环执行'}}</span>
+                    <span>{{scope.row.status ? '循环执行':'执行一次'}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="description" label="任务描述">
+            <el-table-column prop="description" label="备注">
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间" width="180">
                 <template slot-scope="scope">

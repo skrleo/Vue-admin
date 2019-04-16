@@ -208,7 +208,6 @@ export default {
         this.$refs.saveTagInput.$refs.input.focus();
       });
     },
-
     handleInputConfirm() {
       axios.post('/admin/article/tag',qs.stringify({
           name: this.article.name

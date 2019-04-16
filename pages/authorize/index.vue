@@ -7,11 +7,7 @@
                         <img style="width:100%;" src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" class="image">
                     </div>
                     <div class="auth-txt">
-                        <span>授权平台：京东 <br/>授权时间：2019-04-16 10:26:51  <br/>状态：[已过期]</span>
-                        <div class="bottom clearfix">
-                        <time class="time">{{ currentDate }}</time>
-                        <el-button type="text" class="button">操作按钮</el-button>
-                        </div>
+                        <span>授权平台：京东 <br/>授权时间：2019-04-16 10:26:51  <br/>状态：[<small style="color:red;"> 已过期 </small>] 重新授权</span>
                     </div>
                 </el-card>
             </el-col>
@@ -22,10 +18,6 @@
                     </div>
                     <div class="auth-txt">
                         <span>授权平台：京东 <br/>授权时间：2019-04-16 10:26:51  <br/>状态：[已过期]</span>
-                        <div class="bottom clearfix">
-                        <time class="time">{{ currentDate }}</time>
-                        <el-button type="text" class="button">操作按钮</el-button>
-                        </div>
                     </div>
                 </el-card>
             </el-col>
@@ -36,10 +28,6 @@
                     </div>
                     <div class="auth-txt">
                         <span>授权平台：京东 <br/>授权时间：2019-04-16 10:26:51  <br/>状态：[已过期]</span>
-                        <div class="bottom clearfix">
-                        <time class="time">{{ currentDate }}</time>
-                        <el-button type="text" class="button">操作按钮</el-button>
-                        </div>
                     </div>
                 </el-card>
             </el-col>
@@ -50,10 +38,6 @@
                     </div>
                     <div class="auth-txt">
                         <span>授权平台：京东 <br/>授权时间：2019-04-16 10:26:51  <br/>状态：[已过期]</span>
-                        <div class="bottom clearfix">
-                        <time class="time">{{ currentDate }}</time>
-                        <el-button type="text" class="button">操作按钮</el-button>
-                        </div>
                     </div>
                 </el-card>
             </el-col>
@@ -85,12 +69,12 @@
 </script>
 <style>
   .auth-logo {
-    width:40%;
+    width:30%;
     float:left;
     overflow: hidden;
   }
   .auth-txt{
-      width:54%;
+      width:64%;
       float:left;
       padding: 6px 12px;
   }
