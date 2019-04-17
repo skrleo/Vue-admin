@@ -20,12 +20,12 @@
             </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="文章状态" prop="status">
+      <!-- <el-form-item label="文章状态" prop="status">
         <el-radio-group v-model="message.status">
           <el-radio :label="0">发布</el-radio>
           <el-radio :label="1">待发布</el-radio>
         </el-radio-group>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="发送人">
         <el-tag @close="removeTag(tag)" v-for="tag in users" :key="tag.uid" closable>
           {{tag.name}}
@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       message:{
-          type:0,
+          type: '',
           title:'',
           status:0,
           content:'',
@@ -77,20 +77,14 @@ export default {
       users:[],
       dialogVisible: false,
       options: [{
+          value: '0',
+          label: '系统消息'
+        }, {
           value: '1',
-          label: '黄金糕'
+          label: '用户消息'
         }, {
           value: '2',
-          label: '双皮奶'
-        }, {
-          value: '3',
-          label: '蚵仔煎'
-        }, {
-          value: '4',
-          label: '龙须面'
-        }, {
-          value: '5',
-          label: '北京烤鸭'
+          label: '自定义消息'
         }],
     }
   },

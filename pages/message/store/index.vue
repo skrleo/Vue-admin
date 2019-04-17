@@ -89,7 +89,7 @@ export default {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
               this.$message({
-                  message: '成功添加标签',
+                  message: '成功发布消息',
                   type: 'success'
                 });
             }

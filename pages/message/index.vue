@@ -37,11 +37,11 @@
                     <span>{{scope.row.type? '站内信':'系统消息'}}</span>
                 </template>
             </el-table-column>
-             <el-table-column prop="status" label="状态" width="120">
+             <!-- <el-table-column prop="status" label="状态" width="120">
                 <template slot-scope="scope">
                     <span>{{scope.row.status? '已发布':'未发布'}}</span>
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column prop="createdAt" label="创建时间" width="180">
                 <template slot-scope="scope">
                     <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
