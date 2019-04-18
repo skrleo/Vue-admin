@@ -95,14 +95,14 @@
 
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
+  import Echo from 'laravel-echo'
+  import io from 'socket.io-client'
 
-  let id = 1000;
   export default {
     layout:'main',
     name:'node',
     async asyncData () {
       const { data } = await axios.get('/admin/article/lists')
-      console.log(data.lists);
       return {
           pageNow: data.page.now || 1 ,
           pageSize: data.page.size || 10 ,
@@ -193,6 +193,26 @@
                 }
             });
         }
+    },
+    mounted() {
+        window.io = io
+        window.Echo = new Echo({
+            broadcaster: 'socket.io',
+            host: 'http://api.example.com:6001',
+        })
+        window.Echo.private('Message').listen('.sayHello', (res) => {
+        if (res.status === 200) {
+            this.$message({
+                  message: '成功添加定时任务1',
+                  type: 'success'
+                });
+        } else {
+            this.$message({
+                  message: '成功添加定时任务2',
+                  type: 'success'
+                });
+        }
+        })
     }
   };
 </script>
