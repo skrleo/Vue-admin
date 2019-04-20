@@ -68,6 +68,8 @@
   import qs from 'qs';
   import axios from '~/plugins/axios.js'
   import Cookie from 'js-cookie'
+  import Echo from 'laravel-echo'
+  import io from 'socket.io-client'
 
   export default {
     middleware: 'checkLogin',
@@ -137,6 +139,17 @@
         };
     },
     mounted () {
+        window.io = io
+        window.Echo = new Echo({
+            broadcaster: 'socket.io',
+            host: 'http://api.example.com:6001',
+        })
+        window.Echo.private('Message').listen('.sayHello', (res) => {
+            this.$message({
+                        message: '退出成功',
+                        type: 'success'
+                    });
+        });
       var a_index = 0;
       $("body").click(function(e){
           var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
