@@ -145,10 +145,15 @@
             host: 'http://api.example.com:6001',
         })
         window.Echo.private('Message').listen('.sayHello', (res) => {
-            this.$message({
-                        message: '退出成功',
+            if (res.status === 200) {
+                this.$message({
+                        message: '你有新的未读消息',
                         type: 'success'
                     });
+            } else {
+                console.log('something wrong!')
+            }
+        
         });
       var a_index = 0;
       $("body").click(function(e){
