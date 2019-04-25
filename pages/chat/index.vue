@@ -14,7 +14,7 @@
                     <el-submenu index="1">
                         <template slot="title">
                         <i class="el-icon-location"></i>
-                        <span slot="title">聊天</span>
+                        <span slot="title">在线聊天</span>
                         </template>
                         <el-menu-item-group>
                         <span slot="title">分组一</span>
@@ -27,11 +27,15 @@
                     </el-submenu>
                     <el-menu-item index="2">
                         <i class="el-icon-menu"></i>
-                        <span slot="title">阅读</span>
+                        <span slot="title">系统消息</span>
                     </el-menu-item>
                     <el-menu-item index="3">
                         <i class="el-icon-document"></i>
-                        <span slot="title">通讯录</span>
+                        <span slot="title">阅读中心</span>
+                    </el-menu-item>
+                    <el-menu-item index="3">
+                        <i class="el-icon-document"></i>
+                        <span slot="title">通讯管理</span>
                     </el-menu-item>
                     <el-menu-item index="4">
                         <i class="el-icon-setting"></i>
@@ -239,6 +243,10 @@
                     line-height: 36px;
                 }
             }
+        }
+        .room:hover{
+            cursor:pointer;
+            background: rgba(241, 237, 237, 0.534);
         }
         .more{
             color: #000;
