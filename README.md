@@ -53,7 +53,13 @@ docker 运行方式:
 打开浏览器访问
 <p><code> <服务器 IP>:8080 </code></p>
 
-![Image text](./assets/images/system/3be2820e88ec2ed171d8cab5e93f075.png)
+![后台首页](./assets/images/system/658a4c8dc9df68f7a2e34a4d65145b5.png)
+![角色管理](./assets/images/system/3be2820e88ec2ed171d8cab5e93f075.png)
+![节点管理](./assets/images/system/945a6d208fd372b03f752cae6116557.png)
+![站点管理](./assets/images/system/25870eb12f6be77abc0c633d7009017.png)
+![任务管理](./assets/images/system/359846f8638b61d88a538ba6e3209d0.png)
+![用户中心](./assets/images/system/ae535c0481ad7eb882689a31ce19b6a.png)
+![用户管理](./assets/images/system/f39498b37b25328b10438bb9d7dfccb.png)
 
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
