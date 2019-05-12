@@ -52,6 +52,7 @@
               我的邮件
             </div>
           </el-card>
+          
         </el-col>
         <el-col :span="8">
           <el-card class="box-card" shadow="hover">
@@ -66,7 +67,7 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="16">
+        <el-col :span="18">
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>网站访问量</span>
@@ -75,14 +76,14 @@
             <ve-line :data="chartData"></ve-line>
           </el-card>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
-              <span>日均PV量</span>
+              <span>联系我</span>
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
             </div>
-            <div v-for="o in 4" :key="o" class="text item">
-              {{'列表内容 ' + o }}
+            <div>
+              <img src="../assets/images/20190505193408.jpg" alt="" style="width:100%;height:100%;">
             </div>
           </el-card>
         </el-col>
@@ -186,17 +187,5 @@
         font-size: 23px;
       }
     }
-  }
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
-
-  .box-card {
-    width: 100%;
   }
 </style>
