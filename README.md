@@ -53,7 +53,7 @@ docker 运行方式:
 打开浏览器访问
 <p><code> <服务器 IP>:8080 </code></p>
 
-![Image text](../assets/images/system/f39498b37b25328b10438bb9d7dfccb.png)
+![Image text](./assets/images/system/3be2820e88ec2ed171d8cab5e93f075.png)
 
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
