@@ -31,7 +31,7 @@ module.exports = {
   loading: { color: '#3B8070' },
   // 环境变量
   env: {
-    baseUrl: process.env.BASE_URL || 'http://api.example.com/v1.0/api'
+    baseUrl: process.env.BASE_URL || 'http://api.homestead.com/v1.0/api'
   },
   /*
   ** Global CSS
@@ -63,7 +63,7 @@ module.exports = {
   ],
 
   proxyTable: {
-    '/api': { target: 'http://example.com', ws: false }
+    '/api': { target: 'http://homestead.com', ws: false }
   },
 
   /*
@@ -88,7 +88,7 @@ module.exports = {
   'listen': [
     {
       'type': 'tcp',
-      'host': 'manage.example.com',
+      'host': 'manage.homestead.com',
       'port': 80
     }
   ]
