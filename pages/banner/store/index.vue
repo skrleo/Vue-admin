@@ -6,12 +6,12 @@
     <el-breadcrumb-item>添加轮播图</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
-    <el-form :model="article" ref="article" label-width="80px" size="medium">
-      <el-form-item label="名称" prop="title">
-        <el-input  v-model="article.title" style="width:360px;"></el-input>
+    <el-form :model="banner" ref="banner" label-width="80px" size="medium">
+      <el-form-item label="名称" prop="name">
+        <el-input  v-model="banner.name" style="width:360px;"></el-input>
       </el-form-item>
-      <el-form-item label="跳转类型" prop="categoryId">
-        <el-select v-model="article.categoryId" placeholder="请选择">
+      <el-form-item label="跳转类型" prop="jump_type">
+        <el-select v-model="banner.jumpType" placeholder="请选择">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -20,11 +20,11 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="跳转地址" prop="price">
-        <el-input  v-model="article.price" style="width:360px;"></el-input>
+      <el-form-item label="跳转地址" prop="jumpUrl">
+        <el-input  v-model="banner.jumpUrl" style="width:360px;"></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-radio-group v-model="article.status">
+        <el-radio-group v-model="banner.status">
           <el-radio label="0">待发布</el-radio>
           <el-radio label="1">发布</el-radio>
         </el-radio-group>
@@ -32,11 +32,11 @@
       <el-form-item label="广告封面">
         <el-upload
           class="avatar-uploader"
-          action="http://api.example.com/v1.0/api/upload/img"
+          action="http://api.homestead.com/v1.0/api/upload/img"
           :show-file-list="false"
           :on-success="uploadSuccess"
           :before-upload="onBeforeUploadImage">
-          <img v-if="article.cover" :src="article.cover" class="avatar">
+          <img v-if="banner.thumb" :src="banner.thumb" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -59,30 +59,19 @@ export default {
       dialogVisible: false,
       tags: [],
       tagVisible: false,
-      article:{
-        cover:'',
-        title:'',
-        reason: '', 
+      banner:{
         name:'',
-        price:'',
-        address:'',
-        openTime:'',
-        status: 0,     
-        recommend:'',      
-        categoryId:''
+        thumb:'',
+        jumpType:'',
+        jumpUrl:'',
+        status: 0
       },
       options: [{
         value: '0',
-        label: '推荐'
+        label: '商品详情'
       }, {
         value: '1',
-        label: '景点'
-      }, {
-        value: '2',
-        label: '活动'
-      }, {
-        value: '3',
-        label: '产品'
+        label: '活动消息'
       }],
     }
   },
@@ -99,7 +88,7 @@ export default {
       return isIMAGE && isLt1M
     },
     uploadSuccess(response, file, fileList){
-      this.article.cover = response.data.filePath;
+      this.banner.thumb = response.data.filePath;
     },
     // 绑定@imgAdd event
     $imgAdd(pos, $file){
@@ -121,40 +110,13 @@ export default {
             $vm.$img2Url(pos, url);
         })
     },
-    handleInputConfirm() {
-      axios.post('/admin/article/tag',qs.stringify({
-          name: this.article.name
-        })).then(res => {
-          //判断是否请求成功
-          if(res.data.errorId === 'OK'){
-            /**
-             * 获取tagId
-             */
-            const tagId = res.data.data.tagId;
-            const tagName = this.article.name;
-            this.tags.push({
-                  tagId : tagId,
-                  name : tagName
-              });
-            this.tagVisible = false;
-            this.article.tagName = '';
-          }
-        })
-    },
     onSubmit() {
-      const Uid = Cookie.get('Uid');
-      axios.post('/admin/article',qs.stringify({
-          uid: Uid,
-          title: this.article.title,
-          tagIds: this.tags||[],
-          reason: this.article.reason || '',
-          price: this.article.price || '',
-          address: this.article.address || '',
-          openTime: this.article.openTime || '',
-          status: this.article.status,
-          cover: this.article.cover || '',
-          description: this.article.description || '',
-          categoryId: this.article.categoryId || 0,
+      axios.post('/admin/banner',qs.stringify({
+          name: this.banner.name,
+          thumb: this.banner.thumb,
+          jumpType: this.banner.jumpType,
+          jumpUrl: this.banner.jumpUrl,
+          status: this.banner.status,
         })).then(res => {
           //判断是否请求成功
           if(res.data.errorId === 'OK'){

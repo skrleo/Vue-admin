@@ -28,9 +28,9 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
-            <el-table-column prop="articleId" label="ID" width="80">
+            <el-table-column prop="bannerId" label="ID" width="80">
             </el-table-column>
-            <el-table-column prop="title" label="名称">
+            <el-table-column prop="name" label="名称">
             </el-table-column>
              <el-table-column prop="status" label="状态" width="120">
                 <template slot-scope="scope">
@@ -39,11 +39,11 @@
                 </template>
             </el-table-column>
             <el-table-column label="封面" width="170">
-                 <template slot-scope="scope">
-                <img src="http://img.17wangku.com/201904151543265cb4a69eb68f7.jpg" alt="" style="width:150px;height:50px;">
+                <template slot-scope="scope">
+                    <img :src="scope.row.thumb" alt="" style="width:150px;height:50px;">
                 </template>
             </el-table-column>
-            <el-table-column prop="categoryId" label="跳转地址" width="120">
+            <el-table-column prop="jumpUrl" label="跳转地址" width="120">
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间" width="180">
                 <template slot-scope="scope">
@@ -52,13 +52,13 @@
             </el-table-column>
             <el-table-column label="操作" width="260">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'article-id',params:{ id: scope.row.articleId }}">
+                    <nuxt-link :to="{name:'banner-id',params:{ id: scope.row.bannerId }}">
                         <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
                     </nuxt-link>
-                    <nuxt-link :to="{name:'article-id',params:{ id: scope.row.articleId }}">
+                    <nuxt-link :to="{name:'banner-id',params:{ id: scope.row.bannerId }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
                     </nuxt-link>
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.articleId,scope.$index, lists)">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.bannerId,scope.$index, lists)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -88,7 +88,7 @@
     layout:'main',
     name:'node',
     async asyncData () {
-      const { data } = await axios.get('/admin/article/lists')
+      const { data } = await axios.get('/admin/banner/lists')
       return {
           pageNow: data.page.now || 1 ,
           pageSize: data.page.size || 10 ,
@@ -123,14 +123,14 @@
     },
     methods: {
        handleSizeChange(val) {
-        axios.get(`/admin/article/lists?pageSize=${val}`)
+        axios.get(`/admin/banner/lists?pageSize=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageSize = res.data.page.size || 10;
           });
       },
       handleCurrentChange(val) {
-        axios.get(`/admin/article/lists?pageNow=${val}`)
+        axios.get(`/admin/banner/lists?pageNow=${val}`)
         .then(res => {
             this.lists = res.data.lists || [];
             this.pageNow = res.data.page.now || 1;
@@ -139,29 +139,8 @@
       selsChange(val){
        this.multipleSelection = val;
       },
-      setReview(val){
-        axios.put('/admin/article/review', qs.stringify({
-                articleIds:this.multipleSelection,
-                status:val
-            }))
-            .then(res => {
-                //判断是否请求成功
-                if(res.data.errorId === 'OK'){
-                    this.$message({
-                        message: '成功修改文章状态',
-                        type: 'success'
-                        });    
-                    }
-                }).catch(res => {
-                    if(res.response.data.message === ''){
-                        this.$message.error('请求异常，请稍后重试！');
-                    }else{
-                        this.$message.error(res.response.data.message);
-                    }
-                });
-      },
-      destroy(articleId,index,rows){
-        axios.delete(`/admin/article/${articleId}`, {data: qs.stringify({articleId:articleId})})
+      destroy(bannerId,index,rows){
+        axios.delete(`/admin/bannerId/${bannerId}`, {data: qs.stringify({bannerId:bannerId})})
         .then(res => {
             //判断是否请求成功
             if(res.data.errorId === 'OK'){
