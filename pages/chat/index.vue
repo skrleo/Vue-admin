@@ -69,8 +69,6 @@
         <br>
         <!--分页条-->
         <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :current-page="pageNow"
             :page-sizes="[10, 50, 100, 150]"
             :page-size="pageSize"
@@ -121,69 +119,67 @@
         centerDialogVisible: false,
         //查询输入框数据
         input: '',
+        timer: '',
+        status: '',
         //导航条默认选项
         activeIndex: '1',
         activeIndex2: '1',
         dialogVisible: false
       }
     },
+    computed: {
+        // 计算属性
+        statusData() { return this.status }
+    },
+    watch: {
+        statusData: function (res) {
+            // 当返回的新值为创建中的时候,保持3秒轮询
+            if (res != '200') {
+                this.timer = setInterval(() => {
+                    setTimeout(this.check_login, 0)
+                }, 3000)
+            }
+            // 当返回的新值为成功的时候,关闭定时器,结束轮询
+            if (res == '200') {
+                clearInterval(this.timer)
+            }
+            if(this.centerDialogVisible == false){
+                clearInterval(this.timer)
+            }
+            //使用$once(eventName, eventHandler)一次性监听事件
+            this.$once('hook:boforeDestory', () => {
+                clearInterval(this.timer)
+            })
+        }
+    },
     methods: {
-       handleSizeChange(val) {
-        axios.get(`/admin/task/lists?pageSize=${val}`)
-        .then(res => {
-            this.lists = res.data.lists || [];
-            this.pageSize = res.data.page.size || 10;
-          });
-      },
-      handleCurrentChange(val) {
-        axios.get(`/admin/task/lists?pageNow=${val}`)
-        .then(res => {
-            this.lists = res.data.lists || [];
-            this.pageNow = res.data.page.now || 1;
-          });
-      },
-      destroy(crontabId,index,rows){
-        axios.delete(`/admin/task/${crontabId}`, {data: qs.stringify({crontabId:crontabId})})
-        .then(res => {
-            //判断是否请求成功
-            if(res.data.errorId === 'OK'){
-                rows.splice(index, 1);
-                this.$message({
-                    message: '成功删除任务',
-                    type: 'success'
-                    });    
-                }
-            }).catch(res => {
-                 if(res.response.data.message === ''){
-                    this.$message.error('请求异常，请稍后重试！');
-                }else{
-                    this.$message.error(res.response.data.message);
-                }
-            });
-      },
       //获取登录二维码
       login_wechat(){
           this.centerDialogVisible = true;
           axios.get('/chat/getQrCode')
             .then(res => {
-                this.qrCode = res.data.data.qrCode || [];
-                var self = this;
-                var timer = setInterval(() => {
-                    setTimeout(self.check_login(), 0)
-                }, 2000)
+                //判断是否请求成功
+                if(res.data.errorId === 'OK'){
+                    this.qrCode = res.data.data.qrCode || [];
+                    this.check_login();
+                }
             });
       },
       //轮询查询登录
       check_login(){
-           axios.get('/chat/checkIsLogin')
-            .then(res => {
-                // 清除定时器
-                clearInterval(timer);
-                this.$message({
-                        message: '你有新的未读消息',
-                        type: 'success'
-                    });
-            });
+          if(this.centerDialogVisible ==  true){
+              axios.get('/chat/checkIsLogin')
+                .then(res => {
+                    //判断是否请求成功
+                    if(res.data.errorId === 'OK'){
+                        this.status = res.data.data.code;  
+                        this.$message({
+                            message: '调用查询是否登陆',
+                            type: 'success'
+                        });    
+                    }
+                });
+          }
       }
     }
   };
