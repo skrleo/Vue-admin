@@ -168,15 +168,17 @@
             .then(res => {
                 this.qrCode = res.data.data.qrCode || [];
                 var self = this;
-                setTimeout(function () {
-                    self.check_login()
-                }, 200)
+                var timer = setInterval(() => {
+                    setTimeout(self.check_login(), 0)
+                }, 2000)
             });
       },
       //轮询查询登录
       check_login(){
            axios.get('/chat/checkIsLogin')
             .then(res => {
+                // 清除定时器
+                clearInterval(timer);
                 this.$message({
                         message: '你有新的未读消息',
                         type: 'success'
