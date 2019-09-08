@@ -133,15 +133,35 @@
     },
     watch: {
         statusData: function (res) {
-            // 当返回的新值为创建中的时候,保持3秒轮询
+            if (res == '201') { //确认登录
+                this.$message({
+                     message: '确认登录',
+                    type: 'success'
+                }); 
+                // 关闭弹窗
+                this.centerDialogVisible=false;
+            } 
+            if (res == '201') { // 扫描成功 正在登录
+                this.$message({
+                     message: '扫描成功',
+                    type: 'success'
+                }); 
+                // 关闭弹窗
+                this.centerDialogVisible=false;
+            } 
+            if (res == '408') {//登录超时
+               this.$message({
+                     message: '登录超时',
+                    type: 'error'
+                });    
+                // 关闭弹窗
+                this.centerDialogVisible=false;
+            }
             if (res != '200') {
+                 // 当返回的新值为创建中的时候,保持3秒轮询
                 this.timer = setInterval(() => {
                     setTimeout(this.check_login, 0)
                 }, 3000)
-            }
-            // 当返回的新值为成功的时候,关闭定时器,结束轮询
-            if (res == '200') {
-                clearInterval(this.timer)
             }
             if(this.centerDialogVisible == false){
                 clearInterval(this.timer)
