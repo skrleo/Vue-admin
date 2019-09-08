@@ -1,282 +1,188 @@
 <template>
-    <div style="height:100%;">
-        <div class="top-bar">
-            <el-row>
-                <el-col :span="8">当前用户: wechat</el-col>
-                <el-col :span="8"><span class="text-1">状态：在线 </span></el-col>
-                <el-col :span="8"><span class="text-2">注销登陆</span></el-col>
-            </el-row>
+    <div>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>系统管理</el-breadcrumb-item>
+        <el-breadcrumb-item>微信管理</el-breadcrumb-item>
+        </el-breadcrumb>
+        <br>
+        <div style="height:62px;">
+          <!--搜索框-->
+          <el-form :inline="true" style="float:left;" size="small">
+              <el-form-item>
+                  <el-button type="primary" @click="login_wechat">登录微信</el-button>
+              </el-form-item>
+              <el-form-item label="查询任务">
+                  <el-input placeholder="搜索任务"></el-input>
+              </el-form-item>
+              <el-form-item>
+                  <el-button type="primary">查询</el-button>
+              </el-form-item>
+              <el-form-item>
+                  <el-button type="warning">执行</el-button>
+              </el-form-item>
+              <el-form-item>
+                  <el-button type="danger">暂停</el-button>
+              </el-form-item>
+          </el-form>
+          <span style="float:right;color:#000;line-height:42px;"><span style="width:8px;height:8px;border-radius:50%;background:#67C23A;display:inline-block;margin-right:6px;"></span>队列执行中</span>
         </div>
-        <div class="main">
-            <el-row>
-                <el-col :span="4">
-                <el-menu default-active="1-4-1" class="el-menu-vertical-demo">
-                    <el-submenu index="1">
-                        <template slot="title">
-                        <i class="el-icon-location"></i>
-                        <span slot="title">在线聊天</span>
-                        </template>
-                        <el-menu-item-group>
-                        <span slot="title">分组一</span>
-                        <el-menu-item index="1-1">选项1</el-menu-item>
-                        <el-menu-item index="1-2">选项2</el-menu-item>
-                        </el-menu-item-group>
-                        <el-menu-item-group title="分组2">
-                        <el-menu-item index="1-3">选项3</el-menu-item>
-                        </el-menu-item-group>
-                    </el-submenu>
-                    <el-menu-item index="2">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">系统消息</span>
-                    </el-menu-item>
-                    <el-menu-item index="3">
-                        <i class="el-icon-document"></i>
-                        <span slot="title">阅读中心</span>
-                    </el-menu-item>
-                    <el-menu-item index="3">
-                        <i class="el-icon-document"></i>
-                        <span slot="title">通讯管理</span>
-                    </el-menu-item>
-                    <el-menu-item index="4">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">其他</span>
-                    </el-menu-item>
-                </el-menu>                
-                </el-col>
-                <el-col :span="6">
-                    <div class="chat-lists">
-                        <div class="room">
-                            <div class="avatar">
-                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                            </div>
-                            <div class="info">
-                                <span>微信一群 <small style="float:right">23分钟前</small></span>
-                                <small>
-                                    [12条]微信用户: 新发的消息
-                                </small>
-                            </div>
-                        </div>
-                        <div class="room">
-                            <div class="avatar">
-                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                            </div>
-                            <div class="info">
-                                <span>微信一群 <small style="float:right">23分钟前</small></span>
-                                <small>
-                                    [12条]微信用户: 新发的消息
-                                </small>
-                            </div>
-                        </div>
-                        <div class="room">
-                            <div class="avatar">
-                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                            </div>
-                            <div class="info">
-                                <span>微信一群 <small style="float:right">23分钟前</small></span>
-                                <small>
-                                    [12条]微信用户: 新发的消息
-                                </small>
-                            </div>
-                        </div>
-                        <div class="room">
-                            <div class="avatar">
-                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                            </div>
-                            <div class="info">
-                                <span>微信一群 <small style="float:right">23分钟前</small></span>
-                                <small>
-                                    [12条]微信用户: 新发的消息
-                                </small>
-                            </div>
-                        </div>
-                        <div class="room">
-                            <div class="avatar">
-                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                            </div>
-                            <div class="info">
-                                <span>微信一群 <small style="float:right">23分钟前</small></span>
-                                <small>
-                                    [12条]微信用户: 新发的消息
-                                </small>
-                            </div>
-                        </div>
-                        <div class="room">
-                            <div class="avatar">
-                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                            </div>
-                            <div class="info">
-                                <span>微信一群 <small style="float:right">23分钟前</small></span>
-                                <small>
-                                    [12条]微信用户: 新发的消息
-                                </small>
-                            </div>
-                        </div>
-                        <div class="room">
-                            <div class="avatar">
-                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                            </div>
-                            <div class="info">
-                                <span>微信一群 <small style="float:right">23分钟前</small></span>
-                                <small>
-                                    [12条]微信用户: 新发的消息
-                                </small>
-                            </div>
-                        </div>
-                        <div class="room">
-                            <div class="avatar">
-                                <img src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
-                            </div>
-                            <div class="info">
-                                <span>微信一群 <small style="float:right">23分钟前</small></span>
-                                <small>
-                                    [12条]微信用户: 新发的消息
-                                </small>
-                            </div>
-                        </div>
-                        <div class="more">
-                            <div class="tip">
-                                查看更多...
-                            </div>
-                        </div>
-                    </div>
-                </el-col>
-                <el-col :span="14">
-                    <div class="message-bar">
-                        <p class="title_wrap">微信一群</p>
-                        <div class="content">
+        <!--表格数据及操作-->
+        <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
+            <!--勾选框-->
+            <el-table-column type="selection" width="55">
+            </el-table-column>
+            <!--索引-->
+            <el-table-column prop="crontabId" label="任务ID" width="80">
+            </el-table-column>
+            <el-table-column prop="name" label="任务名称">
+            </el-table-column>
+             <el-table-column prop="status" label="状态" width="90">
+                <template slot-scope="scope">
+                    <span>{{scope.row.status ? '暂停':'运行中'}}</span>
+                </template>
+            </el-table-column>
+             <el-table-column prop="type" label="任务类型" width="90">
+                <template slot-scope="scope">
+                    <span>{{scope.row.status ? '循环执行':'执行一次'}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="description" label="备注">
+            </el-table-column>
+            <el-table-column prop="createdAt" label="创建时间" width="180">
+                <template slot-scope="scope">
+                    <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作" width="260">
+                <template slot-scope="scope">
+                    <nuxt-link :to="{name:'crontab-id',params:{ id: scope.row.crontabId }}">
+                        <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
+                    </nuxt-link>
+                    <nuxt-link :to="{name:'crontab-id',params:{ id: scope.row.crontabId }}">
+                        <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+                    </nuxt-link>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.crontabId,scope.$index, lists)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <br>
+        <!--分页条-->
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageNow"
+            :page-sizes="[10, 50, 100, 150]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pageCount">
+        </el-pagination>
 
-                        </div>
-                        <div class="box-ft">
-                            <div class="toolbar">
-                                <span style="float:left;">
-                                    <i class="el-icon-upload el-icon--right"></i>
-                                    <i class="el-icon-upload el-icon--right"></i>
-                                    <i class="el-icon-upload el-icon--right"></i>
-                                </span>
-                                <small style="float:right;font-size:14px;margin-right:8px;">
-                                    聊天记录
-                                </small>
-                                <el-input
-                                    type="textarea"
-                                    :rows="5"
-                                    placeholder="请输入内容"
-                                    v-model="textarea">
-                                    </el-input>
-                                <el-button type="primary" style="float:right;margin-top:5px;" size="medium">发送</el-button>
-                            </div>
-                        </div>
-                    </div>
-                </el-col>
-            </el-row>
-        </div>
+        <el-dialog
+            title="微信登录"
+            :visible.sync="centerDialogVisible"
+            width="20%">
+            <div style="text-align:center;">
+                <img :src="qrCode" alt="" style="width:100%;height:100%;margin-top:-35px;">
+                <i>请使用微信扫一扫登录微信</i>
+            </div>
+        </el-dialog>
     </div>
 </template>
+
+
  <script>
 
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
 
+  let id = 1000;
   export default {
     layout:'main',
-    name:'chat',
+    name:'node',
+    async asyncData () {
+      const { data } = await axios.get('/admin/task/lists')
+      console.log(data.lists);
+      return {
+          pageNow: data.page.now || 1 ,
+          pageSize: data.page.size || 10 ,
+          pageCount: data.page.count || 0 ,
+          lists: data.lists || []
+      }
+    },
     data() {
       return {
-        isCollapse: true
-      };
+        lists: {
+          crontabId: '',
+          state: true,
+          description: ''
+        },
+        qrCode:'',
+        centerDialogVisible: false,
+        //查询输入框数据
+        input: '',
+        //导航条默认选项
+        activeIndex: '1',
+        activeIndex2: '1',
+        dialogVisible: false
+      }
     },
     methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
+       handleSizeChange(val) {
+        axios.get(`/admin/task/lists?pageSize=${val}`)
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageSize = res.data.page.size || 10;
+          });
       },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
+      handleCurrentChange(val) {
+        axios.get(`/admin/task/lists?pageNow=${val}`)
+        .then(res => {
+            this.lists = res.data.lists || [];
+            this.pageNow = res.data.page.now || 1;
+          });
+      },
+      destroy(crontabId,index,rows){
+        axios.delete(`/admin/task/${crontabId}`, {data: qs.stringify({crontabId:crontabId})})
+        .then(res => {
+            //判断是否请求成功
+            if(res.data.errorId === 'OK'){
+                rows.splice(index, 1);
+                this.$message({
+                    message: '成功删除任务',
+                    type: 'success'
+                    });    
+                }
+            }).catch(res => {
+                 if(res.response.data.message === ''){
+                    this.$message.error('请求异常，请稍后重试！');
+                }else{
+                    this.$message.error(res.response.data.message);
+                }
+            });
+      },
+      //获取登录二维码
+      login_wechat(){
+          this.centerDialogVisible = true;
+          axios.get('/chat/getQrCode')
+            .then(res => {
+                this.qrCode = res.data.data.qrCode || [];
+                var self = this;
+                setTimeout(function () {
+                    self.check_login()
+                }, 200)
+            });
+      },
+      //轮询查询登录
+      check_login(){
+           axios.get('/chat/checkIsLogin')
+            .then(res => {
+                this.$message({
+                        message: '你有新的未读消息',
+                        type: 'success'
+                    });
+            });
       }
     }
   };
 </script>
-<style scoped lang="scss">
-
-  .top-bar{
-      color: #000;
-      padding-bottom: 5px;
-      line-height: 28px;
-      border-bottom: 1px solid #dddddd;
-      .text-1{
-          display: block;
-          text-align: center;
-      }
-      .text-2{
-          display: block;
-          float: right;
-      }
-  }
-  .main {
-    margin: 0px;
-    .chat-lists{
-        overflow: hidden;
-        height: 584px;
-        padding:0 6px;
-        border-left: 1px solid #dddddd;
-        border-right: 1px solid #dddddd;
-        .room{
-            float: left;
-            width: 100%;
-            height: 68px;
-            border-bottom: 1px solid #dddddd; 
-            .avatar{
-                margin: 5px 0;
-                float: left;
-                border-radius: 3px;
-                img{
-                    height: 58px;
-                    width: 58px;
-                }
-            }
-            .info{
-                color: #000;
-                width: 226px;
-                float: left;
-                padding: 6px 6px;
-                overflow: hidden;
-                span{
-                    display: block;
-                    line-height: 36px;
-                }
-            }
-        }
-        .room:hover{
-            cursor:pointer;
-            background: rgba(241, 237, 237, 0.534);
-        }
-        .more{
-            color: #000;
-            display: block;
-            float: left;
-            width: 100%;
-            line-height: 38px;
-            text-align: center;
-            height: 38px;
-            margin: 0 auto;
-        }
-    }
-    .message-bar{
-      color: #000;
-      .title_wrap{
-        line-height: 38px;
-        text-align: center;
-        border-bottom:1px solid #dddddd; 
-      }
-      .content{
-        width: 100%;
-        height: 300px;
-        border-bottom:1px solid #dddddd; 
-      }
-      .box-ft{
-          .toolbar{
-            font-size: 28px;
-            line-height: 38px;
-          }
-      }
- }   
-}
-</style>

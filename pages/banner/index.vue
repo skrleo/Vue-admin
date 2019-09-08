@@ -14,7 +14,7 @@
                     <el-button type="primary">添加轮播图</el-button>
                   </nuxt-link>
               </el-form-item>
-              <el-form-item label="查询轮播图">
+              <el-form-item>
                   <el-input placeholder="搜索轮播图"></el-input>
               </el-form-item>
               <el-form-item>
