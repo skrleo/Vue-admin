@@ -5,108 +5,79 @@
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户详情</el-breadcrumb-item>
     </el-breadcrumb>
-    <br>
     <div class="banner">
-      <el-row :gutter="20">
-        <el-col :span="4">
-          <img :src="user.headimg" :alt="user.headimg" style="width:100%;height:130px;">
-        </el-col>
-        <el-col :span="4">用户名称：{{user.name}}</el-col>
-        <el-col :span="4">昵称：{{user.nickname}}</el-col>
-        <el-col :span="3">性别：
-          <span v-if="user.sex === 0">保密</span>
-          <span v-else-if="user.sex === 1">男</span>
-          <span v-else>女</span>
-        </el-col>
-        <el-col :span="3">状态：
-          <span v-if="user.status === 0">启用</span>
-          <span v-else>禁用</span>
-        </el-col>
-        <el-col :span="6">邮箱地址：{{user.email}} </el-col>
-        <el-col :span="4">联系方式：{{user.phone}}</el-col>
-        <el-col :span="3">登录次数：{{user.loginNum}} </el-col>
-        <el-col :span="6">最后登录时间：{{user.lastLoginTime | d('yyyy-MM-dd hh:mm:ss')}}</el-col>
-        <el-col :span="3"><el-button type="text" @click="updatePw()">修改密码</el-button></el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="24">
-          <el-tabs type="border-card" @tab-click="handleClick">
-            <el-tab-pane label="用户管理" name="user">用户管理</el-tab-pane>
-            <el-tab-pane label="操作历史" name="operationLog">
-              <div class="block">
-                <el-timeline>
-                  <el-timeline-item
-                    v-for="(operation, index) in operations"
-                    :key="index"
-                    color="#0bbd87"
-                    :timestamp="operation.createdAt| d('yyyy-MM-dd hh:mm:ss')">
-                    {{operation.detail}}
-                  </el-timeline-item>
-                </el-timeline>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="角色管理" name="role">角色管理</el-tab-pane>
-            <el-tab-pane label="用户消息" name="message">
-                <div style="height:62px;">
-                  <!--搜索框-->
-                  <el-form :inline="true" style="float:left;" size="small">
-                      <el-form-item label="查询消息">
-                          <el-input placeholder="搜索消息"></el-input>
-                      </el-form-item>
-                      <el-form-item>
-                          <el-button type="primary">查询</el-button>
-                      </el-form-item>
-                      <el-form-item>
-                          <el-button type="primary">审核通过</el-button>
-                      </el-form-item>
-                      <el-form-item>
-                          <el-button type="primary">审核不通过</el-button>
-                      </el-form-item>
-                  </el-form>
-                </div>
-              <!--表格数据及操作-->
-              <el-table :data="lists" border style="width: 100%" stripe ref="multipleTable" tooltip-effect="dark">
-                  <!--勾选框-->
-                  <el-table-column type="selection" width="55">
-                  </el-table-column>
-                  <el-table-column prop="title" label="标题">
-                    <template slot-scope="scope">
-                        <nuxt-link :to="{name:'message-id',params:{ id: scope.row.messageId }}">
-                          <span>{{scope.row.title}}</span>
-                        </nuxt-link>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="status" label="是否已读">
-                      <template slot-scope="scope">
-                          <span>{{scope.row.status ? '已读':'未读'}}</span>
-                      </template>
-                  </el-table-column>
-                  <el-table-column prop="status" label="消息类型">
-                      <template slot-scope="scope">
-                          <span>{{scope.row.status ? '站内信':'系统消息'}}</span>
-                      </template>
-                  </el-table-column>
-                  <el-table-column prop="createdAt" label="提交时间">
-                      <template slot-scope="scope">
-                          <span>{{scope.row.createdAt | d('yyyy年MM月dd日 hh:mm:ss')}}</span>
-                      </template>
-                  </el-table-column>
-              </el-table>
-              <br>
-              <!--分页条-->
-              <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page="pageNow"
-                  :page-sizes="[10, 50, 100, 150]"
-                  :page-size="pageSize"
-                  layout="total, sizes, prev, pager, next, jumper"
-                  :total="pageCount">
-              </el-pagination>
-            </el-tab-pane>
-          </el-tabs>
-        </el-col>
-      </el-row>
+      <el-tabs tab-position="top" style="">
+        <el-tab-pane label="用户管理">
+          <div class="userInfo">
+            <el-row :gutter="24">
+              <el-col :span="4">
+                <img :src="user.headimg" :alt="user.headimg">
+              </el-col>
+              <el-col :span="20">{{user.name}}({{user.nickname}})<br/>
+              {{user.phone}}<el-button type="text" @click="updatePw()">修改密码</el-button></el-col>
+            </el-row>
+            <el-row :gutter="24">
+              <el-col :span="4">
+                <i class="el-icon-phone"></i>
+              </el-col>
+              <el-col :span="20">
+                <small>性别</small><br/>
+                <span v-if="user.sex === 0">保密</span>
+                <span v-else-if="user.sex === 1">男</span>
+                <span v-else>女</span>
+              </el-col>
+            </el-row>
+            <el-row :gutter="24">
+              <el-col :span="4">
+                <i class="el-icon-goods"></i>
+              </el-col>
+              <el-col :span="20">
+                <small>账号状态</small><br/>
+                <span v-if="user.status === 0">启用</span>
+                <span v-else>禁用</span>
+              </el-col>
+            </el-row>
+            <el-row :gutter="24">
+              <el-col :span="4">
+                <i class="el-icon-info"></i>
+              </el-col>
+              <el-col :span="20">
+                <small>邮箱地址</small><br/>
+                {{user.email}}</el-col>
+            </el-row>
+            <el-row :gutter="24">
+              <el-col :span="4">
+                <i class="el-icon-warning"></i>
+              </el-col>
+              <el-col :span="20">
+                <small>登录次数</small><br/>
+                {{user.loginNum}} 
+              </el-col>
+            </el-row>
+            <el-row :gutter="24">
+              <el-col :span="4">
+                <i class="el-icon-setting"></i>
+              </el-col>
+              <el-col :span="20">
+                <small>最后登陆时间</small><br/>
+                {{user.lastLoginTime | d('yyyy-MM-dd hh:mm:ss')}}({{user.last_login_ip}})
+              </el-col>
+            </el-row>
+            <el-row :gutter="24">
+              <el-col :span="4">
+                <i class="el-icon-edit"></i>
+              </el-col>
+              <el-col :span="20">
+                <small>备注</small><br/>xxxx
+              </el-col>
+            </el-row>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="配置管理">配置管理</el-tab-pane>
+        <el-tab-pane label="角色管理">角色管理</el-tab-pane>
+        <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+      </el-tabs>
+
     </div>
 </div>
 </template>
@@ -221,33 +192,41 @@
     text-decoration-line: none;
     color: #000;
   }
-  .el-row {
-    line-height: 32px;
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-  .el-col {
+  .el-tabs{
     color: #000;
-    margin-bottom: 12px;
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
+    margin-top: 23px;
+    .userInfo{
+      margin-top: 32px;
+      .el-row {
+        line-height: 16px;
+        margin-bottom: 6px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      .el-col {
+        line-height: 28px;
+        img{
+          width:48px;
+          height:48px;
+          float:right;
+          margin-top: 8px;
+          border-radius: 6px;
+        }
+        i{
+          color:#343131;
+          font-size: 18px;
+          float:right;
+          line-height: 56px;
+        }
+        small{
+          color:#929191;
+        }
+        .el-button{
+          margin-left: 18px;
+        }
+      }
+    }
+
   }
 </style>
