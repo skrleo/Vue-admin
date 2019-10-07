@@ -83,7 +83,7 @@
               <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
             </div>
             <div>
-              <img src="../assets/images/20190505193408.jpg" alt="" style="width:100%;height:100%;">
+              <img :src="qrCode" alt="" style="width:100%;height:100%;">
             </div>
           </el-card>
         </el-col>
@@ -99,14 +99,21 @@
   export default {
     layout: 'main',
     created: function () {
+      axios.get('/chat')
+        .then(res => {
+          console.log(res.data);
+          this.qrCode = res.data.data.qrCode || [];
+        });
       axios.get('/admin/base/shortcut/lists')
         .then(res => {
+          console.log(res.data);
           this.shortcuts = res.data.lists || [];
         });
     },
     data() {
       return {
         shortcuts:[],
+        qrCode:'',
         isCollapse:false,
         chartData: {
           columns: ['日期', '访问用户', '新增用户'],

@@ -188,13 +188,13 @@
       //轮询查询登录
       check_login(){
           if(this.centerDialogVisible ==  true){
-              axios.get('/chat/checkIsLogin')
+              axios.get('/chat/waitForLogin')
                 .then(res => {
                     //判断是否请求成功
                     if(res.data.errorId === 'OK'){
                         this.status = res.data.data.code;  
                         this.$message({
-                            message: '调用查询是否登陆',
+                            message: res.data.data.code,
                             type: 'success'
                         });    
                     }

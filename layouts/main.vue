@@ -7,6 +7,7 @@
                 </div>
                 <el-dropdown>
                     <span class="el-head-img">
+                        <!-- <el-avatar shape="square" size="medium" :src="userInfo.headimg"></el-avatar> -->
                         <nuxt-link :to="{name:'user-id',params:{ id: userInfo.uid }}">
                             <el-badge class="item">
                                 <img :src="userInfo.headimg" alt="">
@@ -208,9 +209,9 @@
                 img{
                     $imgMargin: (($header-height - 45)/2);
                     display:inline-block;
-                    width:45px;
-                    height: 45px;
-                    border-radius: 25px;
+                    width:38px;
+                    height: 38px;
+                    border-radius: 3px;
                     margin-top: $imgMargin;
                 }
             }
