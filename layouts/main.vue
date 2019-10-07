@@ -108,9 +108,6 @@
                     <el-divider></el-divider>
                     <div class="chat-tool">
                         <span>
-                            <el-tooltip class="item" effect="dark" content="聊天设置" placement="top-start">
-                                <i class="el-icon-setting"></i>
-                            </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="链接地址" placement="top-start">
                                 <i class="el-icon-link"></i>
                             </el-tooltip>
@@ -122,6 +119,9 @@
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="图片" placement="top-end">
                                 <i class="el-icon-picture-outline"></i>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="聊天设置" placement="top-start">
+                                <i class="el-icon-setting"></i>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="帮助" placement="top-end">
                                 <i class="el-icon-info"></i>
@@ -338,6 +338,7 @@
             line-height: 32px;
             bottom: 8px;
             .chat-tool{
+                color: #7d7d7d;
                 margin-top: -21px;
             }
         }
@@ -371,7 +372,7 @@
                     position:absolute;
                     top:15%;
                     // margin-top:-8px;
-                    left:41px;
+                    left:40px;
                     display:block;
                     width:0;
                     height:0;
@@ -381,7 +382,7 @@
                     border-bottom:8px solid #FFF;
                     border-top:8px solid #FFF;
                     border-left:none;
-                    border-right:8px solid #3079ED;
+                    border-right:8px solid #4787ED;
                 }
             }
             
@@ -396,7 +397,7 @@
                     border-bottom:8px solid #FFF;
                     border-top:8px solid #FFF;
                     border-right:none;
-                    border-left:8px solid #3079ED;
+                    border-left:8px solid #4787ED;
                 }
                 .article {
                     float:right;
