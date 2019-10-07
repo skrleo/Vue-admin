@@ -29,17 +29,26 @@
             </el-row>
             <el-row :gutter="24">
               <el-col :span="4">
+                <i class="el-icon-document"></i>
+              </el-col>
+              <el-col :span="20">
+                <small>角色</small><br/>
+                超级管理员
+              </el-col>
+            </el-row>
+            <el-row :gutter="24">
+              <el-col :span="4">
                 <i class="el-icon-goods"></i>
               </el-col>
               <el-col :span="20">
                 <small>账号状态</small><br/>
-                <span v-if="user.status === 0">启用</span>
+                <span v-if="user.status === 0">正常</span>
                 <span v-else>禁用</span>
               </el-col>
             </el-row>
             <el-row :gutter="24">
               <el-col :span="4">
-                <i class="el-icon-info"></i>
+                <i class="el-icon-picture"></i>
               </el-col>
               <el-col :span="20">
                 <small>邮箱地址</small><br/>
@@ -47,7 +56,7 @@
             </el-row>
             <el-row :gutter="24">
               <el-col :span="4">
-                <i class="el-icon-warning"></i>
+                <i class="el-icon-share"></i>
               </el-col>
               <el-col :span="20">
                 <small>登录次数</small><br/>
@@ -190,10 +199,10 @@
 <style scoped lang="scss">
   a{
     text-decoration-line: none;
-    color: #000;
+    color: #272626;
   }
   .el-tabs{
-    color: #000;
+    color: #272626;
     margin-top: 23px;
     .userInfo{
       margin-top: 32px;
