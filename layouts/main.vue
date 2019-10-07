@@ -72,9 +72,38 @@
                 <p class="head-title">欢迎使用在线聊天系统</p>
                 <small>这里是团队默认讨论组，所有成员都会自动加入这个讨论组。跟新成员打个招呼噢~</small>
                 <el-divider></el-divider>
-                <small>这里是团队默认讨论组，所有成员都会自动加入这个讨论组。跟新成员打个招呼噢~</small>
                 
-                
+                <div class="bubble">
+                    <div class="chat clearfix">
+                        <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                        <div class="chat-bubble">
+                            <span class="triangle"></span>
+                            <div class="article">谭琳宝宝，我爱你！</div>
+                        </div>
+                    </div>
+                    <div class="chat clearfix fr">
+                        <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                        <div class="chat-bubble">
+                            <span class="triangle right"></span>
+                            <div class="article">小灰灰，我爱你！</div>
+                        </div>
+                    </div>
+                    <div class="chat clearfix">
+                        <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                        <div class="chat-bubble">
+                            <span class="triangle"></span>
+                            <div class="article">谭琳宝宝，我很爱很爱你！</div>
+                        </div>
+                    </div>
+                    <div class="chat clearfix fr">
+                        <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                        <div class="chat-bubble">
+                            <span class="triangle right"></span>
+                            <div class="article">滚，一边去</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="send-box">
                     <el-divider></el-divider>
                     <div class="chat-tool">
@@ -102,7 +131,7 @@
                             聊天记录
                         </small>
                         <el-input type="textarea" :rows="4" v-model="chatMessage" placeholder="发送消息...">
-                            
+
                         </el-input>
                     </div>
                     
@@ -175,6 +204,7 @@
     },
     data() {
         return {
+            circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
             chatMessage:'',
             drawer: false,
             direction: 'rtl',
@@ -311,5 +341,70 @@
                 margin-top: -21px;
             }
         }
+        .bubble {
+            .chat {
+                display: inline-block;
+                width: 100%;
+                margin-bottom: 12px;
+                position:relative;
+                .el-avatar{
+                    float: left;
+                    margin-top: 8px;
+                }
+                .article {
+                    max-width: 75%;
+                    color:#FFF;
+                    margin-left: 12px;
+                    display:inline-block;
+                    *display:inline; zoom:1;
+                    padding:5px 10px;
+                    border:1px solid #3079ED;
+                    background:#eee;
+                    border-radius:5px;
+                    background-color: #4D90FE;
+                    background-image:-webkit-gradient(linear,left top,left bottom,from(#4D90FE),to(#4787ED));
+                    background-image:-webkit-linear-gradient(top,#4D90FE,#4787ED);
+                    background-image:-moz-linear-gradient(center top , #4D90FE, #4787ED);
+                    background-image:linear-gradient(top,#4D90FE,#4787ED);
+                }
+                .triangle {
+                    position:absolute;
+                    top:15%;
+                    // margin-top:-8px;
+                    left:41px;
+                    display:block;
+                    width:0;
+                    height:0;
+                    overflow:hidden;
+                    line-height:0;
+                    font-size:0;
+                    border-bottom:8px solid #FFF;
+                    border-top:8px solid #FFF;
+                    border-left:none;
+                    border-right:8px solid #3079ED;
+                }
+            }
+            
+            .fr { 
+                width: 100%;
+                .el-avatar{
+                    float: right;
+                }
+                .triangle {
+                    left:auto;
+                    right:46px;
+                    border-bottom:8px solid #FFF;
+                    border-top:8px solid #FFF;
+                    border-right:none;
+                    border-left:8px solid #3079ED;
+                }
+                .article {
+                    float:right;
+                    margin-right: 18px;
+                    margin-left: 51px;
+                }
+            }
+        }
     }
+
 </style>
