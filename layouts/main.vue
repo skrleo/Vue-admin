@@ -18,12 +18,11 @@
                         <span style="line-height:45px;">{{userInfo.name || '普通管理员'}}<i class="el-icon-arrow-down el-icon--right"></i></span>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <nuxt-link :to="{name:'user-id'}">
-                            <el-dropdown-item>
-                                <i class="el-icon-third-tubiaozhizuomoban13"></i>
-                                消息
-                            </el-dropdown-item>
-                        </nuxt-link>
+                        <el-dropdown-item>
+                            <el-link @click="drawer = true" :underline="false">
+                                <i class="el-icon-third-tubiaozhizuomoban13"></i>消息
+                            </el-link>
+                        </el-dropdown-item>
                         <nuxt-link :to="{name:'user-id',params:{ id: userInfo.uid }}">
                             <el-dropdown-item>
                                 <i class="el-icon-third-shezhi"></i>
@@ -62,6 +61,54 @@
                 </el-main>
             </el-container>
         </el-container>
+        
+        <el-drawer
+            title="在线聊天"
+            :visible.sync="drawer"
+            :direction="direction"
+            :before-close="handleClose"
+            size="35%">
+            <div id="chat">
+                <p class="head-title">欢迎使用在线聊天系统</p>
+                <small>这里是团队默认讨论组，所有成员都会自动加入这个讨论组。跟新成员打个招呼噢~</small>
+                <el-divider></el-divider>
+                <small>这里是团队默认讨论组，所有成员都会自动加入这个讨论组。跟新成员打个招呼噢~</small>
+                
+                
+                <div class="send-box">
+                    <el-divider></el-divider>
+                    <div class="chat-tool">
+                        <span>
+                            <el-tooltip class="item" effect="dark" content="聊天设置" placement="top-start">
+                                <i class="el-icon-setting"></i>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="链接地址" placement="top-start">
+                                <i class="el-icon-link"></i>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="语音电话" placement="top">
+                                <i class="el-icon-phone-outline"></i>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="视频聊天" placement="top">
+                                <i class="el-icon-video-camera-solid"></i>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="图片" placement="top-end">
+                                <i class="el-icon-picture-outline"></i>
+                            </el-tooltip>
+                            <el-tooltip class="item" effect="dark" content="帮助" placement="top-end">
+                                <i class="el-icon-info"></i>
+                            </el-tooltip>
+                        </span>
+                        <small style="float:right;font-size:14px;margin-right:8px;">
+                            聊天记录
+                        </small>
+                        <el-input type="textarea" :rows="4" v-model="chatMessage" placeholder="发送消息...">
+                            
+                        </el-input>
+                    </div>
+                    
+                </div>
+            </div>
+        </el-drawer>
     </div>
 </template>
 
@@ -128,6 +175,9 @@
     },
     data() {
         return {
+            chatMessage:'',
+            drawer: false,
+            direction: 'rtl',
             isCollapse: false,
             tabWidth: 200,
             test1: 1,
@@ -138,6 +188,15 @@
                 name: ''
             }
         };
+    },
+    methods: {
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      }
     },
     mounted () {
         window.io = io
@@ -237,5 +296,20 @@
             }
          }
     }
-
+    #chat{
+        padding: 0 15px 0 15px;
+        .head-title{
+            font-size: 16px;
+        }
+        .send-box{
+            width: 95%;
+            font-size: 21px;
+            position: absolute;
+            line-height: 32px;
+            bottom: 8px;
+            .chat-tool{
+                margin-top: -21px;
+            }
+        }
+    }
 </style>
