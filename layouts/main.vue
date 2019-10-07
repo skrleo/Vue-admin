@@ -73,35 +73,96 @@
                 <small>这里是团队默认讨论组，所有成员都会自动加入这个讨论组。跟新成员打个招呼噢~</small>
                 <el-divider></el-divider>
                 
-                <div class="bubble">
-                    <div class="chat clearfix">
-                        <el-avatar size="medium" :src="circleUrl"></el-avatar>
-                        <div class="chat-bubble">
-                            <span class="triangle"></span>
-                            <div class="article">谭琳宝宝，我爱你！</div>
+                <div class="bubble" v-infinite-scroll="load">
+                    <el-scrollbar style="height:390px;">
+                         <div class="chat clearfix">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle"></span>
+                                <div class="article">谭琳宝宝，我爱你！</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="chat clearfix fr">
-                        <el-avatar size="medium" :src="circleUrl"></el-avatar>
-                        <div class="chat-bubble">
-                            <span class="triangle right"></span>
-                            <div class="article">小灰灰，我爱你！</div>
+                        <div class="chat clearfix fr">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle right"></span>
+                                <div class="article">小灰灰，我爱你！</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="chat clearfix">
-                        <el-avatar size="medium" :src="circleUrl"></el-avatar>
-                        <div class="chat-bubble">
-                            <span class="triangle"></span>
-                            <div class="article">谭琳宝宝，我很爱很爱你！</div>
+                        <div class="chat clearfix">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle"></span>
+                                <div class="article">谭琳宝宝，我很爱很爱你！</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="chat clearfix fr">
-                        <el-avatar size="medium" :src="circleUrl"></el-avatar>
-                        <div class="chat-bubble">
-                            <span class="triangle right"></span>
-                            <div class="article">滚，一边去</div>
+                        <div class="chat clearfix fr">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle right"></span>
+                                <div class="article">滚，一边去</div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="chat clearfix fr">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle right"></span>
+                                <div class="article">小灰灰，我爱你！</div>
+                            </div>
+                        </div>
+                        <div class="chat clearfix">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle"></span>
+                                <div class="article">谭琳宝宝，我很爱很爱你！</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat clearfix fr">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle right"></span>
+                                <div class="article">小灰灰，我爱你！</div>
+                            </div>
+                        </div>
+                        <div class="chat clearfix">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle"></span>
+                                <div class="article">谭琳宝宝，我很爱很爱你！</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat clearfix fr">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle right"></span>
+                                <div class="article">小灰灰，我爱你！</div>
+                            </div>
+                        </div>
+                        <div class="chat clearfix">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle"></span>
+                                <div class="article">谭琳宝宝，我很爱很爱你！</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat clearfix fr">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle right"></span>
+                                <div class="article">小灰灰，我爱你！</div>
+                            </div>
+                        </div>
+                        <div class="chat clearfix">
+                            <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <div class="chat-bubble">
+                                <span class="triangle"></span>
+                                <div class="article">谭琳宝宝，我很爱很爱你！</div>
+                            </div>
+                        </div>
+                    </el-scrollbar>
                 </div>
 
                 <div class="send-box">
