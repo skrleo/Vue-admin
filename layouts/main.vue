@@ -77,6 +77,7 @@
                     <el-scrollbar style="height:390px;">
                          <div class="chat clearfix">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">小灰灰：</small>
                             <div class="chat-bubble">
                                 <span class="triangle"></span>
                                 <div class="article">谭琳宝宝，我爱你！</div>
@@ -84,6 +85,7 @@
                         </div>
                         <div class="chat clearfix fr">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">谭琳宝宝</small>
                             <div class="chat-bubble">
                                 <span class="triangle right"></span>
                                 <div class="article">小灰灰，我爱你！</div>
@@ -91,6 +93,7 @@
                         </div>
                         <div class="chat clearfix">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">小灰灰</small>
                             <div class="chat-bubble">
                                 <span class="triangle"></span>
                                 <div class="article">谭琳宝宝，我很爱很爱你！</div>
@@ -98,13 +101,16 @@
                         </div>
                         <div class="chat clearfix fr">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">谭琳宝宝</small>
                             <div class="chat-bubble">
                                 <span class="triangle right"></span>
                                 <div class="article">滚，一边去</div>
                             </div>
                         </div>
+                        <br/>
                         <div class="chat clearfix fr">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">谭琳宝宝</small>
                             <div class="chat-bubble">
                                 <span class="triangle right"></span>
                                 <div class="article">小灰灰，我爱你！</div>
@@ -112,6 +118,7 @@
                         </div>
                         <div class="chat clearfix">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">小灰灰</small>
                             <div class="chat-bubble">
                                 <span class="triangle"></span>
                                 <div class="article">谭琳宝宝，我很爱很爱你！</div>
@@ -120,6 +127,7 @@
                         
                         <div class="chat clearfix fr">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">谭琳宝宝</small>
                             <div class="chat-bubble">
                                 <span class="triangle right"></span>
                                 <div class="article">小灰灰，我爱你！</div>
@@ -127,6 +135,7 @@
                         </div>
                         <div class="chat clearfix">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">小灰灰</small>
                             <div class="chat-bubble">
                                 <span class="triangle"></span>
                                 <div class="article">谭琳宝宝，我很爱很爱你！</div>
@@ -135,6 +144,7 @@
                         
                         <div class="chat clearfix fr">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">谭琳宝宝</small>
                             <div class="chat-bubble">
                                 <span class="triangle right"></span>
                                 <div class="article">小灰灰，我爱你！</div>
@@ -142,6 +152,7 @@
                         </div>
                         <div class="chat clearfix">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">小灰灰</small>
                             <div class="chat-bubble">
                                 <span class="triangle"></span>
                                 <div class="article">谭琳宝宝，我很爱很爱你！</div>
@@ -150,6 +161,7 @@
                         
                         <div class="chat clearfix fr">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">谭琳宝宝</small>
                             <div class="chat-bubble">
                                 <span class="triangle right"></span>
                                 <div class="article">小灰灰，我爱你！</div>
@@ -157,6 +169,7 @@
                         </div>
                         <div class="chat clearfix">
                             <el-avatar size="medium" :src="circleUrl"></el-avatar>
+                            <small class="nickname">小灰灰</small>
                             <div class="chat-bubble">
                                 <span class="triangle"></span>
                                 <div class="article">谭琳宝宝，我很爱很爱你！</div>
@@ -404,14 +417,18 @@
             }
         }
         .bubble {
+            .nickname{
+                margin-left: 8px;
+                color: #6f6868;
+            }
             .chat {
                 display: inline-block;
                 width: 100%;
                 margin-bottom: 12px;
                 position:relative;
                 .el-avatar{
-                    float: left;
                     margin-top: 8px;
+                    float: left;
                 }
                 .article {
                     max-width: 75%;
@@ -431,7 +448,7 @@
                 }
                 .triangle {
                     position:absolute;
-                    top:15%;
+                    top:50%;
                     // margin-top:-8px;
                     left:40px;
                     display:block;
@@ -449,12 +466,17 @@
             
             .fr { 
                 width: 100%;
+                .nickname{
+                    float: right;
+                    margin-right: 9px;
+                    color: #6f6868;
+                }
                 .el-avatar{
                     float: right;
                 }
                 .triangle {
                     left:auto;
-                    right:46px;
+                    right:48px;
                     border-bottom:8px solid #FFF;
                     border-top:8px solid #FFF;
                     border-right:none;
@@ -462,8 +484,7 @@
                 }
                 .article {
                     float:right;
-                    margin-right: 18px;
-                    margin-left: 51px;
+                    margin: 23px -51px 12px 0;
                 }
             }
         }
