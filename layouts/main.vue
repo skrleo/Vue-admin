@@ -201,12 +201,8 @@
                                 <i class="el-icon-info"></i>
                             </el-tooltip>
                         </span>
-                        <small style="float:right;font-size:14px;margin-right:8px;">
-                            聊天记录
-                        </small>
-                        <el-input type="textarea" :rows="4" v-model="chatMessage" placeholder="发送消息...">
-
-                        </el-input>
+                        <small class="chat-record"><el-link :underline="false">聊天记录</el-link></small>
+                        <el-input type="textarea" :rows="4" v-model="chatMessage" placeholder="发送消息..." />
                     </div>
                     
                 </div>
@@ -414,6 +410,11 @@
             .chat-tool{
                 color: #7d7d7d;
                 margin-top: -21px;
+            }
+            .chat-record{
+                display: block;
+                float: right;
+                color: #000000;
             }
         }
         .bubble {
