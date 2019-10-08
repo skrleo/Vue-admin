@@ -182,24 +182,36 @@
                     <el-divider></el-divider>
                     <div class="chat-tool">
                         <span>
-                            <el-tooltip class="item" effect="dark" content="链接地址" placement="top-start">
-                                <i class="el-icon-link"></i>
-                            </el-tooltip>
-                            <el-tooltip class="item" effect="dark" content="语音电话" placement="top">
-                                <i class="el-icon-phone-outline"></i>
-                            </el-tooltip>
-                            <el-tooltip class="item" effect="dark" content="视频聊天" placement="top">
-                                <i class="el-icon-video-camera-solid"></i>
-                            </el-tooltip>
-                            <el-tooltip class="item" effect="dark" content="图片" placement="top-end">
-                                <i class="el-icon-picture-outline"></i>
-                            </el-tooltip>
-                            <el-tooltip class="item" effect="dark" content="聊天设置" placement="top-start">
-                                <i class="el-icon-setting"></i>
-                            </el-tooltip>
-                            <el-tooltip class="item" effect="dark" content="帮助" placement="top-end">
-                                <i class="el-icon-info"></i>
-                            </el-tooltip>
+                            <el-link :underline="false">
+                                <el-tooltip class="item" effect="dark" content="链接地址" placement="top-start">
+                                    <i class="el-icon-link"></i>
+                                </el-tooltip>
+                            </el-link>
+                            <el-link :underline="false">
+                                <el-tooltip class="item" effect="dark" content="语音电话" placement="top">
+                                    <i class="el-icon-phone-outline"></i>
+                                </el-tooltip>
+                            </el-link>
+                            <el-link :underline="false">
+                                <el-tooltip class="item" effect="dark" content="视频聊天" placement="top">
+                                    <i class="el-icon-video-camera-solid"></i>
+                                </el-tooltip>
+                            </el-link>
+                            <el-link :underline="false">
+                                <el-tooltip class="item" effect="dark" content="图片" placement="top-end">
+                                    <i class="el-icon-picture-outline"></i>
+                                </el-tooltip>
+                            </el-link>
+                            <el-link :underline="false">
+                                <el-tooltip class="item" effect="dark" content="聊天设置" placement="top-start">
+                                    <i class="el-icon-setting"></i>
+                                </el-tooltip>
+                            </el-link>
+                            <el-link :underline="false">
+                                <el-tooltip class="item" effect="dark" content="帮助" placement="top-end">
+                                    <i class="el-icon-info"></i>
+                                </el-tooltip>
+                            </el-link>
                         </span>
                         <small class="chat-record"><el-link :underline="false">聊天记录</el-link></small>
                         <el-input type="textarea" :rows="4" v-model="chatMessage" placeholder="发送消息..." />
@@ -415,6 +427,9 @@
                 display: block;
                 float: right;
                 color: #000000;
+            }
+            .el-link i{
+                font-size: 18px;
             }
         }
         .bubble {
