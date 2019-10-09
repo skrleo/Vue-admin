@@ -26,6 +26,7 @@
     "mavon-editor": "^2.6.17",
     "nuxt": "^2.3.4",
     "qs": "^6.6.0",
+    "rythm.js": "^2.2.5",
     "socket.io-client": "^2.2.0",
     "v-charts": "^1.19.0",
     "viser-vue": "^2.4.2",
