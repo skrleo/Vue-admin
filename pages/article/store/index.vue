@@ -98,7 +98,7 @@ import qs from 'qs';
 import axios from '~/plugins/axios.js';
 import Cookie from 'js-cookie'
 export default {
-  layout: 'main',
+  layout: 'frame',
   data() {
     return {
       dialogVisible: false,

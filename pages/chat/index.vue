@@ -96,7 +96,7 @@
 
   let id = 1000;
   export default {
-    layout:'main',
+    layout:'frame',
     name:'node',
     async asyncData () {
       const { data } = await axios.get('/admin/task/lists')

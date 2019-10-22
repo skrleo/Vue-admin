@@ -177,7 +177,7 @@
   import axios from '~/plugins/axios.js';
 
   export default {
-    layout:'main',
+    layout:'frame',
     name:'chat',
     data() {
       return {

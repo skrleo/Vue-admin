@@ -49,7 +49,7 @@
   import Cookie from 'js-cookie'
   
   export default {
-    layout: 'main',
+    layout: 'frame',
     name:'site',
     async asyncData () {
       const Uid = Cookie.get('Uid');

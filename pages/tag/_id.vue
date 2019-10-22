@@ -38,7 +38,7 @@ import qs from 'qs';
 import axios from '~/plugins/axios.js';
 import Cookie from 'js-cookie'
 export default {
-  layout: 'main',
+  layout: 'frame',
   validate ({ params }) {
       // Must be a number
       return /^\d+$/.test(params.id)

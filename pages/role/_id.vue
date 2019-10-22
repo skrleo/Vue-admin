@@ -30,7 +30,7 @@
   import qs from 'qs';
   import axios from '~/plugins/axios.js';
   export default {
-    layout: 'main',
+    layout: 'frame',
     validate ({ params }) {
       // Must be a number
       if(/^\d+$/.test(params.id)){

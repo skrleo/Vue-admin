@@ -50,7 +50,7 @@
   import userlist from '~/components/common/userlist.vue'
   
   export default {
-    layout: 'main',
+    layout: 'frame',
     components: {
        'el-user-list':userlist
     },

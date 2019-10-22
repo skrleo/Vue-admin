@@ -94,7 +94,7 @@
 
   let id = 1000;
   export default {
-    layout:'main',
+    layout:'frame',
     name:'node',
     
     async asyncData () {

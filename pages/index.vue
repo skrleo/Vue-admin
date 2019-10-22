@@ -97,7 +97,7 @@
   import Cookie from 'js-cookie'
 
   export default {
-    layout: 'main',
+    layout: 'frame',
     created: function () {
       axios.get('/chat')
         .then(res => {

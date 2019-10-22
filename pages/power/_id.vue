@@ -34,7 +34,7 @@
   import axios from '~/plugins/axios.js';
   
   export default {
-    layout: 'main',
+    layout: 'frame',
     validate ({ params }) {
       // Must be a number
       return /^\d+$/.test(params.id)

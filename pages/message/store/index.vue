@@ -51,7 +51,7 @@ import Cookie from 'js-cookie';
 import userlist from '~/components/common/user-lists-checkbox'
 
 export default {
-  layout: 'main',
+  layout: 'frame',
   components: {
     'el-user-list':userlist
   },

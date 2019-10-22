@@ -50,7 +50,7 @@
   import axios from '~/plugins/axios.js';
 
   export default {
-    layout:'main',
+    layout:'frame',
     name:'authorize',
     data() {
       return {

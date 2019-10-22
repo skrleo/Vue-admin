@@ -38,7 +38,7 @@
   import userlist from '~/components/common/user-lists-radio'
   
   export default {
-    layout: 'main',
+    layout: 'frame',
     components: {
        'el-user-list':userlist
     },

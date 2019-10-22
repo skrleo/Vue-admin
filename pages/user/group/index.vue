@@ -46,7 +46,7 @@
 
   let id = 1000;
   export default {
-    layout:'main',
+    layout:'frame',
     name:'group',
     watch: {
       filterText(val) {

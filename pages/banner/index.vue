@@ -83,7 +83,7 @@
   import axios from '~/plugins/axios.js'
 
   export default {
-    layout:'main',
+    layout:'frame',
     name:'node',
     async asyncData () {
       const { data } = await axios.get('/admin/banner/lists')
