@@ -79,10 +79,8 @@
 
  <script>
 
-  import qs from 'qs';
-  import axios from '~/plugins/axios.js';
-  import Echo from 'laravel-echo'
-  import io from 'socket.io-client'
+  import qs from 'qs'
+  import axios from '~/plugins/axios.js'
 
   export default {
     layout:'main',

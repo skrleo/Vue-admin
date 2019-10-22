@@ -227,8 +227,6 @@
   import qs from 'qs';
   import axios from '~/plugins/axios.js'
   import Cookie from 'js-cookie'
-  import Echo from 'laravel-echo'
-  import io from 'socket.io-client'
 
   export default {
     middleware: 'checkLogin',
@@ -307,46 +305,6 @@
       }
     },
     mounted () {
-        window.io = io
-        window.Echo = new Echo({
-            broadcaster: 'socket.io',
-            host: 'http://api.example.com:6001',
-        })
-        window.Echo.private('Message').listen('.sayHello', (res) => {
-            if (res.status === 200) {
-                this.$message({
-                        message: '你有新的未读消息',
-                        type: 'success'
-                    });
-            } else {
-                console.log('something wrong!')
-            }
-        
-        var wsUrl = 'ws://192.168.10.10:52000';
-        var webSocket  = new WebSocket(wsUrl);
-    
-        //实例的对象 onOpen属性
-        webSocket.onopen = function (evt) {
-            //发送数据
-            webSocket.send("hello_zzs");
-            console.log("connected-swoole-success");
-        }
-    
-        //实例化对象  onMessage  接收服务端的数据的函数
-        webSocket.onmessage = function (evt) {
-            console.log("ws-server-return-data:" + evt.data);
-        }
-    
-        //实例化onClose事件
-        webSocket.onclose = function (evt) {
-            console.log("close");
-        }
-    
-        //返回错误的事件
-        webSocket.onerror = function (evt,e) {
-            console.log("error:" + evt.data);
-        }
-
         var a_index = 0;
         $("body").click(function(e){
             var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");

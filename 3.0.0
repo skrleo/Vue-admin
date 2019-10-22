@@ -1,0 +1,4 @@
++ echarts@4.4.0
+updated 2 packages and audited 17827 packages in 45.927s
+found 10 vulnerabilities (1 low, 2 moderate, 7 high)
+  run `npm audit fix` to fix them, or `npm audit` for details
