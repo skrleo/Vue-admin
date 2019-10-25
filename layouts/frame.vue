@@ -230,7 +230,7 @@
 
   export default {
     middleware: 'checkLogin',
-    name: 'main',
+    name: 'frame',
     created:function(){
         let Uid = Cookie.get('Uid');
         axios.get('/admin/base/lists',{

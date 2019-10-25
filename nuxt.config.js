@@ -49,6 +49,7 @@ module.exports = {
     { src: '~plugins/filters', ssr: true }, 
     { src: '~plugins/element-ui', ssr: true }, 
     { src: '~plugins/mavon-editor', ssr: true }, 
+    { src: '~plugins/websocket', ssr: true }, 
     { src: '~plugins/v-charts', ssr: false }   //ssr设置为false的时候，只在客户端引入
   ],
 
