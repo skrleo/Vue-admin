@@ -6,41 +6,118 @@
       <el-breadcrumb-item>站点设置</el-breadcrumb-item>
     </el-breadcrumb>
     <br>
-    <el-form ref="siteConfig" :model="siteConfig" label-width="120px" size="medium">
-    <el-form-item label="网站名称" style="width:400px" >
-      <el-input v-model="siteConfig.title"></el-input>
-    </el-form-item>
-    <el-form-item label="网站状态" style="width:400px" >
-       <el-radio-group v-model="siteConfig.status">
-        <el-radio :label="0">启用</el-radio>
-        <el-radio :label="1">禁用</el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label="网站Logo" prop="logo">
-      <el-upload
-        class="avatar-uploader"
-        action="http://api.example.com/v1.0/api/upload/img"
-        :show-file-list="false"
-        :on-success="uploadSuccess"
-        :before-upload="onBeforeUploadImage">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-    </el-form-item>
-    <el-form-item label="ICP备案号" style="width:400px" >
-       <el-input v-model="siteConfig.icpBeian"></el-input>
-    </el-form-item>
-    <el-form-item label="SEO关键字" style="width:400px" >
-       <el-input v-model="siteConfig.keywords"></el-input>
-    </el-form-item>
-    <el-form-item label="网站描述" style="width:600px" >
-        <el-input type="textarea" v-model="siteConfig.description" ></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">立即修改</el-button>
-      <el-button>取消</el-button>
-    </el-form-item>
-  </el-form>
+    <el-tabs type="border-card">
+      <el-tab-pane label="站点设置">
+        <el-form ref="siteConfig" :model="siteConfig" label-width="120px" size="medium">
+          <el-form-item label="网站名称" style="width:400px" >
+            <el-input v-model="siteConfig.title"></el-input>
+          </el-form-item>
+          <el-form-item label="网站状态" style="width:400px" >
+            <el-radio-group v-model="siteConfig.status">
+              <el-radio :label="0">启用</el-radio>
+              <el-radio :label="1">禁用</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="网站Logo" prop="logo">
+            <el-upload
+              class="avatar-uploader"
+              action="http://api.example.com/v1.0/api/upload/img"
+              :show-file-list="false"
+              :on-success="uploadSuccess"
+              :before-upload="onBeforeUploadImage">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="ICP备案号" style="width:400px" >
+            <el-input v-model="siteConfig.icpBeian"></el-input>
+          </el-form-item>
+          <el-form-item label="SEO关键字" style="width:400px" >
+            <el-input v-model="siteConfig.keywords"></el-input>
+          </el-form-item>
+          <el-form-item label="网站描述" style="width:600px" >
+              <el-input type="textarea" v-model="siteConfig.description" ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">立即修改</el-button>
+            <el-button>取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="微信支付配置">
+        <el-form ref="siteConfig" :model="siteConfig" label-width="120px" size="medium">
+          <el-form-item label="公众账号ID" style="width:550px" >
+            <el-input v-model="siteConfig.title"></el-input>
+          </el-form-item>
+          <el-form-item label="商户号" style="width:550px" >
+            <el-input v-model="siteConfig.title"></el-input>
+          </el-form-item>
+          <el-form-item label="API密钥" style="width:550px" >
+            <el-input v-model="siteConfig.title"></el-input>
+          </el-form-item>
+          <el-form-item label="商户证书" prop="logo">
+            <el-upload
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :before-remove="beforeRemove"
+              multiple
+              :limit="3"
+              :on-exceed="handleExceed"
+              :file-list="fileList">
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->证书下载 apiclient_cert.pem</div>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="商户证书秘钥" ><el-upload
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :before-remove="beforeRemove"
+              multiple
+              :limit="3"
+              :on-exceed="handleExceed"
+              :file-list="fileList">
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->证书下载 apiclient_key.pem</div>
+            </el-upload>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">保存</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="支付宝支付配置">
+        <el-form ref="siteConfig" :model="siteConfig" label-width="120px" size="medium">
+          <el-form-item label="合作者PID" style="width:550px" >
+            <el-input v-model="siteConfig.title"></el-input>
+          </el-form-item>
+          <el-form-item label="支付宝公钥" style="width:650px" >
+            <el-input
+              type="textarea"
+              :autosize="{ minRows: 4, maxRows: 6}"
+              placeholder="请输入内容"
+              v-model="siteConfig.description">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="应用私钥" style="width:650px" >
+            <el-input
+              type="textarea"
+              :autosize="{ minRows: 4, maxRows: 6}"
+              placeholder="请输入内容"
+              v-model="siteConfig.description">
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">保存</el-button>
+            <el-button>取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+    </el-tabs>
+    
 </div>
 </template>
 <script>
