@@ -127,6 +127,9 @@
             <el-tab-pane label="好友与标签">
                 <!--搜索框-->
                 <el-form :inline="true" style="float:left;" size="mini">
+                    <el-form-item>
+                        <el-button type="primary">添加好友</el-button>
+                    </el-form-item>
                     <el-form-item label="搜索好友">
                         <el-input placeholder="搜索好友"></el-input>
                     </el-form-item>
@@ -193,7 +196,72 @@
                     </el-table-column>
                 </el-table>
             </el-tab-pane>
-            <el-tab-pane label="微信群管理">微信群管理</el-tab-pane>
+            <el-tab-pane label="微信群管理">
+                <!--搜索框-->
+                <el-form :inline="true" style="float:left;" size="mini">
+                    <el-form-item>
+                        <el-button type="primary">微信群发</el-button>
+                    </el-form-item>
+                </el-form>
+                <el-table
+                    :data="tableData"
+                    style="width: 100%">
+                    <el-table-column type="expand">
+                        <template slot-scope="props">
+                            <el-form label-position="left" inline class="demo-table-expand">
+                            <el-form-item label="商品名称">
+                                <span>{{ props.row.name }}</span>
+                            </el-form-item>
+                            <el-form-item label="所属店铺">
+                                <span>{{ props.row.shop }}</span>
+                            </el-form-item>
+                            <el-form-item label="商品 ID">
+                                <span>{{ props.row.id }}</span>
+                            </el-form-item>
+                            <el-form-item label="店铺 ID">
+                                <span>{{ props.row.shopId }}</span>
+                            </el-form-item>
+                            <el-form-item label="商品分类">
+                                <span>{{ props.row.category }}</span>
+                            </el-form-item>
+                            <el-form-item label="店铺地址">
+                                <span>{{ props.row.address }}</span>
+                            </el-form-item>
+                            <el-form-item label="商品描述">
+                                <span>{{ props.row.desc }}</span>
+                            </el-form-item>
+                            </el-form>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                    label="消息 ID"
+                    prop="id">
+                    </el-table-column>
+                    <el-table-column
+                    label="消息类型"
+                    prop="id">
+                    </el-table-column>
+                    <el-table-column
+                    label="接收人"
+                    prop="id">
+                    </el-table-column>
+                    <el-table-column
+                    label="消息内容"
+                    prop="desc">
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <el-button
+                            size="mini"
+                            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                            <el-button
+                            size="mini"
+                            type="danger"
+                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    </template>
+                    </el-table-column>
+                </el-table>
+            </el-tab-pane>
             <el-tab-pane label="朋友圈管理">朋友圈管理</el-tab-pane>
         </el-tabs>
     </div>
@@ -304,7 +372,8 @@
                     _this.$message({
                         message: '退出成功！',
                         type: 'success'
-                    });    
+                    });  
+                    _this.checkLoginInfo = '';  
                 }
             });
         }
@@ -344,7 +413,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                padding: 4px 4px;
+                padding: 4px 7px;
                 align-items: flex-start;
                 border-style: solid;
                 border-width: 1px;

@@ -23,15 +23,15 @@
                                 <i class="el-icon-third-tubiaozhizuomoban13"></i>消息
                             </el-link>
                         </el-dropdown-item>
-                        <nuxt-link :to="{name:'user-id',params:{ id: userInfo.uid }}">
-                            <el-dropdown-item>
-                                <i class="el-icon-third-shezhi"></i>
-                                个人中心
-                            </el-dropdown-item>
-                        </nuxt-link>
-                        <el-dropdown-item @click.native="loginOut()">
-                            <i class="el-icon-third-tuichu"></i>
-                            退出登录
+                        <el-dropdown-item>
+                            <nuxt-link :to="{name:'user-id',params:{ id: userInfo.uid }}">
+                                <i class="el-icon-third-shezhi"></i>个人中心
+                            </nuxt-link>
+                        </el-dropdown-item>
+                        <el-dropdown-item>
+                            <el-link @click="loginOut()" :underline="false">
+                                <i class="el-icon-third-tuichu"></i>退出登录
+                            </el-link>
                         </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
@@ -300,9 +300,33 @@
         };
     },
     methods: {
-      handleClose(done) {
-        done();
-      }
+        handleClose(done) {
+            done();
+        },
+        loginOut(){
+            this.$message({
+                        message: '退出成功',
+                        type: 'success'
+                    });
+            axios.delete('/login').then(res => {
+                //判断是否请求成功
+                if(res.data.statusCode == '200'){
+                    Cookie.remove('token');
+                    this.$message({
+                        message: '退出成功',
+                        type: 'success'
+                    });
+                    this.$router.push('/login'); 
+                }
+                })
+                .catch(res => {
+                    if(res.response.data.message === ''){
+                        this.$message.error('请求异常，请稍后重试！');
+                    }else{
+                        this.$message.error(res.response.data.message);
+                    }
+                });
+        }
     },
     mounted () {
         var a_index = 0;
