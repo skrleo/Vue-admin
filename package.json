@@ -6,9 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "start": "PORT=3002 nuxt start",
+    "build": "nuxt build && npm start"
   },
   "dependencies": {
     "@antv/data-set": "^0.10.1",
