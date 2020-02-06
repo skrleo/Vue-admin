@@ -17,6 +17,7 @@
                         <el-button type="primary" size="mini" style="margin-left:28px;"  @click="loginOut(checkLoginInfo.WxId)">退出登录</el-button>
                     </span>
                     <span class="qrcode-tip" v-else>二维码过期，点击重新获取</span>
+                    <span class="qrcode-tip">请使用手机微信扫描登陆</span>
                 </div>
                 <div class="robot-info">
                     <span style="line-height:38px;">昵称：<el-link type="primary">{{checkLoginInfo.NickName}}</el-link></span>
@@ -43,7 +44,7 @@
             </div>
         </div>
         
-        <el-tabs type="border-card">
+        <el-tabs type="border-card" style="margin-bottom:52px;">
             <el-tab-pane label="消息收发">
                 <div>
                     <!--搜索框-->
@@ -120,7 +121,7 @@
                             size="mini"
                             type="danger"
                             @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                    </template>
+                        </template>
                     </el-table-column>
                 </el-table>
             </el-tab-pane>
@@ -234,20 +235,20 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                    label="消息 ID"
-                    prop="id">
+                        label="消息 ID"
+                        prop="id">
                     </el-table-column>
                     <el-table-column
-                    label="消息类型"
-                    prop="id">
+                        label="消息类型"
+                        prop="id">
                     </el-table-column>
                     <el-table-column
-                    label="接收人"
-                    prop="id">
+                        label="接收人"
+                        prop="id">
                     </el-table-column>
                     <el-table-column
-                    label="消息内容"
-                    prop="desc">
+                        label="消息内容"
+                        prop="desc">
                     </el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
@@ -262,7 +263,57 @@
                     </el-table-column>
                 </el-table>
             </el-tab-pane>
-            <el-tab-pane label="朋友圈管理">朋友圈管理</el-tab-pane>
+            <el-tab-pane label="朋友圈管理">
+                朋友圈管理
+            </el-tab-pane>
+            <el-tab-pane label="发单设置">
+                <section>
+                    <el-row class="panel panel-flat">
+                        <el-row class="panel-body clearfix">
+                            <el-form ref="role" :model="task" label-width="80px" size="medium">
+                            <el-form-item label="任务名称" prop="name">
+                                <el-input v-model="task.name" style="width:280px;"></el-input>
+                            </el-form-item>
+                            <el-form-item label="类型" prop="state">
+                                <el-radio-group v-model="task.type">
+                                <el-radio label="0">执行一次</el-radio>
+                                <el-radio label="1">循环执行</el-radio>
+                                </el-radio-group>
+                            </el-form-item>
+                            <el-form-item label="时间间隔">
+                                    <el-input placeholder="请输入间隔时间" v-model="task.interval" class="input-with-select" style="width:280px;">
+                                        <el-select v-model="task.intervalType" slot="append" placeholder="秒">
+                                        <el-option label="秒" value="0"></el-option>
+                                        <el-option label="分" value="1"></el-option>
+                                        <el-option label="时" value="2"></el-option>
+                                        </el-select>
+                                    </el-input>
+                            </el-form-item>
+                            <el-form-item label="起止时间" prop="state">
+                                <el-date-picker
+                                    v-model="task.beginTime"
+                                    type="daterange"
+                                    value-format="timestamp"
+                                    range-separator="至"
+                                    start-placeholder="开始日期"
+                                    end-placeholder="结束日期">
+                                </el-date-picker>
+                            </el-form-item>
+                            <el-form-item label="执行任务" style="width:600px" prop="description">
+                                <el-input v-model="task.action" style="width:280px;"></el-input>
+                            </el-form-item>
+                            <el-form-item label="备注" style="width:600px" prop="description">
+                                <el-input type="textarea" v-model="task.description"></el-input>
+                            </el-form-item>
+                            <el-form-item size="mini">
+                                <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                                <el-button>取消</el-button>
+                            </el-form-item>
+                            </el-form>
+                        </el-row>
+                    </el-row>
+                </section>
+            </el-tab-pane>
         </el-tabs>
     </div>
     
@@ -330,7 +381,17 @@
           address: '上海市普陀区真北路',
           shop: '王小虎夫妻店',
           shopId: '10333'
-        }]
+        }],
+        task:{
+          name: '',
+          type: 0,
+          interval: 0,
+          intervaltype: 0,
+          beginTime: 0,
+          endTime: 0,
+          action: '',
+          description:''
+        },
       }
     },
     methods: {
@@ -340,15 +401,15 @@
                 uuid: uuid,
             }))
             .then(res => {
-                setTimeout(function()  {
                     if(res.data.code === '4000'){
-                        _this.checkLogin(uuid);
+                        setTimeout(function()  {
+                            _this.checkLogin(uuid);
+                        }, 30000);
                     }
                     _this.checkLoginInfo = res.data.data || [];
                     if(_this.checkLoginInfo.WxId) {
                         _this.heartBeat(_this.checkLoginInfo.WxId);
                     }
-                }, 3000);
             })
         },
         heartBeat(wxId){
@@ -358,8 +419,8 @@
             }))
             .then(res => {
                 setTimeout(function()  {
-                    _this.checkLogin(wxId);
-                }, 180000);
+                    _this.heartBeat(wxId);
+                }, res.data.data.NextTime+'00');
             })
         },
         loginOut(wxId) {
@@ -404,7 +465,6 @@
         overflow: hidden;
         display: flex;
         flex-wrap: wrap;
-        font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
         .home-card {
             color: #414040;
             padding: 8px 8px;
