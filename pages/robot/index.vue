@@ -100,6 +100,39 @@
       }
     },
     methods: {
+        handleSizeChange(val) {
+            axios.get(`/admin/robot/lists?pageSize=${val}`)
+            .then(res => {
+                this.lists = res.data.lists || [];
+                this.pageSize = res.data.page.size || 10;
+            });
+        },
+        handleCurrentChange(val) {
+            axios.get(`/admin/robot/lists?pageNow=${val}`)
+            .then(res => {
+                this.lists = res.data.lists || [];
+                this.pageNow = res.data.page.now || 1;
+            });
+        },
+        destroy(id,index,rows){
+            axios.delete(`/admin/robot/${id}`, {data: qs.stringify({id:id})})
+            .then(res => {
+                //判断是否请求成功
+                if(res.data.errorId === 'OK'){
+                    rows.splice(index, 1);
+                        this.$message({
+                            message: '成功删除机器人',
+                            type: 'success'
+                        });    
+                    }
+            }).catch(res => {
+                if(res.response.data.message === ''){
+                    this.$message.error('请求异常，请稍后重试！');
+                }else{
+                    this.$message.error(res.response.data.message);
+                }
+            });
+        }
     }
   };
 </script>
