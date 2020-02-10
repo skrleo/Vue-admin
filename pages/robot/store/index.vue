@@ -28,13 +28,13 @@
                         <el-link type="primary" v-if="checkLoginInfo.Alias">{{checkLoginInfo.Alias}}</el-link>
                         <el-link type="primary" v-else>设置微信号</el-link>
                     </span>
-                    <span style="line-height:38px;">心跳状态: 
-                        <el-link type="primary" v-if="checkLoginInfo.Alias">开启</el-link>
-                        <el-link type="primary" v-else>关闭</el-link>
+                    <span style="line-height:38px;">心跳状态:
+                        <el-link type="primary" @click="closeHeartBeat(checkLoginInfo.WxId)" v-if="checkLoginInfo.Alias">开启</el-link>
+                        <el-link type="primary" @click="startHeartBeat(checkLoginInfo.WxId)" v-else>关闭</el-link>
                     </span>
                     <span style="line-height:38px;">抢红包状态: 
-                        <el-link type="primary" v-if="checkLoginInfo.Alias">开启</el-link>
-                        <el-link type="primary" v-else>关闭</el-link>
+                        <el-link type="primary" @click="startRedEnvelopes(checkLoginInfo.WxId)" v-if="checkLoginInfo.Alias">开启</el-link>
+                        <el-link type="primary" @click="closeEnvelopes(checkLoginInfo.WxId)" v-else>关闭</el-link>
                     </span>
                     <br/>
                     <span style="line-height:38px;">个性签名:</span><br/>
@@ -409,7 +409,6 @@
     },
     methods: {
         getQrCode(){
-            var _this = this
             var _this = this;
             axios.post('/admin/robot/login/getQrCode')
                 .then(res => {
@@ -418,7 +417,7 @@
                 });
         },
         checkLogin(uuid){
-            var _this = this
+            var _this = this;
             axios.post('/admin/robot/login/checkLogin',qs.stringify({
                 uuid: uuid,
             }))
@@ -431,8 +430,64 @@
                 _this.checkLoginInfo = res.data.data || [];
             })
         },
+        startHeartBeat(wxId){
+            var _this = this;
+            axios.post('/admin/robot/heartBeat/state',qs.stringify({
+                wxId: wxId,
+            }))
+            .then(res => {
+                if(res.data.errorId === 'OK'){
+                    _this.$message({
+                        message: '启动心跳成功！',
+                        type: 'success'
+                    });  
+                }
+            })
+        },
+        closeHeartBeat(wxId){
+            var _this = this;
+            axios.post('/admin/robot/heartBeat/close',qs.stringify({
+                wxId: wxId,
+            }))
+            .then(res => {
+                if(res.data.errorId === 'OK'){
+                    _this.$message({
+                        message: '关闭心跳成功！',
+                        type: 'success'
+                    });  
+                }
+            })
+        },
+        startRedEnvelopes(wxId){
+            var _this = this;
+            axios.post('/admin/robot/pay/startRedEnvelopes',qs.stringify({
+                wxId: wxId,
+            }))
+            .then(res => {
+                if(res.data.errorId === 'OK'){
+                    _this.$message({
+                        message: '启动自动抢红包！',
+                        type: 'success'
+                    });  
+                }
+            })
+        },
+        closeRedEnvelopes(wxId){
+            var _this = this;
+            axios.post('/admin/robot/pay/closeRedEnvelopes',qs.stringify({
+                wxId: wxId,
+            }))
+            .then(res => {
+                if(res.data.errorId === 'OK'){
+                    _this.$message({
+                        message: '关闭自动抢红包！',
+                        type: 'success'
+                    });  
+                }
+            })
+        },
         loginOut(wxId) {
-            var _this = this
+            var _this = this;
             axios.post('/admin/robot/login/loginOut',qs.stringify({
                 wxId: wxId,
             }))
