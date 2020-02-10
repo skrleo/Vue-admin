@@ -10,11 +10,11 @@
             <div class="robot-setting">
                 <div class="home-card">
                     <div class="info">
-                        <img class="qrcode"  v-if="checkLoginInfo.HeadUrl" :src="checkLoginInfo.HeadUrl" :alt="checkLoginInfo.Uuid">
+                        <img class="qrcode"  v-if="loginInfo.HeadUrl" :src="loginInfo.HeadUrl" :alt="loginInfo.Uuid">
                         <img class="qrcode" v-else :src="robotInfo.QrBase64" :alt="robotInfo.Uuid">
                     </div>
-                    <span class="qrcode-tip" v-if="checkLoginInfo.HeadUrl">
-                        <el-button type="primary" size="mini" style="margin-left:28px;"  @click="loginOut(checkLoginInfo.WxId)">退出登录</el-button>
+                    <span class="qrcode-tip" v-if="loginInfo.HeadUrl">
+                        <el-button type="primary" size="mini" style="margin-left:28px;"  @click="loginOut(loginInfo.WxId)">退出登录</el-button>
                     </span>
                     <span class="qrcode-tip" style="margin-left:28px;font-size:13px;" v-else-if="robotInfo.QrBase64">等待扫描登陆···</span>
                     <span class="qrcode-tip" v-else>
@@ -22,37 +22,37 @@
                     </span>
                 </div>
                 <div class="robot-info">
-                    <span style="line-height:38px;">昵称：<el-link type="primary">{{checkLoginInfo.NickName}}</el-link></span>
+                    <span style="line-height:38px;">昵称：<el-link type="primary">{{loginInfo.NickName}}</el-link></span>
                     <span style="line-height:38px;">性别：<el-link type="primary">男</el-link></span>
                     <span style="line-height:38px;">微信号: 
-                        <el-link type="primary" v-if="checkLoginInfo.Alias">{{checkLoginInfo.Alias}}</el-link>
+                        <el-link type="primary" v-if="loginInfo.Alias">{{loginInfo.Alias}}</el-link>
                         <el-link type="primary" v-else>设置微信号</el-link>
                     </span>
                     <span style="line-height:38px;">心跳状态:
-                        <el-link type="primary" @click="closeHeartBeat(checkLoginInfo.WxId)" v-if="checkLoginInfo.Alias">开启</el-link>
-                        <el-link type="primary" @click="startHeartBeat(checkLoginInfo.WxId)" v-else>关闭</el-link>
+                        <el-link type="primary" @click="closeHeartBeat(loginInfo.WxId)" v-if="loginInfo.HeartBeatState === 1">已启动</el-link>
+                        <el-link type="primary" @click="startHeartBeat(loginInfo.WxId)" v-else>关闭</el-link>
                     </span>
                     <span style="line-height:38px;">抢红包状态: 
-                        <el-link type="primary" @click="startRedEnvelopes(checkLoginInfo.WxId)" v-if="checkLoginInfo.Alias">开启</el-link>
-                        <el-link type="primary" @click="closeEnvelopes(checkLoginInfo.WxId)" v-else>关闭</el-link>
+                        <el-link type="primary" @click="startRedEnvelopes(loginInfo.WxId)" v-if="loginInfo.Alias">开启</el-link>
+                        <el-link type="primary" @click="closeEnvelopes(loginInfo.WxId)" v-else>关闭</el-link>
                     </span>
                     <br/>
                     <span style="line-height:38px;">个性签名:</span><br/>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >62登录</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >修改密码</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >摇一摇</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >添加好友</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >绑定邮箱</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >修改资料</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >批量添加好友</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >62登录</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >修改密码</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >摇一摇</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >添加好友</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >绑定邮箱</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >修改资料</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >批量添加好友</el-button></span>
                     <br/>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >上传通讯录</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >附近的人</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >修改头像</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >创建转账</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >获取银行卡信息</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >收款二维码</el-button></span>
-                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >生成自定义收款二维码</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >上传通讯录</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >附近的人</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >修改头像</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >创建转账</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >获取银行卡信息</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >收款二维码</el-button></span>
+                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >生成自定义收款二维码</el-button></span>
                 </div>
             </div>
         </div>
@@ -340,7 +340,7 @@
     layout: 'frame',
     created: function () {
         var _this = this;
-        axios.post('/admin/robot/login/getQrCode')
+        axios.get('/admin/robot/login/getQrCode')
             .then(res => {
                 _this.robotInfo = res.data.data || [];
                 _this.checkLogin(_this.robotInfo.Uuid);
@@ -351,7 +351,7 @@
         shortcuts:[],
         qrCode:'',
         robotInfo:[],
-        checkLoginInfo:[],
+        loginInfo:[],
         desc:'荷兰优质淡奶，奶香浓而不腻',
         isCollapse:false,
         tableData: [{
@@ -410,7 +410,7 @@
     methods: {
         getQrCode(){
             var _this = this;
-            axios.post('/admin/robot/login/getQrCode')
+            axios.get('/admin/robot/login/getQrCode')
                 .then(res => {
                     _this.robotInfo = res.data.data || [];
                     _this.checkLogin(_this.robotInfo.Uuid);
@@ -427,7 +427,7 @@
                         _this.checkLogin(uuid);
                     }, 30000);
                 }
-                _this.checkLoginInfo = res.data.data || [];
+                _this.loginInfo = res.data.data || [];
             })
         },
         startHeartBeat(wxId){
@@ -497,7 +497,7 @@
                         message: '退出成功！',
                         type: 'success'
                     });  
-                    _this.checkLoginInfo = '';  
+                    _this.loginInfo = '';  
                 }
             });
         },

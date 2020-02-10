@@ -339,12 +339,12 @@
   export default {
     layout: 'frame',
     created: function () {
-        var _this = this;
-        axios.post('/admin/robot/login/getQrCode')
-            .then(res => {
-                _this.robotInfo = res.data.data || [];
-                _this.checkLogin(_this.robotInfo.Uuid);
-            });
+        // var _this = this;
+        // axios.get('/admin/robot/login/getQrCode')
+        //     .then(res => {
+        //         _this.robotInfo = res.data.data || [];
+        //         _this.checkLogin(_this.robotInfo.Uuid);
+        //     });
     },
     data() {
       return {
