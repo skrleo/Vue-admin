@@ -66,6 +66,17 @@
           </el-card>
         </el-col>
       </el-row>
+      
+      <div class="home-card">
+        <div class="home-item" v-for="n in 7" :key="n">
+          <img class="home-img" src="http://img.17wangku.com/201902110822025c6130aa48687.jpg" alt="">
+          <div class="home-right">
+            <span style="color: #999; fontSize: 12px">当周流入总计</span>
+            <span class='home-num' >124,345</span>
+            <span><i class="el-icon-caret-bottom" style="color: red; fontSize: 12px" ></i> <i style="color: red">&nbsp;-10%</i>&nbsp;&nbsp;  <span style="color: #999; fontSize: 12px">同比上月</span></span>
+          </div>
+        </div>
+      </div>
       <el-row :gutter="20">
         <el-col :span="18">
           <el-card class="box-card" shadow="hover">
@@ -77,15 +88,13 @@
           </el-card>
         </el-col>
         <el-col :span="6">
-          <el-card class="box-card" shadow="hover">
-            <div slot="header" class="clearfix">
-              <span>联系我</span>
-              <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-            </div>
-            <div>
-              <img :src="qrCode" alt="" style="width:100%;height:100%;">
-            </div>
-          </el-card>
+          <p style="color:#424040;font-size:21px;">公告:</p>
+          <ul style="color:#424040;font-size:16px;line-height:28px;">
+            <li>商家社区有赞的10条举措，与商家共渡难关</li>
+            <li>商家社区有赞的10条举措，与商家共渡难关</li>
+            <li>商家社区有赞的10条举措，与商家共渡难关</li>
+            <li>商家社区有赞的10条举措，与商家共渡难关</li>
+          </ul>
         </el-col>
       </el-row>
     </div>
@@ -99,11 +108,6 @@
   export default {
     layout: 'frame',
     created: function () {
-      axios.get('/chat')
-        .then(res => {
-          console.log(res.data);
-          this.qrCode = res.data.data.qrCode || [];
-        });
       axios.get('/admin/base/shortcut/lists')
         .then(res => {
           console.log(res.data);
@@ -167,6 +171,46 @@
   a{
     text-decoration-line: none;
     color: #000000;
+  }
+  .home-card {
+    width:100%;
+    overflow: hidden;
+    padding: 10px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    .home-item {
+      border-style: solid;
+      border-width: 1px;
+      border-color: #E4E4E4;
+      width: calc(25% - 30px);
+      padding: 10px 0px 10px 20px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      &:nth-child(4) {
+        margin-right: 0;
+      }
+      .home-img {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        margin: 0;
+        padding: 0;
+      }
+      .home-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        margin-left: 10px;
+        .home-num {
+          font-size: 40px;
+          margin: 5px 0;
+        }
+      }
+    }
   }
   .el-row {
     margin-bottom: 20px;

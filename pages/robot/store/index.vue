@@ -38,21 +38,21 @@
                     </span>
                     <br/>
                     <span style="line-height:38px;">个性签名:</span><br/>
-                    <span><el-button type="text">62登录</el-button></span>
-                    <span><el-button type="text">修改密码</el-button></span>
-                    <span><el-button type="text">摇一摇</el-button></span>
-                    <span><el-button type="text">添加好友</el-button></span>
-                    <span><el-button type="text">绑定邮箱</el-button></span>
-                    <span><el-button type="text">修改资料</el-button></span>
-                    <span><el-button type="text">批量添加好友</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >62登录</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >修改密码</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >摇一摇</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >添加好友</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >绑定邮箱</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >修改资料</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >批量添加好友</el-button></span>
                     <br/>
-                    <span><el-button type="text">上传通讯录</el-button></span>
-                    <span><el-button type="text">附近的人</el-button></span>
-                    <span><el-button type="text">修改头像</el-button></span>
-                    <span><el-button type="text">创建转账</el-button></span>
-                    <span><el-button type="text">获取银行卡信息</el-button></span>
-                    <span><el-button type="text">收款二维码</el-button></span>
-                    <span><el-button type="text">生成自定义收款二维码</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >上传通讯录</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >附近的人</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >修改头像</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >创建转账</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >获取银行卡信息</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >收款二维码</el-button></span>
+                    <span><el-button type="text" @click="waitInface(checkLoginInfo.WxId)" >生成自定义收款二维码</el-button></span>
                 </div>
             </div>
         </div>
@@ -500,6 +500,13 @@
                     _this.checkLoginInfo = '';  
                 }
             });
+        },
+        waitInface(wxId) {
+            var _this = this;
+            _this.$message({
+                message: '接口待对接！',
+                type: 'success'
+            });  
         }
     }
   }
