@@ -44,7 +44,8 @@
             </el-table-column>
             <el-table-column prop="status" label="是否登录">
                 <template slot-scope="scope">
-                    <span>{{scope.row.status? '是':'否'}}</span>
+                    <span v-if="scope.row.status === 1"><i class="isStatus" style="background:#67C23A;"/>在线</span>
+                    <span v-else><i class="isStatus" style="background:#87888a;"/>离线</span>
                 </template>
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间" width="180">
@@ -136,3 +137,12 @@
     }
   };
 </script>
+<style>
+    .isStatus{
+        width:8px;
+        height:8px;
+        border-radius:50%;
+        display:inline-block;
+        margin-right:6px;
+    }
+</style>

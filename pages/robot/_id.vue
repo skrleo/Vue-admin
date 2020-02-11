@@ -10,11 +10,11 @@
             <div class="robot-setting">
                 <div class="home-card">
                     <div class="info">
-                        <img class="qrcode"  v-if="checkLoginInfo.HeadUrl" :src="checkLoginInfo.HeadUrl" :alt="checkLoginInfo.Uuid">
+                        <img class="qrcode"  v-if="robotInfo.HeadUrl" :src="robotInfo.HeadUrl" :alt="robotInfo.Uuid">
                         <img class="qrcode" v-else :src="robotInfo.QrBase64" :alt="robotInfo.Uuid">
                     </div>
-                    <span class="qrcode-tip" v-if="checkLoginInfo.HeadUrl">
-                        <el-button type="primary" size="mini" style="margin-left:28px;"  @click="loginOut(checkLoginInfo.WxId)">退出登录</el-button>
+                    <span class="qrcode-tip" v-if="robotInfo.HeadUrl">
+                        <el-button type="primary" size="mini" style="margin-left:28px;"  @click="loginOut(robotInfo.WxId)">退出登录</el-button>
                     </span>
                     <span class="qrcode-tip" style="margin-left:28px;font-size:13px;" v-else-if="robotInfo.QrBase64">等待扫描登陆···</span>
                     <span class="qrcode-tip" v-else>
@@ -22,18 +22,18 @@
                     </span>
                 </div>
                 <div class="robot-info">
-                    <span style="line-height:38px;">昵称：<el-link type="primary">{{checkLoginInfo.NickName}}</el-link></span>
-                    <span style="line-height:38px;">性别：<el-link type="primary">男</el-link></span>
+                    <span style="line-height:38px;">昵称：<el-link type="primary">{{robotInfo.NickName}}</el-link></span>
+                    <span style="line-height:38px;">性别：<el-link type="primary">保密</el-link></span>
                     <span style="line-height:38px;">微信号: 
-                        <el-link type="primary" v-if="checkLoginInfo.Alias">{{checkLoginInfo.Alias}}</el-link>
+                        <el-link type="primary" v-if="robotInfo.Alias">{{robotInfo.Alias}}</el-link>
                         <el-link type="primary" v-else>设置微信号</el-link>
                     </span>
                     <span style="line-height:38px;">心跳状态: 
-                        <el-link type="primary" v-if="checkLoginInfo.Alias">开启</el-link>
+                        <el-link type="primary" v-if="robotInfo.Alias">开启</el-link>
                         <el-link type="primary" v-else>关闭</el-link>
                     </span>
                     <span style="line-height:38px;">抢红包状态: 
-                        <el-link type="primary" v-if="checkLoginInfo.Alias">开启</el-link>
+                        <el-link type="primary" v-if="robotInfo.Alias">开启</el-link>
                         <el-link type="primary" v-else>关闭</el-link>
                     </span>
                     <br/>
@@ -338,20 +338,22 @@
 
   export default {
     layout: 'frame',
-    created: function () {
-        // var _this = this;
-        // axios.get('/admin/robot/login/getQrCode')
-        //     .then(res => {
-        //         _this.robotInfo = res.data.data || [];
-        //         _this.checkLogin(_this.robotInfo.Uuid);
-        //     });
+    validate ({ params }) {
+      // Must be a number
+      return /^\d+$/.test(params.id)
+    },
+    async asyncData ({ params }) {
+        const {data} = await axios.get(`/admin/robot/${params.id}`);
+        return {
+            robotInfo: data.data,
+        }
     },
     data() {
       return {
         shortcuts:[],
         qrCode:'',
         robotInfo:[],
-        checkLoginInfo:[],
+        robotInfo:[],
         desc:'荷兰优质淡奶，奶香浓而不腻',
         isCollapse:false,
         tableData: [{
@@ -428,7 +430,7 @@
                         _this.checkLogin(uuid);
                     }, 30000);
                 }
-                _this.checkLoginInfo = res.data.data || [];
+                _this.robotInfo = res.data.data || [];
             })
         },
         loginOut(wxId) {
@@ -442,7 +444,7 @@
                         message: '退出成功！',
                         type: 'success'
                     });  
-                    _this.checkLoginInfo = '';  
+                    _this.robotInfo = '';  
                 }
             });
         }

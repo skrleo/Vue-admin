@@ -23,7 +23,7 @@
                 </div>
                 <div class="robot-info">
                     <span style="line-height:38px;">昵称：<el-link type="primary">{{loginInfo.NickName}}</el-link></span>
-                    <span style="line-height:38px;">性别：<el-link type="primary">男</el-link></span>
+                    <span style="line-height:38px;">性别：<el-link type="primary">保密</el-link></span>
                     <span style="line-height:38px;">微信号: 
                         <el-link type="primary" v-if="loginInfo.Alias">{{loginInfo.Alias}}</el-link>
                         <el-link type="primary" v-else>设置微信号</el-link>
@@ -432,7 +432,7 @@
         },
         startHeartBeat(wxId){
             var _this = this;
-            axios.post('/admin/robot/heartBeat/state',qs.stringify({
+            axios.post('/admin/robot/heartBeat/start',qs.stringify({
                 wxId: wxId,
             }))
             .then(res => {
