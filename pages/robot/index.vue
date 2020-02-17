@@ -58,7 +58,7 @@
                     <nuxt-link :to="{name:'robot-id',params:{ id: scope.row.id }}">
                         <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
                     </nuxt-link>
-                    <nuxt-link :to="{path:'/robot/group',params:{ id: scope.row.id }}">
+                    <nuxt-link :to="{name:'robot-group-id',params:{ id: scope.row.id }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">群管理</el-button>
                     </nuxt-link>
                     <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.id,scope.$index, lists)">删除</el-button>

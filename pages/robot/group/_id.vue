@@ -84,13 +84,12 @@
 
   export default {
     layout:'frame',
-    // validate ({ params }) {
-    //   // Must be a number
-    //   return /^\d+$/.test(params.id)
-    // },
-    async asyncData () {
-        // console.log(params.id);
-        const { data } = await axios.get('/admin/robot/group/lists')
+    validate({params}){
+        // Must be a number
+        return /^\d+$/.test(params.id)
+    },
+    async asyncData ({params}) {
+        const { data } = await axios.get(`/admin/robot/group/lists?robotId=${params.id}`)
         return {
             pageNow: data.page.now || 1 ,
             pageSize: data.page.size || 10 ,
