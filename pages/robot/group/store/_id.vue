@@ -51,9 +51,14 @@
     components: {
        'el-user-list':userlist
     },
-    async asyncData () {
+    validate({params}){
+        // Must be a number
+        return /^\d+$/.test(params.id)
+    },
+    async asyncData ({params}) {
       let {data} = await axios.get('/admin/rbac/role/lists');
       return {
+        robotId:params.id,
         role: data.lists,
         group: [],
         imageUrl: ''
@@ -88,6 +93,7 @@
         onSubmit() {
             axios.post('/admin/robot/group',qs.stringify({
                 uid: this.user.uid,
+                robotId: this.robotId,
                 name: this.group.name,
                 groupUrl: this.imageUrl,
             })).then(res => {

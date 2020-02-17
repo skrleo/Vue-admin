@@ -11,7 +11,7 @@
           <!--搜索框-->
           <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
-                <nuxt-link :to="{name:'robot-group-store'}">
+                <nuxt-link :to="{name:'robot-group-store-id',params:{ id: robotId }}">
                     <el-button type="primary">添加微信群</el-button>
                 </nuxt-link>
               </el-form-item>
@@ -91,6 +91,7 @@
     async asyncData ({params}) {
         const { data } = await axios.get(`/admin/robot/group/lists?robotId=${params.id}`)
         return {
+            robotId:params.id,
             pageNow: data.page.now || 1 ,
             pageSize: data.page.size || 10 ,
             pageCount: data.page.count || 0 ,

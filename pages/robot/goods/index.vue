@@ -55,20 +55,17 @@
                     <span>{{scope.row.status ? '已发单':'未发单'}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="currentPrice" label="原价">
+            <el-table-column prop="currentPrice" label="原价(元)">
             </el-table-column>
-            <el-table-column prop="couponDiscount" label="券金额">
+            <el-table-column prop="couponDiscount" label="券金额(元)">
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间">
                 <template slot-scope="scope">
                     <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="180">
+            <el-table-column label="操作" width="90">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'robot-goods-id',params:{ id: scope.row.robotGoodsId }}">
-                        <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
-                    </nuxt-link>
                     <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.robotGoodsId,scope.$index, lists)">删除</el-button>
                 </template>
             </el-table-column>
