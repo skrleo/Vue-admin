@@ -21,7 +21,7 @@
           <el-form-item label="网站Logo" prop="logo">
             <el-upload
               class="avatar-uploader"
-              action="http://api.example.com/v1.0/api/upload/img"
+              action="http://api.homestead.com/v1.0/api/upload/img"
               :show-file-list="false"
               :on-success="uploadSuccess"
               :before-upload="onBeforeUploadImage">
@@ -135,7 +135,6 @@
             uid: Uid,
           }));
       let { data } = await axios.get('/admin/site/1')
-      console.log(data.lists);
       return {
         siteConfig: data.data,
         imageUrl:data.data.logo

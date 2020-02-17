@@ -4,22 +4,24 @@
         <el-breadcrumb-item :to="{ name: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>系统管理</el-breadcrumb-item>
         <el-breadcrumb-item>机器人管理</el-breadcrumb-item>
-        <el-breadcrumb-item>商品管理</el-breadcrumb-item>
+        <el-breadcrumb-item>微信群管理</el-breadcrumb-item>
         </el-breadcrumb>
         <br>
         <div style="height:62px;">
           <!--搜索框-->
           <el-form :inline="true" style="float:left;" size="small">
               <el-form-item>
-                <nuxt-link :to="{name:'robot-goods-store'}">
-                    <el-button type="primary">添加商品</el-button>
+                <nuxt-link :to="{name:'robot-group-store'}">
+                    <el-button type="primary">添加微信群</el-button>
                 </nuxt-link>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="syncGoods()">更新商品</el-button>
+                <nuxt-link :to="{name:'robot-goods'}">
+                    <el-button type="primary">待发商品</el-button>
+                </nuxt-link>
               </el-form-item>
-              <el-form-item label="查找用户">
-                  <el-input placeholder="查找用户"></el-input>
+              <el-form-item label="查找群">
+                  <el-input placeholder="查找群名称"></el-input>
               </el-form-item>
               <el-form-item>
                   <el-button type="primary">查询</el-button>
@@ -32,32 +34,21 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
             <!--索引-->
-            <el-table-column prop="robotGoodsId" label="ID" width="80">
+            <el-table-column prop="robotGroupId" label="ID" width="80">
             </el-table-column>
-            <el-table-column prop="itemid" label="商品ID">
+            <el-table-column prop="name" label="微信群名称">
             </el-table-column>
-            <el-table-column prop="type" label="类型">
-                <template slot-scope="scope">
-                    <span v-if="scope.row.type === 1">拼多多</span>
-                    <span v-else-if="scope.row.type === 2">京东</span>
-                    <span v-else>淘宝</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="name" label="商品名称" width="220">
-            </el-table-column>
-            <el-table-column prop="picUrl" label="商品封面" >
+            <el-table-column prop="picUrl" label="微信群头像" >
                 <template slot-scope="scope">
                     <img :src="scope.row.picUrl" alt="" style="width:50px;height:50px;">
                 </template>
             </el-table-column>
-            <el-table-column prop="status" label="状态" width="80">
+            <el-table-column prop="groupAlias" label="群ID">
+            </el-table-column>
+            <el-table-column prop="status" label="状态">
                  <template slot-scope="scope">
-                    <span>{{scope.row.status ? '已发单':'未发单'}}</span>
+                    <span>{{scope.row.status ? '未启动':'运行中'}}</span>
                 </template>
-            </el-table-column>
-            <el-table-column prop="currentPrice" label="原价">
-            </el-table-column>
-            <el-table-column prop="couponDiscount" label="券金额">
             </el-table-column>
             <el-table-column prop="createdAt" label="创建时间">
                 <template slot-scope="scope">
@@ -66,9 +57,6 @@
             </el-table-column>
             <el-table-column label="操作" width="180">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'robot-goods-id',params:{ id: scope.row.robotGoodsId }}">
-                        <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
-                    </nuxt-link>
                     <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.robotGoodsId,scope.$index, lists)">删除</el-button>
                 </template>
             </el-table-column>
@@ -96,8 +84,13 @@
 
   export default {
     layout:'frame',
+    // validate ({ params }) {
+    //   // Must be a number
+    //   return /^\d+$/.test(params.id)
+    // },
     async asyncData () {
-        const { data } = await axios.get('/admin/robot/goods/lists')
+        // console.log(params.id);
+        const { data } = await axios.get('/admin/robot/group/lists')
         return {
             pageNow: data.page.now || 1 ,
             pageSize: data.page.size || 10 ,
@@ -117,44 +110,27 @@
     },
     methods: {
         handleSizeChange(val) {
-            axios.get(`/admin/robot/goods/lists?pageSize=${val}`)
+            axios.get(`/admin/robot/group/lists?pageSize=${val}`)
             .then(res => {
                 this.lists = res.data.lists || [];
                 this.pageSize = res.data.page.size || 10;
             });
         },
         handleCurrentChange(val) {
-            axios.get(`/admin/robot/goods/lists?pageNow=${val}`)
+            axios.get(`/admin/robot/group/lists?pageNow=${val}`)
             .then(res => {
                 this.lists = res.data.lists || [];
                 this.pageNow = res.data.page.now || 1;
             });
         },
         destroy(robotGoodsId,index,rows){
-            axios.delete(`/admin/robot/goods/${robotGoodsId}`, {data: qs.stringify({robotGoodsId:robotGoodsId})})
+            axios.delete(`/admin/robot/group/${robotGoodsId}`, {data: qs.stringify({robotGoodsId:robotGoodsId})})
             .then(res => {
                 //判断是否请求成功
                 if(res.data.errorId === 'OK'){
                     rows.splice(index, 1);
                     this.$message({
                         message: '成功删除用户',
-                        type: 'success'
-                        });    
-                    }
-                }).catch(res => {
-                    if(res.response.data.message === ''){
-                        this.$message.error('请求异常，请稍后重试！');
-                    }else{
-                        this.$message.error(res.response.data.message);
-                    }
-                });
-        },
-        syncGoods(){
-            axios.get(`/admin/robot/goods/syncGoods`)
-            .then(res => {
-                if(res.data.errorId === 'OK'){
-                    this.$message({
-                        message: '成功更新商品',
                         type: 'success'
                         });    
                     }
