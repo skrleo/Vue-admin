@@ -56,7 +56,7 @@
         return /^\d+$/.test(params.id)
     },
     async asyncData ({params}) {
-      let {data} = await axios.get('http://127.0.0.1:3002/v1.0/api/admin/rbac/role/lists');
+      let {data} = await axios.get('http://127.0.0.1:80/v1.0/api/admin/rbac/role/lists');
       return {
         robotId:params.id,
         role: data.lists,
