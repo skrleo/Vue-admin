@@ -90,7 +90,7 @@
     layout:'frame',
     name:'node',
     async asyncData () {
-      const { data } = await axios.get('/admin/robot/lists')
+      const { data } = await axios.get('http://api.17wangku.com:80/v1.0/api/admin/robot/lists')
       return {
           pageNow: data.page.now || 1 ,
           pageSize: data.page.size || 10 ,
