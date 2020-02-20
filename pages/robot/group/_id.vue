@@ -57,7 +57,7 @@
             </el-table-column>
             <el-table-column label="操作" width="180">
                 <template slot-scope="scope">
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.robotGoodsId,scope.$index, lists)">删除</el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.robotGroupId,scope.$index, lists)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -89,7 +89,7 @@
         return /^\d+$/.test(params.id)
     },
     async asyncData ({params}) {
-        const { data } = await axios.get(`/admin/robot/group/lists?robotId=${params.id}`)
+        const { data } = await axios.get(`http://127.0.0.1:3002/v1.0/api/admin/robot/group/lists?robotId=${params.id}`)
         return {
             robotId:params.id,
             pageNow: data.page.now || 1 ,
@@ -123,14 +123,14 @@
                 this.pageNow = res.data.page.now || 1;
             });
         },
-        destroy(robotGoodsId,index,rows){
-            axios.delete(`/admin/robot/group/${robotGoodsId}`, {data: qs.stringify({robotGoodsId:robotGoodsId})})
+        destroy(robotGroupId,index,rows){
+            axios.delete(`/admin/robot/group/${robotGroupId}`, {data: qs.stringify({robotGroupId:robotGroupId})})
             .then(res => {
                 //判断是否请求成功
                 if(res.data.errorId === 'OK'){
                     rows.splice(index, 1);
                     this.$message({
-                        message: '成功删除用户',
+                        message: '成功删除微信群',
                         type: 'success'
                         });    
                     }

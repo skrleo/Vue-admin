@@ -90,8 +90,7 @@
     layout:'frame',
     name:'node',
     async asyncData () {
-      const { data } = await axios.get('/admin/robot/lists')
-      console.log(data.lists);
+      const { data } = await axios.get('http://127.0.0.1:3002/v1.0/api/admin/robot/lists')
       return {
           pageNow: data.page.now || 1 ,
           pageSize: data.page.size || 10 ,
@@ -101,6 +100,10 @@
     },
     data() {
       return {
+           pageNow: 1 ,
+           pageSize:  10 ,
+           pageCount:  0 ,
+           lists: []
       }
     },
     methods: {

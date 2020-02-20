@@ -10,19 +10,25 @@
         <div style="height:62px;">
           <!--搜索框-->
           <el-form :inline="true" style="float:left;" size="small">
-              <el-form-item>
+              <!-- <el-form-item>
                 <nuxt-link :to="{name:'robot-goods-store'}">
                     <el-button type="primary">添加商品</el-button>
                 </nuxt-link>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item>
                 <el-button type="primary" @click="syncGoods()">更新商品</el-button>
               </el-form-item>
-              <el-form-item label="查找用户">
-                  <el-input placeholder="查找用户"></el-input>
+              <el-form-item label="查找商品">
+                  <el-input placeholder="商品名称"></el-input>
               </el-form-item>
               <el-form-item>
                   <el-button type="primary">查询</el-button>
+              </el-form-item>
+              <el-form-item>
+                <el-select placeholder="请选择状态">
+                    <el-option value="0">已发单</el-option>
+                    <el-option value="1">未发单</el-option>
+                </el-select>
               </el-form-item>
           </el-form>
         </div>
