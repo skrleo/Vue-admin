@@ -89,7 +89,7 @@
         return /^\d+$/.test(params.id)
     },
     async asyncData ({params}) {
-        const { data } = await axios.get(`http://127.0.0.1:3002/v1.0/api/admin/robot/group/lists?robotId=${params.id}`)
+        const { data } = await axios.get(`/admin/robot/group/lists?robotId=${params.id}`)
         return {
             robotId:params.id,
             pageNow: data.page.now || 1 ,
