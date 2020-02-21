@@ -38,7 +38,7 @@
                     </span>
                     <br/>
                     <span style="line-height:38px;">个性签名:</span><br/>
-                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >62登录</el-button></span>
+                    <span><el-button type="text" @click="dialog62Login = true">62登录</el-button></span>
                     <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >修改密码</el-button></span>
                     <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >摇一摇</el-button></span>
                     <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >添加好友</el-button></span>
@@ -328,6 +328,32 @@
                 </section>
             </el-tab-pane>
         </el-tabs>
+        <!--62登录弹窗-->
+        <el-dialog
+            title="微信62登录"
+            :visible.sync="dialog62Login"
+            width="28%"
+            :before-close="handle62Login"
+            center>
+            <el-form :inline="true" style="float:left;" size="small">
+                <el-form-item label="微信账号">
+                    <el-input placeholder="请输入微信账号" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="微信密码">
+                    <el-input placeholder="请输入微信密码" show-password></el-input>
+                </el-form-item>
+                <el-form-item label="登录数据">
+                    <el-input placeholder="请输入登录的62数据"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" round size="mini">自动获取</el-button>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialog62Login = false" size="medium">取 消</el-button>
+                <el-button type="primary" @click="dialog62Login = false" size="medium">登 录</el-button>
+            </span>
+        </el-dialog>
     </div>
     
 </template>
@@ -340,6 +366,7 @@
     layout: 'frame',
     data() {
       return {
+        dialog62Login:false,
         shortcuts:[],
         qrCode:'',
         robotInfo:[],
@@ -400,6 +427,13 @@
       }
     },
     methods: {
+        handle62Login(done) {
+            this.$confirm('确认关闭？')
+                .then(_ => {
+                    done();
+                })
+                .catch(_ => {});
+        },
         getQrCode(){
             var _this = this;
             axios.get('/admin/robot/login/getQrCode')
