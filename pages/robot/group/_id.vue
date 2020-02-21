@@ -38,10 +38,7 @@
             </el-table-column>
             <el-table-column prop="name" label="微信群名称">
             </el-table-column>
-            <el-table-column prop="picUrl" label="微信群头像" >
-                <template slot-scope="scope">
-                    <img :src="scope.row.picUrl" alt="" style="width:50px;height:50px;">
-                </template>
+            <el-table-column prop="uid" label="群归属UID">
             </el-table-column>
             <el-table-column prop="groupAlias" label="群ID">
             </el-table-column>
@@ -110,14 +107,14 @@
     },
     methods: {
         handleSizeChange(val) {
-            axios.get(`/admin/robot/group/lists?pageSize=${val}`)
+            axios.get(`/admin/robot/group/lists?robotId=${this.robotId}&pageSize=${val}`)
             .then(res => {
                 this.lists = res.data.lists || [];
                 this.pageSize = res.data.page.size || 10;
             });
         },
         handleCurrentChange(val) {
-            axios.get(`/admin/robot/group/lists?pageNow=${val}`)
+            axios.get(`/admin/robot/group/lists?robotId=${this.robotId}&pageNow=${val}`)
             .then(res => {
                 this.lists = res.data.lists || [];
                 this.pageNow = res.data.page.now || 1;

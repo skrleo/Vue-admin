@@ -55,9 +55,9 @@
             </el-table-column>
             <el-table-column label="操作" width="280">
                 <template slot-scope="scope">
-                    <nuxt-link :to="{name:'robot-id',params:{ id: scope.row.id }}">
+                    <!-- <nuxt-link :to="{name:'robot-id',params:{ id: scope.row.id }}">
                         <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
-                    </nuxt-link>
+                    </nuxt-link> -->
                     <nuxt-link :to="{name:'robot-group-id',params:{ id: scope.row.id }}">
                         <el-button type="primary" icon="el-icon-edit" size="mini">群管理</el-button>
                     </nuxt-link>

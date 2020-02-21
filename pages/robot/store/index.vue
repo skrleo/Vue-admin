@@ -338,14 +338,6 @@
 
   export default {
     layout: 'frame',
-    created: function () {
-        var _this = this;
-        axios.get('/admin/robot/login/getQrCode')
-            .then(res => {
-                _this.robotInfo = res.data.data || [];
-                _this.checkLogin(_this.robotInfo.Uuid);
-            });
-    },
     data() {
       return {
         shortcuts:[],
@@ -422,10 +414,10 @@
                 uuid: uuid,
             }))
             .then(res => {
-                if(res.data.code !== '0'){
+                if(res.data.code === "402"){
                     setTimeout(function()  {
                         _this.checkLogin(uuid);
-                    }, 30000);
+                    }, 10000);
                 }
                 _this.loginInfo = res.data.data || [];
             })
