@@ -139,18 +139,6 @@
                 </el-table>
             </el-tab-pane>
             <el-tab-pane label="好友与标签">
-                <!--搜索框-->
-                <el-form :inline="true" style="float:left;" size="mini">
-                    <el-form-item>
-                        <el-button type="primary">添加好友</el-button>
-                    </el-form-item>
-                    <el-form-item label="搜索好友">
-                        <el-input placeholder="搜索好友"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary">查询</el-button>
-                    </el-form-item>
-                </el-form>
                 <el-table
                     :data="tableData"
                     style="width: 100%">
@@ -211,12 +199,6 @@
                 </el-table>
             </el-tab-pane>
             <el-tab-pane label="微信群管理">
-                <!--搜索框-->
-                <el-form :inline="true" style="float:left;" size="mini">
-                    <el-form-item>
-                        <el-button type="primary">微信群发</el-button>
-                    </el-form-item>
-                </el-form>
                 <el-table
                     :data="tableData"
                     style="width: 100%">

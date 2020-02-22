@@ -40,20 +40,30 @@
             </el-table-column>
             <el-table-column prop="uid" label="群归属UID">
             </el-table-column>
-            <el-table-column prop="groupAlias" label="群ID">
-            </el-table-column>
-            <el-table-column prop="status" label="状态">
-                 <template slot-scope="scope">
-                    <span>{{scope.row.status ? '未启动':'运行中'}}</span>
+            <el-table-column prop="type" label="类型" width="80">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.type === 1">拼多多</span>
+                    <span v-else-if="scope.row.type === 2">京东</span>
+                    <span v-else>淘宝</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="createdAt" label="创建时间">
+            <el-table-column prop="groupAlias" label="群ID">
+            </el-table-column>
+            <el-table-column prop="status" label="状态" width="80">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.status === 1"><i class="isStatus" style="background:#87888a;"/>未启动</span>
+                    <span v-else><i class="isStatus" style="background:#67C23A;"/>运行中</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="createdAt" label="创建时间" width="180">
                 <template slot-scope="scope">
                     <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="180">
+            <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
+                    <el-button v-if="scope.row.status === 1" type="success" icon="el-icon-switch-button" size="mini" @click="setStatus(scope.row.robotGroupId,0)">启动</el-button>
+                    <el-button v-else type="warning" icon="el-icon-switch-button" size="mini" @click="setStatus(scope.row.robotGroupId,1)">关闭</el-button>
                     <el-button type="danger" icon="el-icon-delete" size="mini" @click="destroy(scope.row.robotGroupId,scope.$index, lists)">删除</el-button>
                 </template>
             </el-table-column>
@@ -138,7 +148,35 @@
                         this.$message.error(res.response.data.message);
                     }
                 });
+        },
+        setStatus(robotGroupId,status){
+            axios.put(`/admin/robot/group/${robotGroupId}`, qs.stringify({robotGroupId:robotGroupId,status:status}))
+            .then(res => {
+                //判断是否请求成功
+                if(res.data.errorId === 'OK'){
+                    this.$message({
+                        message: '成功修改微信群状态',
+                        type: 'success'
+                        });    
+                    }
+                }).catch(res => {
+                    if(res.response.data.message === ''){
+                        this.$message.error('请求异常，请稍后重试！');
+                    }else{
+                        this.$message.error(res.response.data.message);
+                    }
+                });
         }
     }
+
   };
 </script>
+<style>
+    .isStatus{
+        width:8px;
+        height:8px;
+        border-radius:50%;
+        display:inline-block;
+        margin-right:6px;
+    }
+</style>

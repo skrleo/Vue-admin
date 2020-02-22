@@ -27,11 +27,11 @@
             <!--勾选框-->
             <el-table-column type="selection" width="55">
             </el-table-column>
-            <el-table-column prop="id" label="ID">
+            <el-table-column prop="id" label="ID" width="80">
             </el-table-column>
-            <el-table-column prop="uid" label="用户ID">
+            <el-table-column prop="uid" label="用户ID" width="80">
             </el-table-column>
-            <el-table-column prop="wxid" label="微信Id" width="166">
+            <el-table-column prop="wxid" label="微信Id" width="180">
             </el-table-column>
             <el-table-column prop="nickname" label="微信昵称">
             </el-table-column>
@@ -53,7 +53,7 @@
                     <span>{{scope.row.createdAt | d('yyyy-MM-dd hh:mm:ss')}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="280">
+            <el-table-column label="操作" width="210">
                 <template slot-scope="scope">
                     <!-- <nuxt-link :to="{name:'robot-id',params:{ id: scope.row.id }}">
                         <el-button type="info" icon="el-icon-view" size="mini">详情</el-button>
@@ -90,7 +90,7 @@
     layout:'frame',
     name:'node',
     async asyncData () {
-      const { data } = await axios.get('http://api.17wangku.com:80/v1.0/api/admin/robot/lists')
+      const { data } = await axios.get('/admin/robot/lists')
       return {
           pageNow: data.page.now || 1 ,
           pageSize: data.page.size || 10 ,
