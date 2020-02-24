@@ -10,11 +10,11 @@
         <div style="height:62px;">
           <!--搜索框-->
           <el-form :inline="true" style="float:left;" size="small">
-              <!-- <el-form-item>
+              <el-form-item>
                 <nuxt-link :to="{name:'robot-goods-store'}">
                     <el-button type="primary">添加商品</el-button>
                 </nuxt-link>
-              </el-form-item> -->
+              </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="syncGoods()">更新商品</el-button>
               </el-form-item>
@@ -40,7 +40,13 @@
             <!--索引-->
             <el-table-column prop="robotGoodsId" label="ID" width="80">
             </el-table-column>
-            <el-table-column prop="itemid" label="商品ID">
+            <el-table-column prop="itemid" label="商品ID" width="120">
+            </el-table-column>
+            <el-table-column prop="sort" label="排序" width="125">
+                <template slot-scope="scope">
+                    <el-input-number size="mini" v-model="scope.row.sort" controls-position="left" style="width:100px;" @change="handleChangeSort(scope.row.robotGoodsId,scope.row.sort)">
+                    </el-input-number>
+                </template>
             </el-table-column>
             <el-table-column prop="type" label="类型">
                 <template slot-scope="scope">
@@ -51,9 +57,9 @@
             </el-table-column>
             <el-table-column prop="name" label="商品名称" width="220">
             </el-table-column>
-            <el-table-column prop="picUrl" label="商品封面" >
+            <el-table-column prop="thumbUrl" label="商品封面" >
                 <template slot-scope="scope">
-                    <img :src="scope.row.picUrl" alt="" style="width:50px;height:50px;">
+                    <img :src="scope.row.thumbUrl" alt="" style="width:50px;height:50px;">
                 </template>
             </el-table-column>
             <el-table-column prop="status" label="状态" width="80">
@@ -61,7 +67,7 @@
                     <span>{{scope.row.status ? '已发单':'未发单'}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="currentPrice" label="原价(元)">
+            <el-table-column prop="currentPrice" label="单价(元)">
             </el-table-column>
             <el-table-column prop="couponDiscount" label="券金额(元)">
             </el-table-column>
@@ -119,6 +125,17 @@
       }
     },
     methods: {
+        handleChangeSort(robotGoodsId,sort) {
+            axios.put(`/admin/robot/goods/changeSort`, qs.stringify({robotGoodsId:robotGoodsId,sort:sort}))
+            .then(res => {
+                }).catch(res => {
+                    if(res.response.data.message === ''){
+                        this.$message.error('请求异常，请稍后重试！');
+                    }else{
+                        this.$message.error(res.response.data.message);
+                    }
+                });
+        },
         handleSizeChange(val) {
             axios.get(`/admin/robot/goods/lists?pageSize=${val}`)
             .then(res => {
@@ -140,7 +157,7 @@
                 if(res.data.errorId === 'OK'){
                     rows.splice(index, 1);
                     this.$message({
-                        message: '成功删除用户',
+                        message: '成功删除商品',
                         type: 'success'
                         });    
                     }
