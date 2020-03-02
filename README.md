@@ -44,6 +44,10 @@ $ npm start
 # generate static project
 $ npm run generate
 ```
+pm2 部署:
+
+<p><code> pm2 start npm --name "Vue-admin" -- run build </code></p>
+
 docker 运行方式:
 
 先构建镜像

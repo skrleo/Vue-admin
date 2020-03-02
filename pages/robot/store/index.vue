@@ -23,7 +23,11 @@
                 </div>
                 <div class="robot-info">
                     <span style="line-height:38px;">昵称：<el-link type="primary">{{loginInfo.NickName}}</el-link></span>
-                    <span style="line-height:38px;">性别：<el-link type="primary">保密</el-link></span>
+                    <span style="line-height:38px;">性别：
+                        <span v-if="loginInfo.Sex === 1">男</span>
+                        <span v-else-if="loginInfo.Sex === 2">女</span>
+                        <span v-else>保密</span>
+                    </span>
                     <span style="line-height:38px;">微信号: 
                         <el-link type="primary" v-if="loginInfo.Alias">{{loginInfo.Alias}}</el-link>
                         <el-link type="primary" v-else>设置微信号</el-link>
@@ -33,15 +37,14 @@
                         <el-link type="primary" @click="startHeartBeat(loginInfo.WxId)" v-else>关闭</el-link>
                     </span>
                     <span style="line-height:38px;">抢红包状态: 
-                        <el-link type="primary" @click="startRedEnvelopes(loginInfo.WxId)" v-if="loginInfo.Alias">开启</el-link>
+                        <el-link type="primary" @click="startRedEnvelopes(loginInfo.WxId)" v-if="loginInfo.RedEnvelopesState === 1">开启</el-link>
                         <el-link type="primary" @click="closeEnvelopes(loginInfo.WxId)" v-else>关闭</el-link>
                     </span>
                     <br/>
-                    <span style="line-height:38px;">个性签名:</span><br/>
+                    <span style="line-height:38px;">个性签名: <span style="font-size:14px;">{{loginInfo.Signature}}</span></span><br/>
                     <span><el-button type="text" @click="dialog62Login = true">62登录</el-button></span>
                     <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >修改密码</el-button></span>
                     <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >摇一摇</el-button></span>
-                    <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >添加好友</el-button></span>
                     <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >绑定邮箱</el-button></span>
                     <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >修改资料</el-button></span>
                     <span><el-button type="text" @click="waitInface(loginInfo.WxId)" >批量添加好友</el-button></span>
@@ -56,265 +59,11 @@
                 </div>
             </div>
         </div>
-        
-        <el-tabs type="border-card" style="margin-bottom:52px;">
-            <el-tab-pane label="消息收发">
-                <div>
-                    <!--搜索框-->
-                    <el-form :inline="true" style="float:left;" size="mini">
-                        <el-form-item>
-                            <el-button type="primary">初始化消息</el-button>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary">获取用户信息</el-button>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary">同步微信消息</el-button>
-                        </el-form-item>
-                        <el-form-item label="搜索好友">
-                            <el-input placeholder="搜索好友"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary">查询</el-button>
-                        </el-form-item>
-                    </el-form>
-                </div>
-                <el-table
-                    :data="tableData"
-                    style="width: 100%">
-                    <el-table-column type="expand">
-                        <template slot-scope="props">
-                            <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="商品名称">
-                                <span>{{ props.row.name }}</span>
-                            </el-form-item>
-                            <el-form-item label="所属店铺">
-                                <span>{{ props.row.shop }}</span>
-                            </el-form-item>
-                            <el-form-item label="商品 ID">
-                                <span>{{ props.row.id }}</span>
-                            </el-form-item>
-                            <el-form-item label="店铺 ID">
-                                <span>{{ props.row.shopId }}</span>
-                            </el-form-item>
-                            <el-form-item label="商品分类">
-                                <span>{{ props.row.category }}</span>
-                            </el-form-item>
-                            <el-form-item label="店铺地址">
-                                <span>{{ props.row.address }}</span>
-                            </el-form-item>
-                            <el-form-item label="商品描述">
-                                <span>{{ props.row.desc }}</span>
-                            </el-form-item>
-                            </el-form>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                        label="消息 ID"
-                        prop="id">
-                    </el-table-column>
-                    <el-table-column
-                        label="消息类型"
-                        prop="id">
-                    </el-table-column>
-                    <el-table-column
-                        label="接收人"
-                        prop="id">
-                    </el-table-column>
-                    <el-table-column
-                        label="消息内容"
-                        prop="desc">
-                    </el-table-column>
-                    <el-table-column label="操作">
-                        <template slot-scope="scope">
-                            <el-button
-                                size="mini"
-                                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                                <el-button
-                                size="mini"
-                                type="danger"
-                                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="好友与标签">
-                <el-table
-                    :data="tableData"
-                    style="width: 100%">
-                    <el-table-column type="expand">
-                        <template slot-scope="props">
-                            <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="商品名称">
-                                <span>{{ props.row.name }}</span>
-                            </el-form-item>
-                            <el-form-item label="所属店铺">
-                                <span>{{ props.row.shop }}</span>
-                            </el-form-item>
-                            <el-form-item label="商品 ID">
-                                <span>{{ props.row.id }}</span>
-                            </el-form-item>
-                            <el-form-item label="店铺 ID">
-                                <span>{{ props.row.shopId }}</span>
-                            </el-form-item>
-                            <el-form-item label="商品分类">
-                                <span>{{ props.row.category }}</span>
-                            </el-form-item>
-                            <el-form-item label="店铺地址">
-                                <span>{{ props.row.address }}</span>
-                            </el-form-item>
-                            <el-form-item label="商品描述">
-                                <span>{{ props.row.desc }}</span>
-                            </el-form-item>
-                            </el-form>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                    label="消息 ID"
-                    prop="id">
-                    </el-table-column>
-                    <el-table-column
-                    label="消息类型"
-                    prop="id">
-                    </el-table-column>
-                    <el-table-column
-                    label="接收人"
-                    prop="id">
-                    </el-table-column>
-                    <el-table-column
-                    label="消息内容"
-                    prop="desc">
-                    </el-table-column>
-                    <el-table-column label="操作">
-                        <template slot-scope="scope">
-                            <el-button
-                            size="mini"
-                            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button
-                            size="mini"
-                            type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                    </template>
-                    </el-table-column>
-                </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="微信群管理">
-                <el-table
-                    :data="tableData"
-                    style="width: 100%">
-                    <el-table-column type="expand">
-                        <template slot-scope="props">
-                            <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="商品名称">
-                                <span>{{ props.row.name }}</span>
-                            </el-form-item>
-                            <el-form-item label="所属店铺">
-                                <span>{{ props.row.shop }}</span>
-                            </el-form-item>
-                            <el-form-item label="商品 ID">
-                                <span>{{ props.row.id }}</span>
-                            </el-form-item>
-                            <el-form-item label="店铺 ID">
-                                <span>{{ props.row.shopId }}</span>
-                            </el-form-item>
-                            <el-form-item label="商品分类">
-                                <span>{{ props.row.category }}</span>
-                            </el-form-item>
-                            <el-form-item label="店铺地址">
-                                <span>{{ props.row.address }}</span>
-                            </el-form-item>
-                            <el-form-item label="商品描述">
-                                <span>{{ props.row.desc }}</span>
-                            </el-form-item>
-                            </el-form>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                        label="消息 ID"
-                        prop="id">
-                    </el-table-column>
-                    <el-table-column
-                        label="消息类型"
-                        prop="id">
-                    </el-table-column>
-                    <el-table-column
-                        label="接收人"
-                        prop="id">
-                    </el-table-column>
-                    <el-table-column
-                        label="消息内容"
-                        prop="desc">
-                    </el-table-column>
-                    <el-table-column label="操作">
-                        <template slot-scope="scope">
-                            <el-button
-                            size="mini"
-                            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button
-                            size="mini"
-                            type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                    </template>
-                    </el-table-column>
-                </el-table>
-            </el-tab-pane>
-            <el-tab-pane label="朋友圈管理">
-                朋友圈管理
-            </el-tab-pane>
-            <el-tab-pane label="发单设置">
-                <section>
-                    <el-row class="panel panel-flat">
-                        <el-row class="panel-body clearfix">
-                            <el-form ref="role" :model="task" label-width="80px" size="medium">
-                            <el-form-item label="任务名称" prop="name">
-                                <el-input v-model="task.name" style="width:280px;"></el-input>
-                            </el-form-item>
-                            <el-form-item label="类型" prop="state">
-                                <el-radio-group v-model="task.type">
-                                <el-radio label="0">执行一次</el-radio>
-                                <el-radio label="1">循环执行</el-radio>
-                                </el-radio-group>
-                            </el-form-item>
-                            <el-form-item label="时间间隔">
-                                    <el-input placeholder="请输入间隔时间" v-model="task.interval" class="input-with-select" style="width:280px;">
-                                        <el-select v-model="task.intervalType" slot="append" placeholder="秒">
-                                        <el-option label="秒" value="0"></el-option>
-                                        <el-option label="分" value="1"></el-option>
-                                        <el-option label="时" value="2"></el-option>
-                                        </el-select>
-                                    </el-input>
-                            </el-form-item>
-                            <el-form-item label="起止时间" prop="state">
-                                <el-date-picker
-                                    v-model="task.beginTime"
-                                    type="daterange"
-                                    value-format="timestamp"
-                                    range-separator="至"
-                                    start-placeholder="开始日期"
-                                    end-placeholder="结束日期">
-                                </el-date-picker>
-                            </el-form-item>
-                            <el-form-item label="执行任务" style="width:600px" prop="description">
-                                <el-input v-model="task.action" style="width:280px;"></el-input>
-                            </el-form-item>
-                            <el-form-item label="备注" style="width:600px" prop="description">
-                                <el-input type="textarea" v-model="task.description"></el-input>
-                            </el-form-item>
-                            <el-form-item size="mini">
-                                <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                                <el-button>取消</el-button>
-                            </el-form-item>
-                            </el-form>
-                        </el-row>
-                    </el-row>
-                </section>
-            </el-tab-pane>
-        </el-tabs>
         <!--62登录弹窗-->
         <el-dialog
             title="微信62登录"
             :visible.sync="dialog62Login"
-            width="28%"
+            width="23%"
             :before-close="handle62Login"
             center>
             <el-form :inline="true" style="float:left;" size="small">
@@ -325,11 +74,8 @@
                     <el-input placeholder="请输入微信密码" show-password></el-input>
                 </el-form-item>
                 <el-form-item label="登录数据">
-                    <el-input placeholder="请输入登录的62数据"></el-input>
+                    <el-input placeholder="请输入登录的62数据" clearable></el-input>
                 </el-form-item>
-                <el-form-item>
-                  <el-button type="primary" round size="mini">自动获取</el-button>
-              </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialog62Login = false" size="medium">取 消</el-button>
@@ -352,60 +98,7 @@
         shortcuts:[],
         qrCode:'',
         robotInfo:[],
-        loginInfo:[],
-        desc:'荷兰优质淡奶，奶香浓而不腻',
-        isCollapse:false,
-        tableData: [{
-          id: '12987122',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }, {
-          id: '12987123',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }, {
-          id: '12987125',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }, {
-          id: '12987126',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }, {
-          id: '12987126',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }],
-        task:{
-          name: '',
-          type: 0,
-          interval: 0,
-          intervaltype: 0,
-          beginTime: 0,
-          endTime: 0,
-          action: '',
-          description:''
-        },
+        loginInfo:[]
       }
     },
     methods: {
@@ -449,6 +142,7 @@
                         message: '启动心跳成功！',
                         type: 'success'
                     });  
+                    _this.loginInfo.HeartBeatState = 1;
                 }
             })
         },
@@ -463,6 +157,7 @@
                         message: '关闭心跳成功！',
                         type: 'success'
                     });  
+                    _this.loginInfo.HeartBeatState = 0;
                 }
             })
         },
@@ -477,6 +172,7 @@
                         message: '启动自动抢红包！',
                         type: 'success'
                     });  
+                    _this.loginInfo.RedEnvelopesState = 1;
                 }
             })
         },
@@ -491,6 +187,7 @@
                         message: '关闭自动抢红包！',
                         type: 'success'
                     });  
+                    _this.loginInfo.RedEnvelopesState = 0;
                 }
             })
         },
@@ -506,6 +203,21 @@
                         type: 'success'
                     });  
                     _this.loginInfo = '';  
+                }
+            });
+        },
+        updateHeadImage(wxId,headImageUrl) {
+            var _this = this;
+            axios.post('/admin/robot/user/updateHeadImage',qs.stringify({
+                wxId: wxId,
+                headImageUrl:headImageUrl
+            }))
+            .then(res => {
+                if(res.data.errorId === 'OK'){
+                    _this.$message({
+                        message: '修改头像成功！',
+                        type: 'success'
+                    });  
                 }
             });
         },
