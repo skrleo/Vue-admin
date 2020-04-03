@@ -255,9 +255,9 @@
                 }
               });
         axios.get(`/admin/user/${Uid}`)
-        .then(res => {
-                this.userInfo = res.data.data
-              });
+            .then(res => {
+                    this.userInfo = res.data.data
+                });
     },
     methods:{
         loginOut(){
