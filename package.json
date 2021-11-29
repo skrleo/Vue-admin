@@ -23,7 +23,7 @@
     "js-cookie": "^2.2.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "mavon-editor": "^2.6.17",
+    "mavon-editor": "^2.8.2",
     "nuxt": "^2.3.4",
     "popper.js": "^1.14.7",
     "qs": "^6.6.0",
